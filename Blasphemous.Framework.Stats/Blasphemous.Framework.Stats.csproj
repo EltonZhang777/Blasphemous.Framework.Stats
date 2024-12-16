@@ -20,8 +20,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blasphemous.ModdingAPI" Version="2.3.0" />
+    <PackageReference Include="Blasphemous.Framework.UI" Version="0.1.2" />
+    <PackageReference Include="Blasphemous.ModdingAPI" Version="2.4.1" />
     <PackageReference Include="Blasphemous.ModdingReferences" Version="4.0.67" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enemies\" />
+    <Folder Include="Items\" />
   </ItemGroup>
 
   <Target Name="Development" AfterTargets="PostBuildEvent">

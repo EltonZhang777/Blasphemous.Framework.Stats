@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Blasphemous.Framework.Stats.Components;
+namespace Blasphemous.Framework.Stats.Extensions;
 
 /// <summary>
 /// Useful extensions for inspecting <see cref="EntityStats"/>

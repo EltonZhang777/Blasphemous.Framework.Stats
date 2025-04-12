@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Enemies\" />
-    <Folder Include="Items\" />
+    <Folder Include="EnemiesInfo\" />
+    <Folder Include="ItemsInfo\" />
   </ItemGroup>
 
   <Target Name="Development" AfterTargets="PostBuildEvent">

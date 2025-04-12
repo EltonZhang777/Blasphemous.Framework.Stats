@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 
-namespace Blasphemous.Framework.Stats.Components;
+namespace Blasphemous.Framework.Stats.Extensions;
 
 /// <summary>
 /// Useful extensions for inspecting <see cref="PlatformCharacterController"/>

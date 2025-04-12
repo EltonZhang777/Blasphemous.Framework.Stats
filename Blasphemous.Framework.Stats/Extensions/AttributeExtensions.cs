@@ -7,7 +7,7 @@ using HarmonyLib;
 using Newtonsoft.Json;
 using Attribute = Framework.FrameworkCore.Attributes.Logic.Attribute;
 
-namespace Blasphemous.Framework.Stats.Components;
+namespace Blasphemous.Framework.Stats.Extensions;
 
 /// <summary>
 /// Useful extensions for inspecting <see cref="Attribute"/>
@@ -64,7 +64,7 @@ public static class AttributeExtensions
             baseValue = attr.GetBase(),
             upgradeIncrement = attr.GetUpgradeIncrement(),
             upgradeCount = attr.GetUpgrades(),
-            bonusValueWithoutUpgrades = attr.Bonus - attr.GetUpgradeIncrement() * attr.GetUpgrades(),
+            bonusValueWithoutUpgrades = attr.Bonus - attr.PermanetBonus,
             finalValue = attr.Final,
         };
     }
@@ -80,4 +80,41 @@ public class AttributeValues
     [JsonProperty] public int upgradeCount;
     [JsonProperty] public float bonusValueWithoutUpgrades;
     [JsonProperty] public float finalValue;
+
+    /// <summary>
+    /// Write only the `baseValue` and `upgradeIncrement` value of this instance to the specified <see cref="Attribute"/>
+    /// </summary>
+    public void WriteBaseToAttribute(ref Attribute attribute)
+    {
+        Traverse.Create(attribute).Property("Base").SetValue(baseValue);
+        Traverse.Create(attribute).Field("_upgradeValue").SetValue(upgradeIncrement);
+
+        // re-upgrade according to current upgrade count
+        int count = attribute.GetUpgrades();
+        attribute.ResetUpgrades();
+        for (int i = 0; i < count; i++)
+        {
+            attribute.Upgrade();
+        }
+    }
+
+    /// <summary>
+    /// Force write all values of this instance to the specified <see cref="Attribute"/>. 
+    /// Will attempt to force overwrite final value may not yield intended result.
+    /// </summary>
+    public void WriteAllToAttribute(ref Attribute attribute)
+    {
+        Traverse.Create(attribute).Property("Base").SetValue(baseValue);
+        Traverse.Create(attribute).Field("_upgradeValue").SetValue(upgradeIncrement);
+
+        // re-upgrade according to the given upgrade count of this instance
+        attribute.ResetUpgrades();
+        for (int i = 0; i < upgradeCount; i++)
+        {
+            attribute.Upgrade();
+        }
+
+        // apply `bonusValueWithoutUpgrades` as a RawBonus
+        attribute.AddRawBonus(new RawBonus(bonusValueWithoutUpgrades));
+    }
 }

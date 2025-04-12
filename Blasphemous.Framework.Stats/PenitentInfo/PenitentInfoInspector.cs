@@ -1,4 +1,4 @@
-﻿using Blasphemous.Framework.Stats.Components;
+﻿using Blasphemous.Framework.Stats.Extensions;
 using Framework.Managers;
 using Gameplay.GameControllers.Penitent;
 using Newtonsoft.Json;

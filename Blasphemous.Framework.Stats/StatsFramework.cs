@@ -46,7 +46,7 @@ public class StatsFramework : BlasMod
         if (SceneHelper.GameSceneLoaded)
         {
             File.WriteAllText(
-                FileHandler.ModdingFolder + @"stats/penitent.json",
+                FileHandler.ContentFolder + @"penitent.json",
                 JsonConvert.SerializeObject(
                     PenitentInfoInspector.ReadPenitentInfo(),
                     Formatting.Indented));

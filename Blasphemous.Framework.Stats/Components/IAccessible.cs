@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿namespace Blasphemous.Framework.Stats.Components;
 
-namespace Blasphemous.Framework.Stats.Components;
-
-internal interface IAccessible<TClass>
+/// <summary>
+/// Interface of classes that can read/write values of specific class instances
+/// </summary>
+public interface IAccessible<T> where T : class
 {
-    public abstract void GetValueFrom(TClass classInstance);
-    public abstract void SetValueTo(TClass classInstance);
+    /// <summary>
+    /// Read the value of given class instance to this IAccessible instance's fields
+    /// </summary>
+    public abstract void GetValueFrom(T obj);
+
+    /// <summary>
+    /// Write the value from this IAccessible instance's fields to the given class instance
+    /// </summary>
+    public abstract void SetValueTo(T obj);
 }

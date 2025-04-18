@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿/*
 using Framework.FrameworkCore.Attributes;
 using Gameplay.GameControllers.Entities;
 using Gameplay.GameControllers.Penitent.Attack;
 using HarmonyLib;
-using Tools.Items;
 
-namespace Blasphemous.Framework.Stats;
+namespace Blasphemous.Framework.Stats.Patches;
 
 
 // WIP: harmony patches that
@@ -38,7 +34,8 @@ internal class AttackSpeedUncap_Patches
         ____attackSpeed = value;
         PenitentSword penitentSword = (PenitentSword)__instance.CurrentPenitentWeapon;
         penitentSword.SlashAnimator.SetAnimatorSpeed(____attackSpeed);
-        
+
         return false;
     }
 }
+*/

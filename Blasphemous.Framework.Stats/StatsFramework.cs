@@ -1,13 +1,17 @@
-﻿using Blasphemous.Framework.Stats.PenitentInfo;
+﻿global using BlasAttribute = Framework.FrameworkCore.Attributes.Logic.Attribute;
+using Blasphemous.CheatConsole;
+using Blasphemous.Framework.Stats.Commands;
+using Blasphemous.Framework.Stats.PenitentInfo;
 using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Helpers;
+using Framework.Managers;
 using Newtonsoft.Json;
 using System.IO;
 
 namespace Blasphemous.Framework.Stats;
 
 /// <summary>
-/// Allows other mods to read and write vanilla stats.
+/// Mod that allows other mods to read and write vanilla stats.
 /// </summary>
 public class StatsFramework : BlasMod
 {
@@ -20,8 +24,10 @@ public class StatsFramework : BlasMod
         : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION)
     { }
 
+    /// <inheritdoc/>
     protected override void OnInitialize()
     {
+        //LocalizationHandler.RegisterDefaultLanguage("en");
         Config = ConfigHandler.Load<Config>();
         ConfigHandler.Save(Config);
         if (!Directory.Exists(FileHandler.ModdingFolder + @"stats/"))
@@ -30,27 +36,26 @@ public class StatsFramework : BlasMod
         }
     }
 
-    protected override void OnExitGame()
+    /// <inheritdoc/>
+    protected override void OnRegisterServices(ModServiceProvider provider)
     {
-        ConfigHandler.Save(Config);
+        provider.RegisterCommand(new PenitentStatsCommand());
     }
 
+    /// <inheritdoc/>
     protected override void OnLateUpdate()
     {
         OnLateUpdateEvent?.Invoke();
     }
 
+    /// <inheritdoc/>
     protected override void OnLevelLoaded(string oldLevel, string newLevel)
     {
-#if DEBUG
-        if (SceneHelper.GameSceneLoaded)
-        {
-            File.WriteAllText(
-                FileHandler.ContentFolder + @"penitent.json",
-                JsonConvert.SerializeObject(
-                    PenitentInfoInspector.ReadPenitentInfo(),
-                    Formatting.Indented));
-        }
-#endif
+    }
+
+    /// <inheritdoc/>
+    protected override void OnExitGame()
+    {
+        ConfigHandler.Save(Config);
     }
 }

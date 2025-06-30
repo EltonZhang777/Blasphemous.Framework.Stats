@@ -1,5 +1,4 @@
-﻿using Blasphemous.ModdingAPI;
-using Gameplay.GameControllers.Entities;
+﻿using Gameplay.GameControllers.Entities;
 using Newtonsoft.Json;
 
 namespace Blasphemous.Framework.Stats.Components;
@@ -41,7 +40,8 @@ public class EntityStatsValues_Penitent : IAccessible<EntityStats>
     /// <inheritdoc/>
     public void GetValueFrom(EntityStats stats)
     {
-        Main.Validate(stats, x => x != null);
+        if (!Main.Validate(stats, x => x != null))
+            return;
 
         life.GetValueFrom(stats.Life);
         strength.GetValueFrom(stats.Strength);
@@ -76,7 +76,8 @@ public class EntityStatsValues_Penitent : IAccessible<EntityStats>
     /// <inheritdoc/>
     public void SetValueTo(EntityStats stats)
     {
-        Main.Validate(stats, x => x != null);
+        if (!Main.Validate(stats, x => x != null))
+            return;
 
         life.SetValueTo(stats.Life);
         strength.SetValueTo(stats.Strength);
@@ -124,8 +125,12 @@ public class EntityStatsValues_Enemy : IAccessible<EntityStats>
     [JsonProperty] public AttributeValues fireDamageReduction = new();
     [JsonProperty] public AttributeValues toxicDamageReduction = new();
 
+    /// <inheritdoc/>
     public void GetValueFrom(EntityStats stats)
     {
+        if (!Main.Validate(stats, x => x != null))
+            return;
+
         life.GetValueFrom(stats.Life);
         strength.GetValueFrom(stats.Strength);
         defense.GetValueFrom(stats.Defense);
@@ -137,8 +142,12 @@ public class EntityStatsValues_Enemy : IAccessible<EntityStats>
         toxicDamageReduction.GetValueFrom(stats.ToxicDmgReduction);
     }
 
+    /// <inheritdoc/>
     public void SetValueTo(EntityStats stats)
     {
+        if (!Main.Validate(stats, x => x != null))
+            return;
+
         life.SetValueTo(stats.Life);
         strength.SetValueTo(stats.Strength);
         defense.SetValueTo(stats.Defense);

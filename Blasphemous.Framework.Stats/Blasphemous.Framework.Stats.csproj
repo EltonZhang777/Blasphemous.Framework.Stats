@@ -27,8 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="ItemsInfo\" />
+    <Folder Include="ItemStats\" />
   </ItemGroup>
 
   <Target Name="Development" AfterTargets="PostBuildEvent">

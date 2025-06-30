@@ -1,0 +1,30 @@
+{
+  "name": "test_patch_enemy",
+  "activeType": "Manually",
+  "statsPatches": 
+  [
+    {
+      "entityId": "EV10",
+      "entityStats":
+      {
+        "strength":
+        {
+          "baseValue": 199,
+          "initialValue": 199
+        },
+        "life":
+        {
+          "baseValue": 1000,
+          "initialValue": 1000
+        },
+        "physicalDamageReduction":
+        {
+          "baseValue": 0.5,
+          "initialValue": 0.5
+        }
+      },
+      "tearsDrop": 114514,
+      "contactDamage": 80
+    }
+  ]
+}

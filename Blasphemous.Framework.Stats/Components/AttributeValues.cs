@@ -1,5 +1,4 @@
-﻿using Blasphemous.ModdingAPI;
-using Framework.FrameworkCore.Attributes.Logic;
+﻿using Framework.FrameworkCore.Attributes.Logic;
 using Newtonsoft.Json;
 using System;
 
@@ -10,17 +9,18 @@ namespace Blasphemous.Framework.Stats.Components;
 /// </summary>
 public class AttributeValues : IAccessible<BlasAttribute>
 {
-    [JsonProperty] public float baseValue;
-    [JsonProperty] public float initialValue;
-    [JsonProperty] public float upgradeIncrement;
-    [JsonProperty] public int upgradeCount;
-    [JsonProperty] public float bonusValue;
-    [JsonProperty] public float finalValue;
+    [JsonProperty] public float baseValue = Main.DEFAULT_FLOAT;
+    [JsonProperty] public float initialValue = Main.DEFAULT_FLOAT;
+    [JsonProperty] public float upgradeIncrement = Main.DEFAULT_FLOAT;
+    [JsonProperty] public int upgradeCount = Main.DEFAULT_INT;
+    [JsonProperty] public float bonusValue = Main.DEFAULT_FLOAT;
+    [JsonProperty] public float finalValue = Main.DEFAULT_FLOAT;
 
     /// <inheritdoc/>
     public void GetValueFrom(BlasAttribute attr)
     {
-        Main.Validate(attr, x => x != null);
+        if (!Main.Validate(attr, x => x != null))
+            return;
 
         baseValue = Main.GetValue<BlasAttribute, float>(attr, "Base", Main.TraverseAccessType.Property);
         initialValue = Main.GetValue<BlasAttribute, float>(attr, "_initialValue", Main.TraverseAccessType.Field);
@@ -36,13 +36,26 @@ public class AttributeValues : IAccessible<BlasAttribute>
     /// </summary>
     public void SetValueTo(BlasAttribute attr)
     {
-        Main.Validate(attr, x => x != null);
+        if (!Main.Validate(attr, x => x != null))
+            return;
 
-        Main.SetValue(ref attr, "Base", baseValue, Main.TraverseAccessType.Property);
-        Main.SetValue(ref attr, "_initialValue", initialValue, Main.TraverseAccessType.Field);
-        Main.SetValue(ref attr, "_upgradeValue", upgradeIncrement, Main.TraverseAccessType.Field);
+        // reset `_bonusValue` since it won't be properly reset in vanilla code
+        Main.SetValue(ref attr, "Bonus", 0f, Main.TraverseAccessType.Property);
+
+        // set values
+        Main.SetValueIfValidated(ref attr, "Base", baseValue, Main.IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref attr, "_initialValue", initialValue, Main.IsNotDefault, Main.TraverseAccessType.Field);
+        Main.SetValueIfValidated(ref attr, "_upgradeValue", upgradeIncrement, Main.IsNotDefault, Main.TraverseAccessType.Field);
 
         // re-upgrade according to current upgrade count
+        if (Main.IsNotDefault(upgradeCount))
+        {
+            SetUpgrades(attr);
+        }
+    }
+
+    private void SetUpgrades(BlasAttribute attr)
+    {
         attr.ResetUpgrades();
         for (int i = 0; i < upgradeCount; i++)
         {

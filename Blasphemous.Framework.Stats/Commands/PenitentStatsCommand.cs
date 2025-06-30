@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Blasphemous.CheatConsole;
-using Blasphemous.Framework.Stats.PenitentInfo;
-using Blasphemous.ModdingAPI.Files;
+﻿using Blasphemous.CheatConsole;
+using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.Framework.Stats.PenitentStats;
 using Framework.Managers;
-using Newtonsoft.Json;
-using System.IO;
-using Blasphemous.Framework.Stats.Components;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Blasphemous.Framework.Stats.Commands;
 
@@ -26,8 +22,8 @@ internal class PenitentStatsCommand : ModCommand
         };
 
 #if DEBUG
-        result.Add("readinfo", SubCommand_ReadInfo);
-        result.Add("writeinfo", SubCommand_WriteInfo);
+        result.Add("exportjson", SubCommand_ExportJson);
+        result.Add("importjson", SubCommand_ImportJson);
 #endif
 
         return result;
@@ -39,39 +35,35 @@ internal class PenitentStatsCommand : ModCommand
             return;
 
 #if DEBUG
-        Write($"{CommandName} readinfo : Read the stats of Penitent and export it to JSON file");
-        Write($"{CommandName} writeinfo : Write the stats of Penitent from JSON file");
+        Write($"{CommandName} exportjson: Read the stats of Penitent and export it to JSON file");
+        Write($"{CommandName} importjson : Write the stats of Penitent from JSON file");
 #endif
     }
 
-    private void SubCommand_ReadInfo(string[] parameters)
+    private void SubCommand_ExportJson(string[] parameters)
     {
         if (!ValidateParameterList(parameters, 0))
             return;
 
-        PenitentData result = new();
-        result.GetValueFrom(Core.Logic.Penitent);
-        string exportPath = Main.StatsFramework.FileHandler.ContentFolder + @"penitent_stats.json";
-        File.WriteAllText(
-            exportPath,
-            JsonConvert.SerializeObject(
-                result,
-                Formatting.Indented));
+        PenitentData data = new();
+        string fileName = "penitent_data.json";
+        data.GetValueFrom(Core.Logic.Penitent);
+        Main.StatsFramework.FileHandler.WriteJsonToContent(fileName, data);
 
-        Write($"Successfully written penitent values to `{exportPath}` !");
+        Write($"Successfully exported penitent values to `{fileName}` !");
     }
 
-    private void SubCommand_WriteInfo(string[] parameters)
+    private void SubCommand_ImportJson(string[] parameters)
     {
         if (!ValidateParameterList(parameters, 0))
             return;
 
-        PenitentData result = new();
-        string importPath = Main.StatsFramework.FileHandler.ContentFolder + @"penitent_stats.json";
-        result = JsonConvert.DeserializeObject<PenitentData>(File.ReadAllText(importPath));
-        result.SetValueTo(Core.Logic.Penitent);
+        PenitentData data = new();
+        string fileName = "penitent_data.json";
+        Main.StatsFramework.FileHandler.LoadContentAsJson<PenitentData>(fileName, out data);
+        data.SetValueTo(Core.Logic.Penitent);
 
-        Write($"Successfully imported penitent values from `{importPath}` !");
+        Write($"Successfully imported penitent values from `{fileName}` !");
     }
 
     private bool ValidateParameterList(string[] parameters, List<int> validParameterLengths)

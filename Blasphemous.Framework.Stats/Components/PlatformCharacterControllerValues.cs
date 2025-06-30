@@ -1,7 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.ModdingAPI;
 using CreativeSpore.SmartColliders;
 using Gameplay.GameControllers.Entities;
+using UnityEngine;
 
 namespace Blasphemous.Framework.Stats.Extensions;
 
@@ -10,27 +10,27 @@ namespace Blasphemous.Framework.Stats.Extensions;
 /// </summary>
 public class PlatformCharacterControllerValues_Penitent : IAccessible<PlatformCharacterController>
 {
-    public float walkingAcceleration;
-    public float walkingDrag;
-    public float maxWalkingSpeed;
-    public float airborneAcceleration;
-    public float jumpingSpeed;
-    public float jumpingAcceleration;
-    public float jumpingAccelerationTime;
+    public float walkingAcceleration = DEFAULT_FLOAT;
+    public float walkingDrag = DEFAULT_FLOAT;
+    public float maxWalkingSpeed = DEFAULT_FLOAT;
+    public float airborneAcceleration = DEFAULT_FLOAT;
+    public float jumpingSpeed = DEFAULT_FLOAT;
+    public float jumpingAcceleration = DEFAULT_FLOAT;
+    public float jumpingAccelerationTime = DEFAULT_FLOAT;
 
-    public float platformDropTime;
-    public float ghostJumpDelay;
-    public float ladderJumpTimeThreshold;
-    public float climbingSpeed;
+    public float platformDropTime = DEFAULT_FLOAT;
+    public float ghostJumpDelay = DEFAULT_FLOAT;
+    public float ladderJumpTimeThreshold = DEFAULT_FLOAT;
+    public float climbingSpeed = DEFAULT_FLOAT;
+
+    internal const float DEFAULT_FLOAT = -114514f;
+    internal const int DEFAULT_INT = -114514;
 
     /// <inheritdoc/>
     public void GetValueFrom(PlatformCharacterController pcc)
     {
-        if (pcc == null)
-        {
-            ModLog.Warn($"PlatformCharacterController {pcc} is null!");
+        if (!Main.Validate(pcc, x => x != null))
             return;
-        }
 
         walkingAcceleration = Main.GetValue<PlatformCharacterController, float>(pcc, "WalkingAcc", Main.TraverseAccessType.Property);
         walkingDrag = Main.GetValue<PlatformCharacterController, float>(pcc, "WalkingDrag", Main.TraverseAccessType.Property);
@@ -49,24 +49,34 @@ public class PlatformCharacterControllerValues_Penitent : IAccessible<PlatformCh
     /// <inheritdoc/>
     public void SetValueTo(PlatformCharacterController pcc)
     {
-        if (pcc == null)
-        {
-            ModLog.Warn($"PlatformCharacterController {pcc} is null!");
+        if (!Main.Validate(pcc, x => x != null))
             return;
+
+        Main.SetValueIfValidated(ref pcc, "WalkingAcc", walkingAcceleration, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "WalkingDrag", walkingDrag, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "MaxWalkingSpeed", maxWalkingSpeed, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "AirborneAcc", airborneAcceleration, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "JumpingSpeed", jumpingSpeed, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "JumpingAcc", jumpingAcceleration, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "JumpingAccTime", jumpingAccelerationTime, IsNotDefault, Main.TraverseAccessType.Property);
+
+        Main.SetValueIfValidated(ref pcc, "PlatformDropTime", platformDropTime, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "GhostJumpDelay", ghostJumpDelay, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "m_ladderJumpTimeThreshold", ladderJumpTimeThreshold, IsNotDefault, Main.TraverseAccessType.Field);
+        Main.SetValueIfValidated(ref pcc, "ClimbingSpeed", climbingSpeed, IsNotDefault, Main.TraverseAccessType.Property);
+    }
+
+    private bool IsNotDefault<T>(T obj)
+    {
+        switch (obj)
+        {
+            case float value:
+                return !Mathf.Approximately((float)value, DEFAULT_FLOAT);
+            case int value:
+                return !Mathf.Approximately((int)value, DEFAULT_INT);
+            default:
+                return false;
         }
-
-        Main.SetValue(ref pcc, "WalkingAcc", walkingAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "WalkingDrag", walkingDrag, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "MaxWalkingSpeed", maxWalkingSpeed, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "AirborneAcc", airborneAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "JumpingSpeed", jumpingSpeed, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "JumpingAcc", jumpingAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "JumpingAccTime", jumpingAccelerationTime, Main.TraverseAccessType.Property);
-
-        Main.SetValue(ref pcc, "PlatformDropTime", platformDropTime, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "GhostJumpDelay", ghostJumpDelay, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "m_ladderJumpTimeThreshold", ladderJumpTimeThreshold, Main.TraverseAccessType.Field);
-        Main.SetValue(ref pcc, "ClimbingSpeed", climbingSpeed, Main.TraverseAccessType.Property);
     }
 }
 
@@ -75,18 +85,22 @@ public class PlatformCharacterControllerValues_Penitent : IAccessible<PlatformCh
 /// </summary>
 public class PlatformCharacterControllerValues_Enemy : IAccessible<PlatformCharacterController>
 {
-    public float walkingAcceleration;
-    public float walkingDrag;
-    public float maxWalkingSpeed;
-    public float airborneAcceleration;
-    public float jumpingSpeed;
-    public float jumpingAcceleration;
-    public float jumpingAccelerationTime;
+    public float walkingAcceleration = DEFAULT_FLOAT;
+    public float walkingDrag = DEFAULT_FLOAT;
+    public float maxWalkingSpeed = DEFAULT_FLOAT;
+    public float airborneAcceleration = DEFAULT_FLOAT;
+    public float jumpingSpeed = DEFAULT_FLOAT;
+    public float jumpingAcceleration = DEFAULT_FLOAT;
+    public float jumpingAccelerationTime = DEFAULT_FLOAT;
+
+    internal const float DEFAULT_FLOAT = -114514f;
+    internal const int DEFAULT_INT = -114514;
 
     /// <inheritdoc/>
     public void GetValueFrom(PlatformCharacterController pcc)
     {
-        Main.Validate(pcc, x => x != null);
+        if (!Main.Validate(pcc, x => x != null))
+            return;
 
         walkingAcceleration = Main.GetValue<PlatformCharacterController, float>(pcc, "WalkingAcc", Main.TraverseAccessType.Property);
         walkingDrag = Main.GetValue<PlatformCharacterController, float>(pcc, "WalkingDrag", Main.TraverseAccessType.Property);
@@ -100,14 +114,28 @@ public class PlatformCharacterControllerValues_Enemy : IAccessible<PlatformChara
     /// <inheritdoc/>
     public void SetValueTo(PlatformCharacterController pcc)
     {
-        Main.Validate(pcc, x => x != null);
+        if (!Main.Validate(pcc, x => x != null))
+            return;
 
-        Main.SetValue(ref pcc, "WalkingAcc", walkingAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "WalkingDrag", walkingDrag, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "MaxWalkingSpeed", maxWalkingSpeed, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "AirborneAcc", airborneAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "JumpingSpeed", jumpingSpeed, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "JumpingAcc", jumpingAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValue(ref pcc, "JumpingAccTime", jumpingAccelerationTime, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "WalkingAcc", walkingAcceleration, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "WalkingDrag", walkingDrag, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "MaxWalkingSpeed", maxWalkingSpeed, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "AirborneAcc", airborneAcceleration, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "JumpingSpeed", jumpingSpeed, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "JumpingAcc", jumpingAcceleration, IsNotDefault, Main.TraverseAccessType.Property);
+        Main.SetValueIfValidated(ref pcc, "JumpingAccTime", jumpingAccelerationTime, IsNotDefault, Main.TraverseAccessType.Property);
+    }
+
+    private bool IsNotDefault<T>(T obj)
+    {
+        switch (obj)
+        {
+            case float value:
+                return !Mathf.Approximately((float)value, DEFAULT_FLOAT);
+            case int value:
+                return !Mathf.Approximately((int)value, DEFAULT_INT);
+            default:
+                return false;
+        }
     }
 }

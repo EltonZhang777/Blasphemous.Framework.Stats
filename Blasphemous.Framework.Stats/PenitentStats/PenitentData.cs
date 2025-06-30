@@ -1,18 +1,15 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Blasphemous.Framework.Stats.Extensions;
+using Framework.Managers;
 using Gameplay.GameControllers.Penitent;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Blasphemous.Framework.Stats.PenitentInfo;
+namespace Blasphemous.Framework.Stats.PenitentStats;
 
 /// <summary>
 /// Stats of TPO
 /// </summary>
-public class PenitentData : IAccessible<Penitent>
+public class PenitentData : IAccessible<Penitent>, IStatsPatchable
 {
     [JsonProperty] public EntityStatsValues_Penitent entityStats = new();
     [JsonProperty] public PlatformCharacterControllerValues_Penitent platformCharacterController = new();
@@ -29,5 +26,29 @@ public class PenitentData : IAccessible<Penitent>
     {
         entityStats.SetValueTo(obj.Stats);
         platformCharacterController.SetValueTo(obj.PlatformCharacterController);
+    }
+
+    /// <summary>
+    /// Checks if Penitent exists
+    /// </summary>
+    public bool TryGetTargets() => Core.Logic.Penitent != null;
+
+
+    /// <summary>
+    /// Get value from Penitent instance
+    /// </summary>
+    public void GetValueFromFirstTarget()
+    {
+        if (TryGetTargets())
+            GetValueFrom(Core.Logic.Penitent);
+    }
+
+    /// <summary>
+    /// Set value to Penitent instance
+    /// </summary>
+    public void SetValueToAllTargets()
+    {
+        if (TryGetTargets())
+            SetValueTo(Core.Logic.Penitent);
     }
 }

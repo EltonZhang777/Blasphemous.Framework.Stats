@@ -10,9 +10,9 @@ internal class ItemCollection<T>
         get
         {
             return this.GetType()
-                .GetProperties()
-                .Where(p => p.PropertyType == typeof(T))
-                .Select(p => (T)p.GetValue(this, null));
+                .GetFields()
+                .Where(p => p.FieldType == typeof(T))
+                .Select(p => (T)p.GetValue(this));
         }
     }
 }

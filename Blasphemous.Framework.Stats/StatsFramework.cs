@@ -1,11 +1,13 @@
 ﻿global using BlasAttribute = Framework.FrameworkCore.Attributes.Logic.Attribute;
+global using UObject = UnityEngine.Object;
 using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Commands;
-using Blasphemous.Framework.Stats.PenitentInfo;
+using Blasphemous.Framework.Stats.Components;
+using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.Framework.Stats.Patches;
+using Blasphemous.Framework.Stats.PenitentStats;
 using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Helpers;
-using Framework.Managers;
-using Newtonsoft.Json;
 using System.IO;
 
 namespace Blasphemous.Framework.Stats;
@@ -16,6 +18,7 @@ namespace Blasphemous.Framework.Stats;
 public class StatsFramework : BlasMod
 {
     internal static Config Config { get; set; }
+    internal string StatsFolder => FileHandler.ModdingFolder + @"stats/";
 
     internal delegate void StandardEvent();
     internal event StandardEvent OnLateUpdateEvent;
@@ -30,9 +33,9 @@ public class StatsFramework : BlasMod
         //LocalizationHandler.RegisterDefaultLanguage("en");
         Config = ConfigHandler.Load<Config>();
         ConfigHandler.Save(Config);
-        if (!Directory.Exists(FileHandler.ModdingFolder + @"stats/"))
+        if (!Directory.Exists(StatsFolder))
         {
-            Directory.CreateDirectory(FileHandler.ModdingFolder + @"stats/");
+            Directory.CreateDirectory(StatsFolder);
         }
     }
 
@@ -40,6 +43,12 @@ public class StatsFramework : BlasMod
     protected override void OnRegisterServices(ModServiceProvider provider)
     {
         provider.RegisterCommand(new PenitentStatsCommand());
+        provider.RegisterCommand(new StatsPatchCommand());
+
+#if DEBUG
+        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<PenitentStatsPatch>("test_patch_penitent.json"));
+        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<EnemyStatsPatch>("test_patch_enemy.json"));
+#endif
     }
 
     /// <inheritdoc/>
@@ -51,6 +60,11 @@ public class StatsFramework : BlasMod
     /// <inheritdoc/>
     protected override void OnLevelLoaded(string oldLevel, string newLevel)
     {
+        if (SceneHelper.GameSceneLoaded)
+        {
+            PatchController.PatchEnemyStats();
+            PatchController.PatchPenitentStats();
+        }
     }
 
     /// <inheritdoc/>

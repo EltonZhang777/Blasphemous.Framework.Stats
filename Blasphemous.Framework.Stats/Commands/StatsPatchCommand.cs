@@ -1,7 +1,12 @@
 ﻿using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Components;
+using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.Framework.Stats.ItemStats;
 using Blasphemous.Framework.Stats.PenitentStats;
+using Blasphemous.ModdingAPI;
+using Framework.Managers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +31,7 @@ internal class StatsPatchCommand : ModCommand
         };
 #if DEBUG
         result.Add("exportjson", SubCommand_ExportToJson);
+        result.Add("exportallinventoryitems", SubCommand_ExportAllInventoryItems);
 #endif
 
         return result;
@@ -43,6 +49,7 @@ internal class StatsPatchCommand : ModCommand
         Write($"{CommandName} deactivate [patchName] : deactivate the specified stats patch. (only supports patches that can be manually toggled active)");
 #if DEBUG
         Write($"{CommandName} exportjson [patchName] : (debug use) export the info of specified stats patch to JSON file");
+        Write($"{CommandName} exportallinventoryitems : (debug use) export the info all inventory items to JSON file");
 #endif
     }
 
@@ -151,6 +158,72 @@ internal class StatsPatchCommand : ModCommand
         Write($"Successfully exported `{backgroundName}` info to `{exportPath}`!");
     }
 
+    private void SubCommand_ExportAllInventoryItems(string[] parameters)
+    {
+        // WIP!
+        if (!ValidateParameterList(parameters, 0))
+            return;
+
+        JsonSerializerSettings jsonSerializerSettings = new()
+        {
+            Converters = [
+                new UnityEngineIgnoreConverter(),
+                new StringEnumConverter(),
+                ],
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.None,
+        };
+
+        InventoryItemStatsPatch patch = new();
+        foreach (var item in Core.InventoryManager.GetAllCollectibleItems())
+        {
+            InventoryItemData itemData = new InventoryItemData(item.id);
+            itemData.GetValueFrom(item);
+            patch.statsPatches.Add(itemData);
+        }
+        foreach (var item in Core.InventoryManager.GetAllPrayers())
+        {
+            InventoryItemData itemData = new InventoryItemData(item.id);
+            itemData.GetValueFrom(item);
+            patch.statsPatches.Add(itemData);
+        }
+        foreach (var item in Core.InventoryManager.GetAllQuestItems())
+        {
+            InventoryItemData itemData = new InventoryItemData(item.id);
+            itemData.GetValueFrom(item);
+            patch.statsPatches.Add(itemData);
+        }
+        foreach (var item in Core.InventoryManager.GetAllRelics())
+        {
+            InventoryItemData itemData = new InventoryItemData(item.id);
+            itemData.GetValueFrom(item);
+            patch.statsPatches.Add(itemData);
+        }
+        foreach (var item in Core.InventoryManager.GetAllRosaryBeads())
+        {
+            InventoryItemData itemData = new InventoryItemData(item.id);
+            itemData.GetValueFrom(item);
+            patch.statsPatches.Add(itemData);
+        }
+        foreach (var item in Core.InventoryManager.GetAllSwords())
+        {
+            InventoryItemData itemData = new InventoryItemData(item.id);
+            itemData.GetValueFrom(item);
+            patch.statsPatches.Add(itemData);
+        }
+
+        foreach (var itemPatch in patch.statsPatches)
+        {
+            ModLog.Warn($"Serializing `{itemPatch.itemId}`!");
+            Main.StatsFramework.FileHandler.WriteJsonToContent(
+                $"{itemPatch.itemId}.json",
+                itemPatch,
+                jsonSerializerSettings);
+        }
+
+        Write($"Successfully exported all inventory items' data to `{Main.StatsFramework.FileHandler.ContentFolder}`!");
+    }
+
     private bool ValidateParameterList(string[] parameters, List<int> validParameterLengths)
     {
         if (!validParameterLengths.Contains(parameters.Length))
@@ -196,5 +269,35 @@ internal class StatsPatchCommand : ModCommand
 
         targetPatch.isActive = active;
         return true;
+    }
+}
+
+public class UnityEngineIgnoreConverter : JsonConverter
+{
+    public override bool CanConvert(Type objectType)
+    {
+        // List of types to ignore
+        List<System.Type> ignoredTypes = [
+            typeof(UnityEngine.GameObject),
+            typeof(UnityEngine.Transform),
+            typeof(UnityEngine.Texture),
+            typeof(UnityEngine.Sprite),
+            typeof(UnityEngine.UI.Image),
+            typeof(UnityEngine.Material)
+            ];
+
+        return ignoredTypes.Contains(objectType);
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        // Simply write a null value for ignored types
+        writer.WriteNull();
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        // Handle deserialization if necessary, or just return null
+        return null;
     }
 }

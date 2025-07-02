@@ -15,7 +15,9 @@ namespace Blasphemous.Framework.Stats.EnemyStats;
 /// </summary>
 public class EnemyData : IAccessible<Enemy>, IStatsPatchable
 {
-    [JsonProperty(Required = Required.Always)] public string entityId;
+    [JsonProperty(Required = Required.Always)]
+    public string entityId;
+
     public EntityStatsValues_Enemy entityStats = new();
     public PlatformCharacterControllerValues_Enemy platformCharacterController = new();
     public float tearsDrop = Main.DEFAULT_FLOAT;

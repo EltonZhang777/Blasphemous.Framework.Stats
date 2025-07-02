@@ -39,11 +39,18 @@ internal static class FileHandlerExtensions
         return false;
     }
 
-    internal static void WriteJsonToContent(this FileHandler fileHandler, string fileName, object obj)
+    internal static void WriteJsonToContent(this FileHandler fileHandler, string fileName, object obj, Formatting formatting = Formatting.Indented)
     {
         File.WriteAllText(
             Path.Combine(fileHandler.ContentFolder, fileName),
-            JsonConvert.SerializeObject(obj, Formatting.Indented));
+            JsonConvert.SerializeObject(obj, formatting));
+    }
+
+    internal static void WriteJsonToContent(this FileHandler fileHandler, string fileName, object obj, JsonSerializerSettings settings, Formatting formatting = Formatting.Indented)
+    {
+        File.WriteAllText(
+            Path.Combine(fileHandler.ContentFolder, fileName),
+            JsonConvert.SerializeObject(obj, formatting, settings));
     }
 
     private static bool ReadFileContents(this FileHandler fileHandler, string path, out string output)

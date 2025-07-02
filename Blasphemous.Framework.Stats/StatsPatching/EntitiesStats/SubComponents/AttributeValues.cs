@@ -1,8 +1,9 @@
-﻿using Framework.FrameworkCore.Attributes.Logic;
+﻿using Blasphemous.Framework.Stats.Components;
+using Framework.FrameworkCore.Attributes.Logic;
 using Newtonsoft.Json;
 using System;
 
-namespace Blasphemous.Framework.Stats.Components;
+namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 
 /// <summary>
 /// Documenting useful values of a Blasphemous <see cref="BlasAttribute"/>

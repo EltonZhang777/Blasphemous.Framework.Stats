@@ -1,5 +1,5 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 using CreativeSpore.SmartColliders;
 using Gameplay.GameControllers.Enemies.Framework.Attack;
 using Gameplay.GameControllers.Entities;
@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blasphemous.Framework.Stats.EnemyStats;
+namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 
 /// <summary>
 /// Stats of a type of Enemy

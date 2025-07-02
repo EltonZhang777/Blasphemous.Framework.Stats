@@ -1,10 +1,10 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 using Framework.Managers;
 using Gameplay.GameControllers.Penitent;
 using Newtonsoft.Json;
 
-namespace Blasphemous.Framework.Stats.PenitentStats;
+namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 
 /// <summary>
 /// Stats of TPO

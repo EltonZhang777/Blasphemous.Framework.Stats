@@ -1,6 +1,6 @@
 ﻿using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Extensions;
-using Blasphemous.Framework.Stats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Framework.Managers;
 using System;
 using System.Collections.Generic;

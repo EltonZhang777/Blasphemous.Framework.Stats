@@ -26,6 +26,10 @@
     <PackageReference Include="Blasphemous.ModdingReferences" Version="4.0.67" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StatsPatching\ItemStats\SubComponents\" />
+  </ItemGroup>
+
   <Target Name="Development" AfterTargets="PostBuildEvent">
 
     <!-- Get dev and export folders -->

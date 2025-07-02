@@ -1,8 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.EnemyStats;
 using System.Collections.Generic;
 
-namespace Blasphemous.Framework.Stats.PenitentStats;
+namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 
 public class EnemyStatsPatch : BaseStatsPatch
 {

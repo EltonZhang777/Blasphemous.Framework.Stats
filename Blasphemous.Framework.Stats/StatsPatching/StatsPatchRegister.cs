@@ -1,9 +1,11 @@
-﻿using Blasphemous.Framework.Stats.PenitentStats;
+﻿using Blasphemous.Framework.Stats.Components;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Blasphemous.ModdingAPI;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blasphemous.Framework.Stats.Components;
+namespace Blasphemous.Framework.Stats.StatsPatching;
 
 
 /// <summary>
@@ -32,9 +34,9 @@ public static class StatsPatchRegister
     }
 
     internal static bool Exists(string name) => _statsPatches.Any(x => x.name == name);
-    internal static bool Exists(string name, bool active) => _statsPatches.Any(x => (x.name == name) && (x.isActive == active));
+    internal static bool Exists(string name, bool active) => _statsPatches.Any(x => x.name == name && x.isActive == active);
     internal static bool Exists<T>(string name) where T : BaseStatsPatch => _statsPatches.OfType<T>().Any(x => x.name == name);
-    internal static bool Exists<T>(string name, bool active) where T : BaseStatsPatch => _statsPatches.OfType<T>().Any(x => (x.name == name) && (x.isActive == active));
+    internal static bool Exists<T>(string name, bool active) where T : BaseStatsPatch => _statsPatches.OfType<T>().Any(x => x.name == name && x.isActive == active);
     internal static IEnumerable<T> OfType<T>(this IEnumerable<BaseStatsPatch> collection) where T : BaseStatsPatch
     {
         return collection.Where(x => x is T)?.Select(x => x as T);

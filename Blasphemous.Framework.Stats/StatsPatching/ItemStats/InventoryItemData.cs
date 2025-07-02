@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Blasphemous.Framework.Stats.ItemStats;
+namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 
 /// <summary>
 /// Stats of an of Inventory Item
@@ -54,7 +54,7 @@ public class InventoryItemData : IAccessible<BaseInventoryObject>, IStatsPatchab
     {
         // WIP
         scripts = obj.gameObject.GetComponents<MonoBehaviour>().ToList();
-        scripts.RemoveAll(obj => (obj as BaseInventoryObject) != null);
+        scripts.RemoveAll(obj => obj as BaseInventoryObject != null);
         ModLog.Warn($"  Monobehaviors for `{itemId}` : ");
         scripts.ForEach(x => ModLog.Warn(x.GetType()));
         ModLog.Info("\n");

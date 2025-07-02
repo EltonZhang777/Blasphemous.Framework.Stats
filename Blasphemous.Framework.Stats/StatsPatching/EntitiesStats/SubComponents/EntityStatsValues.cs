@@ -1,7 +1,8 @@
-﻿using Gameplay.GameControllers.Entities;
+﻿using Blasphemous.Framework.Stats.Components;
+using Gameplay.GameControllers.Entities;
 using Newtonsoft.Json;
 
-namespace Blasphemous.Framework.Stats.Components;
+namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 
 /// <summary>
 /// Documenting useful values of a Blasphemous <see cref="EntityStats"/> for <see cref="Gameplay.GameControllers.Penitent.Penitent"/>

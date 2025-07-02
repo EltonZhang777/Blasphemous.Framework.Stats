@@ -1,8 +1,10 @@
 ﻿using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Components;
 using Blasphemous.Framework.Stats.Extensions;
-using Blasphemous.Framework.Stats.ItemStats;
-using Blasphemous.Framework.Stats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Blasphemous.ModdingAPI;
 using Framework.Managers;
 using Newtonsoft.Json;

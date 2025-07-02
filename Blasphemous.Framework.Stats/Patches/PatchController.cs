@@ -1,5 +1,6 @@
-﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.PenitentStats;
+﻿using Blasphemous.Framework.Stats.StatsPatching;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Gameplay.GameControllers.Entities;
 using System.Collections.Generic;
 using System.Linq;

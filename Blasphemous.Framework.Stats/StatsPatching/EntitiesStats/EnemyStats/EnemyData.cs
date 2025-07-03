@@ -20,8 +20,8 @@ public class EnemyData : IAccessible<Enemy>, IStatsPatchable
 
     public EntityStatsValues_Enemy entityStats = new();
     public PlatformCharacterControllerValues_Enemy platformCharacterController = new();
-    public float tearsDrop = Main.DEFAULT_FLOAT;
-    public float contactDamage = Main.DEFAULT_FLOAT;
+    public float? tearsDrop;
+    public float? contactDamage;
 
     [JsonIgnore] protected List<Enemy> targetEnemies;
 
@@ -56,15 +56,15 @@ public class EnemyData : IAccessible<Enemy>, IStatsPatchable
             platformCharacterController.SetValueTo(pcc);
         }
 
-        if (Main.IsNotDefault(tearsDrop))
+        if (tearsDrop.HasValue)
         {
-            obj.purgePointsWhenDead = tearsDrop;
+            obj.purgePointsWhenDead = tearsDrop.Value;
         }
 
         EnemyAttack enemyAttack = obj.GetComponentInChildren<EnemyAttack>();
-        if (enemyAttack != null && Main.IsNotDefault(contactDamage))
+        if (enemyAttack != null && contactDamage.HasValue)
         {
-            enemyAttack.ContactDamageAmount = contactDamage;
+            enemyAttack.ContactDamageAmount = contactDamage.Value;
         }
     }
 

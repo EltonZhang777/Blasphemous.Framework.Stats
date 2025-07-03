@@ -1,6 +1,5 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.FrameworkCore.Attributes.Logic;
-using Newtonsoft.Json;
 using System;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
@@ -10,12 +9,12 @@ namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 /// </summary>
 public class AttributeValues : IAccessible<BlasAttribute>
 {
-    [JsonProperty] public float baseValue = Main.DEFAULT_FLOAT;
-    [JsonProperty] public float initialValue = Main.DEFAULT_FLOAT;
-    [JsonProperty] public float upgradeIncrement = Main.DEFAULT_FLOAT;
-    [JsonProperty] public int upgradeCount = Main.DEFAULT_INT;
-    [JsonProperty] public float bonusValue = Main.DEFAULT_FLOAT;
-    [JsonProperty] public float finalValue = Main.DEFAULT_FLOAT;
+    public float? baseValue;
+    public float? initialValue;
+    public float? upgradeIncrement;
+    public int? upgradeCount;
+    public float? bonusValue;
+    public float? finalValue;
 
     /// <inheritdoc/>
     public void GetValueFrom(BlasAttribute attr)
@@ -44,12 +43,12 @@ public class AttributeValues : IAccessible<BlasAttribute>
         Main.SetValue(ref attr, "Bonus", 0f, Main.TraverseAccessType.Property);
 
         // set values
-        Main.SetValueIfValidated(ref attr, "Base", baseValue, Main.IsNotDefault, Main.TraverseAccessType.Property);
-        Main.SetValueIfValidated(ref attr, "_initialValue", initialValue, Main.IsNotDefault, Main.TraverseAccessType.Field);
-        Main.SetValueIfValidated(ref attr, "_upgradeValue", upgradeIncrement, Main.IsNotDefault, Main.TraverseAccessType.Field);
+        Main.SetValueIfNotNull(ref attr, "Base", baseValue, Main.TraverseAccessType.Property);
+        Main.SetValueIfNotNull(ref attr, "_initialValue", initialValue, Main.TraverseAccessType.Field);
+        Main.SetValueIfNotNull(ref attr, "_upgradeValue", upgradeIncrement, Main.TraverseAccessType.Field);
 
         // re-upgrade according to current upgrade count
-        if (Main.IsNotDefault(upgradeCount))
+        if (upgradeCount.HasValue)
         {
             SetUpgrades(attr);
         }

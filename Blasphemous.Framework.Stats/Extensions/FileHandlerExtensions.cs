@@ -29,7 +29,7 @@ internal static class FileHandlerExtensions
 
     internal static bool LoadContentAsJson<T>(this FileHandler fileHandler, string fileName, out T output)
     {
-        if (ReadFileContents(fileHandler, fileHandler.ContentFolder + fileName, out var output2))
+        if (ReadFileContents(fileHandler, Path.Combine(fileHandler.ContentFolder, fileName), out var output2))
         {
             output = JsonConvert.DeserializeObject<T>(output2);
             return true;
@@ -39,18 +39,20 @@ internal static class FileHandlerExtensions
         return false;
     }
 
-    internal static void WriteJsonToContent(this FileHandler fileHandler, string fileName, object obj, Formatting formatting = Formatting.Indented)
+    internal static void WriteJsonToContent(this FileHandler fileHandler, string fileName, object obj, JsonSerializerSettings settings = null, Formatting formatting = Formatting.Indented)
     {
-        File.WriteAllText(
-            Path.Combine(fileHandler.ContentFolder, fileName),
-            JsonConvert.SerializeObject(obj, formatting));
-    }
-
-    internal static void WriteJsonToContent(this FileHandler fileHandler, string fileName, object obj, JsonSerializerSettings settings, Formatting formatting = Formatting.Indented)
-    {
-        File.WriteAllText(
-            Path.Combine(fileHandler.ContentFolder, fileName),
-            JsonConvert.SerializeObject(obj, formatting, settings));
+        if (settings != null)
+        {
+            File.WriteAllText(
+                Path.Combine(fileHandler.ContentFolder, fileName),
+                JsonConvert.SerializeObject(obj, formatting, settings));
+        }
+        else
+        {
+            File.WriteAllText(
+                Path.Combine(fileHandler.ContentFolder, fileName),
+                JsonConvert.SerializeObject(obj, formatting));
+        }
     }
 
     private static bool ReadFileContents(this FileHandler fileHandler, string path, out string output)

@@ -2,6 +2,8 @@
 using Blasphemous.Framework.Stats.Extensions;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Framework.Managers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -48,7 +50,13 @@ internal class PenitentStatsCommand : ModCommand
         PenitentData data = new();
         string fileName = "penitent_data.json";
         data.GetValueFrom(Core.Logic.Penitent);
-        Main.StatsFramework.FileHandler.WriteJsonToContent(fileName, data);
+        JsonSerializerSettings settings = new()
+        {
+            Converters = [
+                new StringEnumConverter(),
+                ]
+        };
+        Main.StatsFramework.FileHandler.WriteJsonToContent(fileName, data, settings);
 
         Write($"Successfully exported penitent values to `{fileName}` !");
     }

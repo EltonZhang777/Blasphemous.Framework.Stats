@@ -7,7 +7,7 @@ namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 /// <summary>
 /// Documenting useful values of a Blasphemous <see cref="EntityStats"/> for <see cref="Gameplay.GameControllers.Penitent.Penitent"/>
 /// </summary>
-public class EntityStatsValues_Penitent : IAccessible<EntityStats>
+public class EntityStatsValues_Penitent : IAccessible_Class<EntityStats>
 {
     [JsonProperty] public AttributeValues life = new();
     [JsonProperty] public AttributeValues strength = new();
@@ -114,7 +114,7 @@ public class EntityStatsValues_Penitent : IAccessible<EntityStats>
 /// <summary>
 /// Documenting useful values of a Blasphemous <see cref="EntityStats"/> for <see cref="Enemy"/>
 /// </summary>
-public class EntityStatsValues_Enemy : IAccessible<EntityStats>
+public class EntityStatsValues_Enemy : IAccessible_Class<EntityStats>
 {
     [JsonProperty] public AttributeValues life = new();
     [JsonProperty] public AttributeValues strength = new();

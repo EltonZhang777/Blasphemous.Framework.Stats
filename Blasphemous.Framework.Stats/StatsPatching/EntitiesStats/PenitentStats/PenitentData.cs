@@ -9,7 +9,7 @@ namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 /// <summary>
 /// Stats of TPO
 /// </summary>
-public class PenitentData : IAccessible<Penitent>, IStatsPatchable
+public class PenitentData : IAccessible_Class<Penitent>, IStatsPatchable
 {
     [JsonProperty] public EntityStatsValues_Penitent entityStats = new();
     [JsonProperty] public PlatformCharacterControllerValues_Penitent platformCharacterController = new();

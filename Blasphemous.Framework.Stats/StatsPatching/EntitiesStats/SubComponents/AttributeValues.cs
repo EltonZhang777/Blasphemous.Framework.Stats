@@ -7,7 +7,7 @@ namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 /// <summary>
 /// Documenting useful values of a Blasphemous <see cref="BlasAttribute"/>
 /// </summary>
-public class AttributeValues : IAccessible<BlasAttribute>
+public class AttributeValues : IAccessible_Class<BlasAttribute>
 {
     public float? baseValue;
     public float? initialValue;

@@ -7,7 +7,7 @@ namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 /// <summary>
 /// Documenting useful values of a <see cref="PlatformCharacterController"/> for <see cref="Gameplay.GameControllers.Penitent.Penitent"/>
 /// </summary>
-public class PlatformCharacterControllerValues_Penitent : PlatformCharacterControllerValues_Enemy, IAccessible<PlatformCharacterController>
+public class PlatformCharacterControllerValues_Penitent : PlatformCharacterControllerValues_Enemy, IAccessible_Class<PlatformCharacterController>
 {
     public float? platformDropTime;
     public float? ghostJumpDelay;
@@ -46,7 +46,7 @@ public class PlatformCharacterControllerValues_Penitent : PlatformCharacterContr
 /// <summary>
 /// Documenting useful values of a <see cref="PlatformCharacterController"/> for <see cref="Enemy"/>
 /// </summary>
-public class PlatformCharacterControllerValues_Enemy : IAccessible<PlatformCharacterController>
+public class PlatformCharacterControllerValues_Enemy : IAccessible_Class<PlatformCharacterController>
 {
     public float? walkingAcceleration;
     public float? walkingDrag;

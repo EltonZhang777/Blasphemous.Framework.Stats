@@ -13,7 +13,7 @@ namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 /// <summary>
 /// Stats of a type of Enemy
 /// </summary>
-public class EnemyData : IAccessible<Enemy>, IStatsPatchable
+public class EnemyData : IAccessible_Class<Enemy>, IStatsPatchable
 {
     [JsonProperty(Required = Required.Always)]
     public string entityId;

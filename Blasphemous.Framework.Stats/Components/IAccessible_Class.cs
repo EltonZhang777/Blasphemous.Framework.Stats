@@ -3,7 +3,7 @@
 /// <summary>
 /// Interface of classes that can read/write values of specific class instances
 /// </summary>
-public interface IAccessible<in T> where T : class
+public interface IAccessible_Class<in T> where T : class
 {
     /// <summary>
     /// Read the value of given class instance to this IAccessible instance's fields

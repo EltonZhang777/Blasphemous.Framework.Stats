@@ -143,7 +143,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 #if DEBUG
                     ModLog.Warn($"Getting ObjectEffectValues of derived type `{data.GetType()}`!");
 #endif
-                    data.GetValueFrom((ObjectEffect)mb);
+                    data.GetValueFrom(mb);
                     effectModifications.Add(data);
                     break;
                 case BaseInventoryObjectValues data:

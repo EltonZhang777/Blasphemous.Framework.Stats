@@ -1,10 +1,11 @@
 ﻿using Blasphemous.Framework.Stats.Components;
+using Blasphemous.ModdingAPI;
 using Framework.Inventory;
 using System.Collections.Generic;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
-public class ObjectEffectValues : IAccessible_Class<ObjectEffect>
+public class ObjectEffectValues : IAccessible_Class<ObjectEffect>, IAccessible_Polymorphic
 {
     public ObjectEffect.EffectType? effectType;
     public string abilityName;
@@ -63,5 +64,29 @@ public class ObjectEffectValues : IAccessible_Class<ObjectEffect>
         Main.SetValueIfNotNull(ref obj, "Conditions", conditions, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref obj, "StoppingConditions", stoppingConditions, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref obj, "ActivationFxSound", activationFxSound, Main.TraverseAccessType.Field);
+    }
+
+    public virtual void GetValueFrom(object obj)
+    {
+        if (obj is ObjectEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            ModLog.Warn($"Error getting value from `{obj}` of type `{obj.GetType()}`! Expected type: {typeof(ObjectEffect)} or its derived types.");
+        }
+    }
+
+    public virtual void SetValueTo(object obj)
+    {
+        if (obj is ObjectEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            ModLog.Warn($"Error getting value from `{obj}` of type `{obj.GetType()}`! Expected type: {typeof(ObjectEffect)} or its derived types.");
+        }
     }
 }

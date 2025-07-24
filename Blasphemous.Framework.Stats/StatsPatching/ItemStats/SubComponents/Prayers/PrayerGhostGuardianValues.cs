@@ -1,6 +1,5 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
-using System;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -17,7 +16,6 @@ public class PrayerGhostGuardianValues : ObjectEffectValues, IAccessible_Class<P
 
         base.GetValueFrom(obj);
 
-        throw new NotImplementedException();
     }
 
     public void SetValueTo(PrayerGhostGuardian obj)
@@ -27,6 +25,29 @@ public class PrayerGhostGuardianValues : ObjectEffectValues, IAccessible_Class<P
 
         base.SetValueTo(obj);
 
-        throw new NotImplementedException();
+    }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is PrayerGhostGuardian t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is PrayerGhostGuardian t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
     }
 }

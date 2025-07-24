@@ -4,7 +4,7 @@ using Gameplay.GameControllers.Entities;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
-public class ObjectEffect_StatValues : ObjectEffectValues, IAccessible_Class<ObjectEffect_Stat>
+public class ObjectEffect_StatValues : ObjectEffectValues, IAccessible_Class<ObjectEffect_Stat>, IAccessible_Polymorphic
 {
     public bool? useHitAsBaseValue;
     public ObjectEffect_Stat.EffectMode? effectMode;
@@ -46,5 +46,29 @@ public class ObjectEffect_StatValues : ObjectEffectValues, IAccessible_Class<Obj
         Main.SetValueIfNotNull(ref obj, "statValueType", statValueType, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref obj, "value", value, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref obj, "multiplier", multiplier, Main.TraverseAccessType.Field);
+    }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is ObjectEffect_Stat t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is ObjectEffect_Stat t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
     }
 }

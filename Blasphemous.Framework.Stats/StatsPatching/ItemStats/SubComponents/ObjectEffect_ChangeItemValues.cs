@@ -41,4 +41,28 @@ public class ObjectEffect_ChangeItemValues : ObjectEffectValues, IAccessible_Cla
         Main.SetValueIfNotNull(ref obj, "equip", autoEquipNewItem, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref obj, "NewItem", newItem, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is ObjectEffect_ChangeItem t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is ObjectEffect_ChangeItem t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

@@ -26,4 +26,28 @@ public class ItemFlagValues : ObjectEffectValues, IAccessible_Class<ItemFlag>
 
         Main.SetValueIfNotNull(ref obj, "flagName", flagName, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is ItemFlag t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is ItemFlag t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

@@ -27,4 +27,28 @@ public class ItemTemporalEffectValues : ObjectEffectValues, IAccessible_Class<It
 
         Main.SetValueIfNotNull(ref obj, "effects", temporalEffects, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is ItemTemporalEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is ItemTemporalEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

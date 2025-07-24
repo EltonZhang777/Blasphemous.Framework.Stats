@@ -1,5 +1,4 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using System;
 using Tools.Items;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
@@ -16,8 +15,6 @@ public class PenitentMultishotEffectValues : ObjectEffectValues, IAccessible_Cla
             return;
 
         base.GetValueFrom(obj);
-
-        throw new NotImplementedException();
     }
 
     public void SetValueTo(PenitentMultishotEffect obj)
@@ -26,7 +23,29 @@ public class PenitentMultishotEffectValues : ObjectEffectValues, IAccessible_Cla
             return;
 
         base.SetValueTo(obj);
+    }
 
-        throw new NotImplementedException();
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is PenitentMultishotEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is PenitentMultishotEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
     }
 }

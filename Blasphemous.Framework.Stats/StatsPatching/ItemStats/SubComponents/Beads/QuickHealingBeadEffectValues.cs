@@ -29,4 +29,28 @@ public class QuickHealingBeadEffectValues : ObjectEffectValues, IAccessible_Clas
 
         Main.SetValueIfNotNull(ref obj, "AnimatorSpeed", flaskUseSpeedMultiplier, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is QuickHealingBeadEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is QuickHealingBeadEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

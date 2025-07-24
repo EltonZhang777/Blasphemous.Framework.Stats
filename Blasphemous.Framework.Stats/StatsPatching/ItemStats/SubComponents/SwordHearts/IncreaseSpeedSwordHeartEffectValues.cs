@@ -30,4 +30,28 @@ public class IncreaseSpeedSwordHeartEffectValues : ObjectEffectValues, IAccessib
 
         Main.SetValueIfNotNull(ref obj, "MotionSettings", movementSetting, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is IncreaseSpeedSwordHeartEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is IncreaseSpeedSwordHeartEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

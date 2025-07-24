@@ -1,5 +1,4 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using System;
 using Tools.Items;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
@@ -17,7 +16,6 @@ public class PenitentCrawlerOrbsEffectValues : ObjectEffectValues, IAccessible_C
 
         base.GetValueFrom(obj);
 
-        throw new NotImplementedException();
     }
 
     public void SetValueTo(PenitentCrawlerOrbsEffect obj)
@@ -27,6 +25,29 @@ public class PenitentCrawlerOrbsEffectValues : ObjectEffectValues, IAccessible_C
 
         base.SetValueTo(obj);
 
-        throw new NotImplementedException();
+    }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is PenitentCrawlerOrbsEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is PenitentCrawlerOrbsEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
     }
 }

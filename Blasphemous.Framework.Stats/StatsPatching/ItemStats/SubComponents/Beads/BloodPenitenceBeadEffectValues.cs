@@ -29,4 +29,28 @@ public class BloodPenitenceBeadEffectValues : ObjectEffectValues, IAccessible_Cl
 
         Main.SetValueIfNotNull(ref obj, "regenFactorIncrease", regenFactorIncrease, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is BloodPenitenceBeadEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is BloodPenitenceBeadEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

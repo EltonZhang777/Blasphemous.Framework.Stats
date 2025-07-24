@@ -30,4 +30,28 @@ public class IncreaseSpeedBeadEffectValues : ObjectEffectValues, IAccessible_Cla
 
         Main.SetValueIfNotNull(ref obj, "BeadMoveSettings", movementSetting, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is IncreaseSpeedBeadEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is IncreaseSpeedBeadEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

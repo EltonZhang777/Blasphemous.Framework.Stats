@@ -33,4 +33,28 @@ public class ItemGhostTrailValues : ObjectEffectValues, IAccessible_Class<ItemGh
 
         Main.SetValueIfNotNull(ref obj, "color", TrailColor, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is ItemGhostTrail t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is ItemGhostTrail t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

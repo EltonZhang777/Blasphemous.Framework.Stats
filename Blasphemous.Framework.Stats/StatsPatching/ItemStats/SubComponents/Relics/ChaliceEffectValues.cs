@@ -30,4 +30,28 @@ public class ChaliceEffectValues : ObjectEffectValues, IAccessible_Class<Chalice
 
         Main.SetValueIfNotNull(ref obj, "EnemiesNames", targetEnemyNames, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is ChaliceEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is ChaliceEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

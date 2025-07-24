@@ -70,4 +70,28 @@ public class CloisteredGemBeadEffectValues : ObjectEffectValues, IAccessible_Cla
         Main.SetValueIfNotNull(ref obj, "DamageAmount", finalDamageMultiplier, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref obj, "MaxUses", maxUses, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is CloisteredGemBeadEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is CloisteredGemBeadEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

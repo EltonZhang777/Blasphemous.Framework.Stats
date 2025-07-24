@@ -29,4 +29,28 @@ public class QuickAreaTransformBeadEffectValues : ObjectEffectValues, IAccessibl
 
         Main.SetValueIfNotNull(ref obj, "AuraTransformAnimationSpeed", prayerCastSpeedMultiplier, Main.TraverseAccessType.Field);
     }
+
+    public override void GetValueFrom(object obj)
+    {
+        if (obj is QuickAreaTransformBeadEffect t)
+        {
+            GetValueFrom(t);
+        }
+        else
+        {
+            base.GetValueFrom(obj);
+        }
+    }
+
+    public override void SetValueTo(object obj)
+    {
+        if (obj is QuickAreaTransformBeadEffect t)
+        {
+            SetValueTo(t);
+        }
+        else
+        {
+            base.SetValueTo(obj);
+        }
+    }
 }

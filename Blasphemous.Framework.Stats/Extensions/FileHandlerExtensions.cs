@@ -13,18 +13,35 @@ internal static class FileHandlerExtensions
         return Main.GetValue<FileHandler, string>(fileHandler, "dataPath", Main.TraverseAccessType.Field);
     }
 
+    internal static string GetConfigPath(this FileHandler fileHandler)
+    {
+        return Main.GetValue<FileHandler, string>(fileHandler, "configPath", Main.TraverseAccessType.Field);
+    }
+
     internal static string[] GetAllDataFileNames(this FileHandler fileHandler)
     {
         return Directory.GetFiles(fileHandler.GetDataPath()).Select(x => Path.GetFileName(x)).ToArray();
     }
 
-    internal static T LoadDataAsJson<T>(this FileHandler fileHandler, string fileName)
+    internal static T LoadDataAsJson<T>(this FileHandler fileHandler, string fileName, JsonSerializerSettings settings = null)
     {
-        if (!fileHandler.LoadDataAsJson(fileName, out T result))
+        if (!INTERNAL_CALL_LoadDataAsJson(fileName, out T result))
         {
             throw new ArgumentException($"Failed to load {fileName} to JSON of type {typeof(T)}!");
         }
         return result;
+
+        bool INTERNAL_CALL_LoadDataAsJson<T1>(string fileName, out T1 output)
+        {
+            if (fileHandler.ReadFileContents(fileHandler.GetDataPath() + fileName, out var output2))
+            {
+                output = JsonConvert.DeserializeObject<T1>(output2, settings);
+                return true;
+            }
+
+            output = default(T1);
+            return false;
+        }
     }
 
     internal static bool LoadContentAsJson<T>(this FileHandler fileHandler, string fileName, out T output)
@@ -55,7 +72,7 @@ internal static class FileHandlerExtensions
         }
     }
 
-    private static bool ReadFileContents(this FileHandler fileHandler, string path, out string output)
+    internal static bool ReadFileContents(this FileHandler fileHandler, string path, out string output)
     {
         if (File.Exists(path))
         {

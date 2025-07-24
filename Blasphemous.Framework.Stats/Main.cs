@@ -3,6 +3,7 @@ using Blasphemous.ModdingAPI;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Blasphemous.Framework.Stats;
 
@@ -197,5 +198,12 @@ internal class Main : BaseUnityPlugin
                 throw new ArgumentException(errorMessage);
         }
         return validate(obj);
+    }
+
+    internal static void EnsureDirectoryExists(string path)
+    {
+        string directory = Path.GetDirectoryName(path);
+        if (!Directory.Exists(directory))
+            Directory.CreateDirectory(directory);
     }
 }

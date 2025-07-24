@@ -9,6 +9,8 @@ using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.IO;
 
 namespace Blasphemous.Framework.Stats;
@@ -46,9 +48,18 @@ public class StatsFramework : BlasMod
         provider.RegisterCommand(new PenitentStatsCommand());
         provider.RegisterCommand(new StatsPatchCommand());
 
+        JsonSerializerSettings jsonSerializerSettings = new()
+        {
+            Converters = [
+                new StringEnumConverter(),
+                ],
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.None,
+            TypeNameHandling = TypeNameHandling.Objects,
+        };
 #if DEBUG
-        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<PenitentStatsPatch>("test_patch_penitent.json"));
-        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<EnemyStatsPatch>("test_patch_enemy.json"));
+        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<PenitentStatsPatch>("test_patch_penitent.json", jsonSerializerSettings));
+        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<EnemyStatsPatch>("test_patch_enemy.json", jsonSerializerSettings));
 #endif
     }
 

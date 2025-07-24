@@ -174,6 +174,7 @@ internal class StatsPatchCommand : ModCommand
                 ],
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             PreserveReferencesHandling = PreserveReferencesHandling.None,
+            TypeNameHandling = TypeNameHandling.Objects,
         };
 
         InventoryItemStatsPatch patch = new();

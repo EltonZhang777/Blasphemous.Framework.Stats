@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Blasphemous.Framework.Stats.Commands;
 
@@ -57,7 +56,7 @@ internal class StatsPatchCommand : ModCommand
 
     private void SubCommand_List(string[] parameters)
     {
-        if (!ValidateParameterList(parameters, [0, 1]))
+        if (!this.ValidateParameterList(parameters, [0, 1]))
             return;
 
         bool hasAny = false;
@@ -178,37 +177,7 @@ internal class StatsPatchCommand : ModCommand
         };
 
         InventoryItemStatsPatch patch = new();
-        foreach (var item in Core.InventoryManager.GetAllCollectibleItems())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllPrayers())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllQuestItems())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllRelics())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllRosaryBeads())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllSwords())
+        foreach (var item in Core.InventoryManager.GetAllInventoryObjects())
         {
             InventoryItemData itemData = new InventoryItemData(item.id);
             itemData.GetValueFrom(item);
@@ -225,27 +194,6 @@ internal class StatsPatchCommand : ModCommand
         }
 
         Write($"Successfully exported all inventory items' data to `{Main.StatsFramework.FileHandler.ContentFolder}`!");
-    }
-
-    private bool ValidateParameterList(string[] parameters, List<int> validParameterLengths)
-    {
-        if (!validParameterLengths.Contains(parameters.Length))
-        {
-            StringBuilder sb = new();
-            sb.Append($"This command takes ");
-            for (int i = 0; i < validParameterLengths.Count; i++)
-            {
-                sb.Append($"{i} ");
-                if (i != validParameterLengths.Count - 1)
-                    sb.Append("or ");
-            }
-            sb.Append($"parameters.  You passed {parameters.Length}");
-            Write(sb.ToString());
-
-            return false;
-        }
-
-        return true;
     }
 
     private bool StatsPatchExists(string name)

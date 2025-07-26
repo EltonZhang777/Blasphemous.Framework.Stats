@@ -10,12 +10,12 @@ internal static class FileHandlerExtensions
 {
     internal static string GetDataPath(this FileHandler fileHandler)
     {
-        return Main.GetValue<FileHandler, string>(fileHandler, "dataPath", Main.TraverseAccessType.Field);
+        return Main.GetValue<string>(fileHandler, "dataPath", Main.TraverseAccessType.Field);
     }
 
     internal static string GetConfigPath(this FileHandler fileHandler)
     {
-        return Main.GetValue<FileHandler, string>(fileHandler, "configPath", Main.TraverseAccessType.Field);
+        return Main.GetValue<string>(fileHandler, "configPath", Main.TraverseAccessType.Field);
     }
 
     internal static string[] GetAllDataFileNames(this FileHandler fileHandler)

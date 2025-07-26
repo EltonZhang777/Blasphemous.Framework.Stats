@@ -11,8 +11,8 @@ public class BaseInventoryObjectValues : IAccessible_Class<BaseInventoryObject>
     /// <inheritdoc/>
     public void GetValueFrom(BaseInventoryObject obj)
     {
-        carryOnStart = Main.GetValue<BaseInventoryObject, bool>(obj, "carryonstart", Main.TraverseAccessType.Field);
-        preserveInNewGamePlus = Main.GetValue<BaseInventoryObject, bool>(obj, "preserveInNewGamePlus", Main.TraverseAccessType.Field);
+        carryOnStart = Main.GetValue<bool>(obj, "carryonstart", Main.TraverseAccessType.Field);
+        preserveInNewGamePlus = Main.GetValue<bool>(obj, "preserveInNewGamePlus", Main.TraverseAccessType.Field);
     }
 
     /// <inheritdoc/>

@@ -22,10 +22,10 @@ public class PlatformCharacterControllerValues_Penitent : PlatformCharacterContr
         if (!Main.Validate(pcc, x => x != null))
             return;
 
-        platformDropTime = Main.GetValue<PlatformCharacterController, float>(pcc, "PlatformDropTime", Main.TraverseAccessType.Property);
-        ghostJumpDelay = Main.GetValue<PlatformCharacterController, float>(pcc, "GhostJumpDelay", Main.TraverseAccessType.Property);
-        ladderJumpTimeThreshold = Main.GetValue<PlatformCharacterController, float>(pcc, "m_ladderJumpTimeThreshold", Main.TraverseAccessType.Field);
-        climbingSpeed = Main.GetValue<PlatformCharacterController, float>(pcc, "ClimbingSpeed", Main.TraverseAccessType.Property);
+        platformDropTime = Main.GetValue<float>(pcc, "PlatformDropTime", Main.TraverseAccessType.Property);
+        ghostJumpDelay = Main.GetValue<float>(pcc, "GhostJumpDelay", Main.TraverseAccessType.Property);
+        ladderJumpTimeThreshold = Main.GetValue<float>(pcc, "m_ladderJumpTimeThreshold", Main.TraverseAccessType.Field);
+        climbingSpeed = Main.GetValue<float>(pcc, "ClimbingSpeed", Main.TraverseAccessType.Property);
     }
 
     /// <inheritdoc/>
@@ -62,13 +62,13 @@ public class PlatformCharacterControllerValues_Enemy : IAccessible_Class<Platfor
         if (!Main.Validate(pcc, x => x != null))
             return;
 
-        walkingAcceleration = Main.GetValue<PlatformCharacterController, float>(pcc, "WalkingAcc", Main.TraverseAccessType.Property);
-        walkingDrag = Main.GetValue<PlatformCharacterController, float>(pcc, "WalkingDrag", Main.TraverseAccessType.Property);
-        maxWalkingSpeed = Main.GetValue<PlatformCharacterController, float>(pcc, "MaxWalkingSpeed", Main.TraverseAccessType.Property);
-        airborneAcceleration = Main.GetValue<PlatformCharacterController, float>(pcc, "AirborneAcc", Main.TraverseAccessType.Property);
-        jumpingSpeed = Main.GetValue<PlatformCharacterController, float>(pcc, "JumpingSpeed", Main.TraverseAccessType.Property);
-        jumpingAcceleration = Main.GetValue<PlatformCharacterController, float>(pcc, "JumpingAcc", Main.TraverseAccessType.Property);
-        jumpingAccelerationTime = Main.GetValue<PlatformCharacterController, float>(pcc, "JumpingAccTime", Main.TraverseAccessType.Property);
+        walkingAcceleration = Main.GetValue<float>(pcc, "WalkingAcc", Main.TraverseAccessType.Property);
+        walkingDrag = Main.GetValue<float>(pcc, "WalkingDrag", Main.TraverseAccessType.Property);
+        maxWalkingSpeed = Main.GetValue<float>(pcc, "MaxWalkingSpeed", Main.TraverseAccessType.Property);
+        airborneAcceleration = Main.GetValue<float>(pcc, "AirborneAcc", Main.TraverseAccessType.Property);
+        jumpingSpeed = Main.GetValue<float>(pcc, "JumpingSpeed", Main.TraverseAccessType.Property);
+        jumpingAcceleration = Main.GetValue<float>(pcc, "JumpingAcc", Main.TraverseAccessType.Property);
+        jumpingAccelerationTime = Main.GetValue<float>(pcc, "JumpingAccTime", Main.TraverseAccessType.Property);
     }
 
     /// <inheritdoc/>

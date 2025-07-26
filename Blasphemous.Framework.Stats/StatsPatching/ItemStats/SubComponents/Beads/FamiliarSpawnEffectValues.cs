@@ -18,7 +18,7 @@ public class FamiliarSpawnEffectValues : ObjectEffectValues, IAccessible_Class<F
 
         base.GetValueFrom(obj);
 
-        minionOffsetToPenitent = Main.GetValue<FamiliarSpawnEffect, Vector2>(obj, "Offset", Main.TraverseAccessType.Field);
+        minionOffsetToPenitent = Main.GetValue<Vector2>(obj, "Offset", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(FamiliarSpawnEffect obj)

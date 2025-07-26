@@ -17,7 +17,7 @@ public class QuickAreaTransformBeadEffectValues : ObjectEffectValues, IAccessibl
 
         base.GetValueFrom(obj);
 
-        prayerCastSpeedMultiplier = Main.GetValue<QuickAreaTransformBeadEffect, float>(obj, "AuraTransformAnimationSpeed", Main.TraverseAccessType.Field);
+        prayerCastSpeedMultiplier = Main.GetValue<float>(obj, "AuraTransformAnimationSpeed", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(QuickAreaTransformBeadEffect obj)

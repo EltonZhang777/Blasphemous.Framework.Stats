@@ -22,13 +22,13 @@ public class ObjectEffect_StatValues : ObjectEffectValues, IAccessible_Class<Obj
 
         base.GetValueFrom(obj);
 
-        useHitAsBaseValue = Main.GetValue<ObjectEffect_Stat, bool>(obj, "UseHitAsBaseValue", Main.TraverseAccessType.Field);
-        effectMode = Main.GetValue<ObjectEffect_Stat, ObjectEffect_Stat.EffectMode>(obj, "effectMode", Main.TraverseAccessType.Field);
-        statType = Main.GetValue<ObjectEffect_Stat, EntityStats.StatsTypes>(obj, "statType", Main.TraverseAccessType.Field);
-        valueType = Main.GetValue<ObjectEffect_Stat, ObjectEffect_Stat.ValueType>(obj, "valueType", Main.TraverseAccessType.Field);
-        statValueType = Main.GetValue<ObjectEffect_Stat, EntityStats.StatsTypes>(obj, "statValueType", Main.TraverseAccessType.Field);
-        value = Main.GetValue<ObjectEffect_Stat, float>(obj, "value", Main.TraverseAccessType.Field);
-        multiplier = Main.GetValue<ObjectEffect_Stat, float>(obj, "multiplier", Main.TraverseAccessType.Field);
+        useHitAsBaseValue = Main.GetValue<bool>(obj, "UseHitAsBaseValue", Main.TraverseAccessType.Field);
+        effectMode = Main.GetValue<ObjectEffect_Stat.EffectMode>(obj, "effectMode", Main.TraverseAccessType.Field);
+        statType = Main.GetValue<EntityStats.StatsTypes>(obj, "statType", Main.TraverseAccessType.Field);
+        valueType = Main.GetValue<ObjectEffect_Stat.ValueType>(obj, "valueType", Main.TraverseAccessType.Field);
+        statValueType = Main.GetValue<EntityStats.StatsTypes>(obj, "statValueType", Main.TraverseAccessType.Field);
+        value = Main.GetValue<float>(obj, "value", Main.TraverseAccessType.Field);
+        multiplier = Main.GetValue<float>(obj, "multiplier", Main.TraverseAccessType.Field);
     }
 
     /// <inheritdoc/>

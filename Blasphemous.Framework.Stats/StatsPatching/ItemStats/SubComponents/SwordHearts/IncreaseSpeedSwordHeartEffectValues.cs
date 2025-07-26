@@ -18,7 +18,7 @@ public class IncreaseSpeedSwordHeartEffectValues : ObjectEffectValues, IAccessib
 
         base.GetValueFrom(obj);
 
-        movementSetting = Main.GetValue<IncreaseSpeedSwordHeartEffect, Dash.MoveSetting>(obj, "MotionSettings", Main.TraverseAccessType.Field);
+        movementSetting = Main.GetValue<Dash.MoveSetting>(obj, "MotionSettings", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(IncreaseSpeedSwordHeartEffect obj)

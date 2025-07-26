@@ -47,8 +47,8 @@ public class CloisteredGemBeadEffectValues : ObjectEffectValues, IAccessible_Cla
 
         base.GetValueFrom(obj);
 
-        finalDamageMultiplier = Main.GetValue<CloisteredGemBeadEffect, int>(obj, "DamageAmount", Main.TraverseAccessType.Field);
-        maxUses = Main.GetValue<CloisteredGemBeadEffect, int>(obj, "MaxUses", Main.TraverseAccessType.Field);
+        finalDamageMultiplier = Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field);
+        maxUses = Main.GetValue<int>(obj, "MaxUses", Main.TraverseAccessType.Field);
 
         cloisteredGemProjectileAttack = Traverse.Create(obj).Field("projectileAttack");
         if (cloisteredGemProjectileAttack != null)

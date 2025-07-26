@@ -25,9 +25,9 @@ public class ObjectEffect_ChangeItemValues : ObjectEffectValues, IAccessible_Cla
 
         base.GetValueFrom(obj);
 
-        changeToNewItem = Main.GetValue<ObjectEffect_ChangeItem, bool>(obj, "addObject", Main.TraverseAccessType.Field);
-        autoEquipNewItem = Main.GetValue<ObjectEffect_ChangeItem, bool>(obj, "equip", Main.TraverseAccessType.Field);
-        newItem = Main.GetValue<ObjectEffect_ChangeItem, InventoryObjectInspector>(obj, "NewItem", Main.TraverseAccessType.Field);
+        changeToNewItem = Main.GetValue<bool>(obj, "addObject", Main.TraverseAccessType.Field);
+        autoEquipNewItem = Main.GetValue<bool>(obj, "equip", Main.TraverseAccessType.Field);
+        newItem = Main.GetValue<InventoryObjectInspector>(obj, "NewItem", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ObjectEffect_ChangeItem obj)

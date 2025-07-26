@@ -48,7 +48,7 @@ internal class Main : BaseUnityPlugin
     /// <summary>
     /// Traverse and get value of a variable, regardless of accessibility levels
     /// </summary>
-    public static TValue GetValue<TTarget, TValue>(TTarget obj, string variableName, TraverseAccessType accessType)
+    public static TValue GetValue<TValue>(object obj, string variableName, TraverseAccessType accessType)
     {
         Traverse traverse = Traverse.Create(obj);
         if (traverse == null)

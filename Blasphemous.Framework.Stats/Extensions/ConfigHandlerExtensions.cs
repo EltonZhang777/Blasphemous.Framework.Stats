@@ -8,7 +8,7 @@ namespace Blasphemous.Framework.Stats.Extensions;
 
 internal static class ConfigHandlerExtensions
 {
-    private static BlasMod GetMod(this ConfigHandler configHandler) => Main.GetValue<ConfigHandler, BlasMod>(configHandler, "_mod", Main.TraverseAccessType.Field);
+    private static BlasMod GetMod(this ConfigHandler configHandler) => Main.GetValue<BlasMod>(configHandler, "_mod", Main.TraverseAccessType.Field);
 
     /// <summary>
     /// Load config while specifying <see cref="JsonSerializerSettings"/>

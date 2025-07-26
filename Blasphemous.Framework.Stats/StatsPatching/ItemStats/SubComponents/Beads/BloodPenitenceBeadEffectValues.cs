@@ -17,7 +17,7 @@ public class BloodPenitenceBeadEffectValues : ObjectEffectValues, IAccessible_Cl
 
         base.GetValueFrom(obj);
 
-        regenFactorIncrease = Main.GetValue<BloodPenitenceBeadEffect, float>(obj, "regenFactorIncrease", Main.TraverseAccessType.Field);
+        regenFactorIncrease = Main.GetValue<float>(obj, "regenFactorIncrease", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(BloodPenitenceBeadEffect obj)

@@ -21,7 +21,7 @@ public class ItemGhostTrailValues : ObjectEffectValues, IAccessible_Class<ItemGh
 
         base.GetValueFrom(obj);
 
-        trailColor = ColorUtility.ToHtmlStringRGBA(Main.GetValue<ItemGhostTrail, Color>(obj, "color", Main.TraverseAccessType.Field));
+        trailColor = ColorUtility.ToHtmlStringRGBA(Main.GetValue<Color>(obj, "color", Main.TraverseAccessType.Field));
     }
 
     public void SetValueTo(ItemGhostTrail obj)

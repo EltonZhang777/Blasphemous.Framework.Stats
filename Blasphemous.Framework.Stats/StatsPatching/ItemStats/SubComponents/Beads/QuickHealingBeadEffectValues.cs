@@ -17,7 +17,7 @@ public class QuickHealingBeadEffectValues : ObjectEffectValues, IAccessible_Clas
 
         base.GetValueFrom(obj);
 
-        flaskUseSpeedMultiplier = Main.GetValue<QuickHealingBeadEffect, float>(obj, "AnimatorSpeed", Main.TraverseAccessType.Field);
+        flaskUseSpeedMultiplier = Main.GetValue<float>(obj, "AnimatorSpeed", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(QuickHealingBeadEffect obj)

@@ -14,7 +14,7 @@ public class ItemFlagValues : ObjectEffectValues, IAccessible_Class<ItemFlag>
 
         base.GetValueFrom(obj);
 
-        flagName = Main.GetValue<ItemFlag, string>(obj, "flagName", Main.TraverseAccessType.Field);
+        flagName = Main.GetValue<string>(obj, "flagName", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ItemFlag obj)

@@ -18,7 +18,7 @@ public class ChaliceEffectValues : ObjectEffectValues, IAccessible_Class<Chalice
 
         base.GetValueFrom(obj);
 
-        targetEnemyNames = Main.GetValue<ChaliceEffect, List<string>>(obj, "EnemiesNames", Main.TraverseAccessType.Field);
+        targetEnemyNames = Main.GetValue<List<string>>(obj, "EnemiesNames", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ChaliceEffect obj)

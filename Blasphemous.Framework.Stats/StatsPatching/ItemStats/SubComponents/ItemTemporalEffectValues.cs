@@ -15,7 +15,7 @@ public class ItemTemporalEffectValues : ObjectEffectValues, IAccessible_Class<It
 
         base.GetValueFrom(obj);
 
-        temporalEffects = Main.GetValue<ItemTemporalEffect, List<ItemTemporalEffect.PenitentEffects>>(obj, "effects", Main.TraverseAccessType.Field);
+        temporalEffects = Main.GetValue<List<ItemTemporalEffect.PenitentEffects>>(obj, "effects", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ItemTemporalEffect obj)

@@ -17,7 +17,7 @@ public class HardLandingBeadEffectValues : ObjectEffect_StatValues, IAccessible_
 
         base.GetValueFrom(obj);
 
-        fallRecoveryAnimationSpeed = Main.GetValue<HardLandingBeadEffect, float>(obj, "AnimatorNormalizedSpeed", Main.TraverseAccessType.Field);
+        fallRecoveryAnimationSpeed = Main.GetValue<float>(obj, "AnimatorNormalizedSpeed", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(HardLandingBeadEffect obj)

@@ -54,26 +54,26 @@ public class HitValues : IAccessible_Struct<Hit>
 
     public void GetValueFrom(Hit obj)
     {
-        attackingEntity = Main.GetValue<Hit, GameObject>(obj, "AttackingEntity", Main.TraverseAccessType.Field);
+        attackingEntity = Main.GetValue<GameObject>(obj, "AttackingEntity", Main.TraverseAccessType.Field);
 
-        damageAmount = Main.GetValue<Hit, float>(obj, "DamageAmount", Main.TraverseAccessType.Field);
-        damageType = Main.GetValue<Hit, DamageArea.DamageType>(obj, "DamageType", Main.TraverseAccessType.Field);
-        damageElement = Main.GetValue<Hit, DamageArea.DamageElement>(obj, "DamageElement", Main.TraverseAccessType.Field);
+        damageAmount = Main.GetValue<float>(obj, "DamageAmount", Main.TraverseAccessType.Field);
+        damageType = Main.GetValue<DamageArea.DamageType>(obj, "DamageType", Main.TraverseAccessType.Field);
+        damageElement = Main.GetValue<DamageArea.DamageElement>(obj, "DamageElement", Main.TraverseAccessType.Field);
 
-        unavoidable = Main.GetValue<Hit, bool>(obj, "Unnavoidable", Main.TraverseAccessType.Field);
-        unparriable = Main.GetValue<Hit, bool>(obj, "Unparriable", Main.TraverseAccessType.Field);
-        unblockable = Main.GetValue<Hit, bool>(obj, "Unblockable", Main.TraverseAccessType.Field);
+        unavoidable = Main.GetValue<bool>(obj, "Unnavoidable", Main.TraverseAccessType.Field);
+        unparriable = Main.GetValue<bool>(obj, "Unparriable", Main.TraverseAccessType.Field);
+        unblockable = Main.GetValue<bool>(obj, "Unblockable", Main.TraverseAccessType.Field);
 
-        knockbackDistance = Main.GetValue<Hit, float>(obj, "Force", Main.TraverseAccessType.Field);
-        knockbackDirectionByOwnerPosition = Main.GetValue<Hit, bool>(obj, "ThrowbackDirByOwnerPosition", Main.TraverseAccessType.Field);
-        forceGuardslide = Main.GetValue<Hit, bool>(obj, "forceGuardslide", Main.TraverseAccessType.Field);
-        forceGuardSlideDirection = Main.GetValue<Hit, bool>(obj, "ForceGuardSlideDirection", Main.TraverseAccessType.Field);
-        checkOrientationsForGuardslide = Main.GetValue<Hit, bool>(obj, "CheckOrientationsForGuardslide", Main.TraverseAccessType.Field);
+        knockbackDistance = Main.GetValue<float>(obj, "Force", Main.TraverseAccessType.Field);
+        knockbackDirectionByOwnerPosition = Main.GetValue<bool>(obj, "ThrowbackDirByOwnerPosition", Main.TraverseAccessType.Field);
+        forceGuardslide = Main.GetValue<bool>(obj, "forceGuardslide", Main.TraverseAccessType.Field);
+        forceGuardSlideDirection = Main.GetValue<bool>(obj, "ForceGuardSlideDirection", Main.TraverseAccessType.Field);
+        checkOrientationsForGuardslide = Main.GetValue<bool>(obj, "CheckOrientationsForGuardslide", Main.TraverseAccessType.Field);
 
-        destroysProjectiles = Main.GetValue<Hit, bool>(obj, "DestroysProjectiles", Main.TraverseAccessType.Field);
-        dontSpawnBlood = Main.GetValue<Hit, bool>(obj, "DontSpawnBlood", Main.TraverseAccessType.Field);
+        destroysProjectiles = Main.GetValue<bool>(obj, "DestroysProjectiles", Main.TraverseAccessType.Field);
+        dontSpawnBlood = Main.GetValue<bool>(obj, "DontSpawnBlood", Main.TraverseAccessType.Field);
 
-        hitSoundId = Main.GetValue<Hit, string>(obj, "HitSoundId", Main.TraverseAccessType.Field);
+        hitSoundId = Main.GetValue<string>(obj, "HitSoundId", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ref Hit obj)

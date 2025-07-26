@@ -18,7 +18,7 @@ public class IncreaseSpeedBeadEffectValues : ObjectEffectValues, IAccessible_Cla
 
         base.GetValueFrom(obj);
 
-        movementSetting = Main.GetValue<IncreaseSpeedBeadEffect, Dash.MoveSetting>(obj, "BeadMoveSettings", Main.TraverseAccessType.Field);
+        movementSetting = Main.GetValue<Dash.MoveSetting>(obj, "BeadMoveSettings", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(IncreaseSpeedBeadEffect obj)

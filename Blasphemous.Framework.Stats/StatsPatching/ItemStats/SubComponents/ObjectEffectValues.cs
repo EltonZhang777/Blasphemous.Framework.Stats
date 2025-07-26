@@ -28,20 +28,20 @@ public class ObjectEffectValues : IAccessible_Class<ObjectEffect>, IAccessible_P
         if (!Main.Validate(obj, x => x != null))
             return;
 
-        effectType = Main.GetValue<ObjectEffect, ObjectEffect.EffectType>(obj, "effectType", Main.TraverseAccessType.Field);
-        abilityName = Main.GetValue<ObjectEffect, string>(obj, "abilityName", Main.TraverseAccessType.Field);
-        limitTime = Main.GetValue<ObjectEffect, bool>(obj, "LimitTime", Main.TraverseAccessType.Field);
-        effectTime = Main.GetValue<ObjectEffect, float>(obj, "EffectTime", Main.TraverseAccessType.Field);
-        usePrayerDurationAddition = Main.GetValue<ObjectEffect, bool>(obj, "UsePrayerDurationAddition", Main.TraverseAccessType.Field);
-        triggerOnlyOnce = Main.GetValue<ObjectEffect, bool>(obj, "TriggerOnlyOnce", Main.TraverseAccessType.Field);
-        onlyWhenUsingPrayer = Main.GetValue<ObjectEffect, bool>(obj, "OnlyWhenUsingPrayer", Main.TraverseAccessType.Field);
-        percentToExecute = Main.GetValue<ObjectEffect, int>(obj, "percentToExecute", Main.TraverseAccessType.Field);
-        pingTime = Main.GetValue<ObjectEffect, float>(obj, "PingTime", Main.TraverseAccessType.Field);
-        timeToWait = Main.GetValue<ObjectEffect, float>(obj, "TimeToWait", Main.TraverseAccessType.Field);
-        useWhenCastingPrayer = Main.GetValue<ObjectEffect, bool>(obj, "UseWhenCastingPrayer", Main.TraverseAccessType.Field);
-        conditions = Main.GetValue<ObjectEffect, List<ObjectEffect.Condition>>(obj, "Conditions", Main.TraverseAccessType.Field);
-        stoppingConditions = Main.GetValue<ObjectEffect, List<ObjectEffect.Condition>>(obj, "StoppingConditions", Main.TraverseAccessType.Field);
-        activationFxSound = Main.GetValue<ObjectEffect, string>(obj, "ActivationFxSound", Main.TraverseAccessType.Field);
+        effectType = Main.GetValue<ObjectEffect.EffectType>(obj, "effectType", Main.TraverseAccessType.Field);
+        abilityName = Main.GetValue<string>(obj, "abilityName", Main.TraverseAccessType.Field);
+        limitTime = Main.GetValue<bool>(obj, "LimitTime", Main.TraverseAccessType.Field);
+        effectTime = Main.GetValue<float>(obj, "EffectTime", Main.TraverseAccessType.Field);
+        usePrayerDurationAddition = Main.GetValue<bool>(obj, "UsePrayerDurationAddition", Main.TraverseAccessType.Field);
+        triggerOnlyOnce = Main.GetValue<bool>(obj, "TriggerOnlyOnce", Main.TraverseAccessType.Field);
+        onlyWhenUsingPrayer = Main.GetValue<bool>(obj, "OnlyWhenUsingPrayer", Main.TraverseAccessType.Field);
+        percentToExecute = Main.GetValue<int>(obj, "percentToExecute", Main.TraverseAccessType.Field);
+        pingTime = Main.GetValue<float>(obj, "PingTime", Main.TraverseAccessType.Field);
+        timeToWait = Main.GetValue<float>(obj, "TimeToWait", Main.TraverseAccessType.Field);
+        useWhenCastingPrayer = Main.GetValue<bool>(obj, "UseWhenCastingPrayer", Main.TraverseAccessType.Field);
+        conditions = Main.GetValue<List<ObjectEffect.Condition>>(obj, "Conditions", Main.TraverseAccessType.Field);
+        stoppingConditions = Main.GetValue<List<ObjectEffect.Condition>>(obj, "StoppingConditions", Main.TraverseAccessType.Field);
+        activationFxSound = Main.GetValue<string>(obj, "ActivationFxSound", Main.TraverseAccessType.Field);
     }
 
     /// <inheritdoc/>

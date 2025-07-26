@@ -22,12 +22,12 @@ public class AttributeValues : IAccessible_Class<BlasAttribute>
         if (!Main.Validate(attr, x => x != null))
             return;
 
-        baseValue = Main.GetValue<BlasAttribute, float>(attr, "Base", Main.TraverseAccessType.Property);
-        initialValue = Main.GetValue<BlasAttribute, float>(attr, "_initialValue", Main.TraverseAccessType.Field);
-        upgradeIncrement = Main.GetValue<BlasAttribute, float>(attr, "_upgradeValue", Main.TraverseAccessType.Field);
+        baseValue = Main.GetValue<float>(attr, "Base", Main.TraverseAccessType.Property);
+        initialValue = Main.GetValue<float>(attr, "_initialValue", Main.TraverseAccessType.Field);
+        upgradeIncrement = Main.GetValue<float>(attr, "_upgradeValue", Main.TraverseAccessType.Field);
         upgradeCount = attr.GetUpgrades();
-        bonusValue = Main.GetValue<BlasAttribute, float>(attr, "Bonus", Main.TraverseAccessType.Property);
-        finalValue = Main.GetValue<BlasAttribute, float>(attr, "Final", Main.TraverseAccessType.Property);
+        bonusValue = Main.GetValue<float>(attr, "Bonus", Main.TraverseAccessType.Property);
+        finalValue = Main.GetValue<float>(attr, "Final", Main.TraverseAccessType.Property);
     }
 
     /// <summary>

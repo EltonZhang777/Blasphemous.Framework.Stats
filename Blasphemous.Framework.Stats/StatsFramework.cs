@@ -7,6 +7,7 @@ using Blasphemous.Framework.Stats.Patches;
 using Blasphemous.Framework.Stats.StatsPatching;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Helpers;
 using Newtonsoft.Json;
@@ -60,6 +61,7 @@ public class StatsFramework : BlasMod
 #if DEBUG
         provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<PenitentStatsPatch>("test_patch_penitent.json", jsonSerializerSettings));
         provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<EnemyStatsPatch>("test_patch_enemy.json", jsonSerializerSettings));
+        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<InventoryItemStatsPatch>("test_patch_items.json", jsonSerializerSettings));
 #endif
     }
 
@@ -74,6 +76,7 @@ public class StatsFramework : BlasMod
     {
         if (SceneHelper.GameSceneLoaded)
         {
+            PatchController.PatchItemStats();
             PatchController.PatchEnemyStats();
             PatchController.PatchPenitentStats();
         }

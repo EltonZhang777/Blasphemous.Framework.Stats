@@ -2,8 +2,6 @@
 using Blasphemous.Framework.Stats.Components;
 using Blasphemous.Framework.Stats.Extensions;
 using Blasphemous.Framework.Stats.StatsPatching;
-using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
-using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Blasphemous.ModdingAPI;
 using Framework.Managers;
@@ -62,7 +60,7 @@ internal class StatsPatchCommand : ModCommand
         bool hasAny = false;
         if (parameters.Length == 0)
         {
-            Write($"All loaded backgrounds: ");
+            Write($"All loaded stats patches: ");
             foreach (BaseStatsPatch patch in StatsPatchRegister.StatsPatches)
             {
                 hasAny = true;
@@ -138,25 +136,28 @@ internal class StatsPatchCommand : ModCommand
         if (!ValidateParameterList(parameters, 1))
             return;
 
-        string backgroundName = parameters[0];
-        if (!StatsPatchExists(backgroundName))
+        string patchName = parameters[0];
+        if (!StatsPatchExists(patchName))
             return;
 
-        string exportPath = Path.Combine(Main.StatsFramework.FileHandler.ContentFolder, $"exported--{backgroundName}.json");
-        switch (StatsPatchRegister.AtName(backgroundName))
+        string exportPath = Path.Combine(Main.StatsFramework.FileHandler.ContentFolder, $"exported--{patchName}.json");
+        JsonSerializerSettings jsonSerializerSettings = new()
         {
-            case PenitentStatsPatch patch:
-                File.WriteAllText(
-                    exportPath,
-                    JsonConvert.SerializeObject(patch, Formatting.Indented));
-                break;
-            case EnemyStatsPatch patch:
-                File.WriteAllText(
-                    exportPath,
-                    JsonConvert.SerializeObject(patch, Formatting.Indented));
-                break;
-        }
-        Write($"Successfully exported `{backgroundName}` info to `{exportPath}`!");
+            Converters = [
+                new StringEnumConverter(),
+                ],
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.None,
+            TypeNameHandling = TypeNameHandling.Objects,
+        };
+
+        File.WriteAllText(
+            exportPath,
+            JsonConvert.SerializeObject(
+                StatsPatchRegister.AtName(patchName),
+                Formatting.Indented,
+                jsonSerializerSettings));
+        Write($"Successfully exported `{patchName}` info to `{exportPath}`!");
     }
 
     private void SubCommand_ExportAllInventoryItems(string[] parameters)

@@ -193,9 +193,10 @@ internal class Main : BaseUnityPlugin
         if (!validate(obj))
         {
             string errorMessage = $"`{obj}` of type `{typeof(T)}` isn't a valid argument";
+            ArgumentException exception = new ArgumentException(errorMessage);
             ModLog.Error(errorMessage);
             if (throwError)
-                throw new ArgumentException(errorMessage);
+                throw exception;
         }
         return validate(obj);
     }

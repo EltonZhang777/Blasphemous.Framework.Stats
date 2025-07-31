@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Blasphemous.ModdingAPI;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ public static class StatsPatchRegister
     internal static IEnumerable<BaseStatsPatch> StatsPatches => _statsPatches;
     internal static IEnumerable<PenitentStatsPatch> PenitentPatches => _statsPatches.OfType<PenitentStatsPatch>();
     internal static IEnumerable<EnemyStatsPatch> EnemyPatches => _statsPatches.OfType<EnemyStatsPatch>();
+    internal static IEnumerable<InventoryItemStatsPatch> ItemPatches => _statsPatches.OfType<InventoryItemStatsPatch>();
     internal static int Total => _statsPatches.Count;
 
     internal static BaseStatsPatch AtIndex(int index) => _statsPatches[index];
@@ -62,6 +64,6 @@ public static class StatsPatchRegister
 
         statsPatch.parentModId = provider.RegisteringMod.Id;
         _statsPatches.Add(statsPatch);
-        ModLog.Info($"Registered custom Background: {statsPatch.name}");
+        ModLog.Info($"Registered custom stats patch: {statsPatch.name}");
     }
 }

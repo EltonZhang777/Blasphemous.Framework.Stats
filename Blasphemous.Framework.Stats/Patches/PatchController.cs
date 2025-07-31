@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.StatsPatching;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Gameplay.GameControllers.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,38 @@ internal static class PatchController
             {
                 patch.statsPatches.ForEach(x => x.SetValueToAllTargets());
             }
+        }
+    }
+
+    /// <summary>
+    /// Patch all active item stats patches to corresponding items.
+    /// </summary>
+    internal static void PatchItemStats()
+    {
+        foreach (InventoryItemStatsPatch patch in StatsPatchRegister.ItemPatches)
+        {
+            patch.UpdateActive();
+            if (patch.isActive)
+            {
+                foreach (InventoryItemData p in patch.statsPatches)
+                {
+                    if (p.isApplied)
+                        continue;
+
+                    p.SetValueToAllTargets();
+                }
+            }
+            else
+            {
+                foreach (InventoryItemData p in patch.statsPatches)
+                {
+                    if (!p.isApplied)
+                        continue;
+
+                    p.RevertValueToAllTargets();
+                }
+            }
+
         }
     }
 }

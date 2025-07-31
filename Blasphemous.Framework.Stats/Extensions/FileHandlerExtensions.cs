@@ -33,7 +33,7 @@ internal static class FileHandlerExtensions
 
         bool INTERNAL_CALL_LoadDataAsJson<T1>(string fileName, out T1 output)
         {
-            if (fileHandler.ReadFileContents(fileHandler.GetDataPath() + fileName, out var output2))
+            if (fileHandler.ReadFileContents(Path.Combine(fileHandler.GetDataPath(), fileName), out var output2))
             {
                 output = JsonConvert.DeserializeObject<T1>(output2, settings);
                 return true;

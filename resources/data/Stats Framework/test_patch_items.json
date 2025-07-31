@@ -1,0 +1,68 @@
+{
+  "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.InventoryItemStatsPatch, StatsFramework",
+  "name": "test_patch_items",
+  "activeType": "Manually",
+  "statsPatches": 
+  [
+    {
+      "itemId": "RB06",
+      "effectAdditions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.ObjectEffect_StatValues, StatsFramework",
+          "useHitAsBaseValue": false,
+          "effectMode": "Bonus",
+          "statType": "Strength",
+          "valueType": "Value",
+          "statValueType": "AttackSpeed",
+          "value": 10.0,
+          "multiplier": 1.0,
+          "effectType": "OnEquip",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+        },
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.ObjectEffect_StatValues, StatsFramework",
+          "useHitAsBaseValue": false,
+          "effectMode": "Bonus",
+          "statType": "Defense",
+          "valueType": "Value",
+          "statValueType": "AttackSpeed",
+          "value": 10.0,
+          "multiplier": 1.0,
+          "effectType": "OnEquip",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+        }
+      ],
+      "effectDeletions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.ObjectEffect_StatValues, StatsFramework",
+          "statType": "Strength",
+          "value": 2.5
+        }
+      ]
+    }
+  ]
+}

@@ -62,6 +62,7 @@ public class StatsFramework : BlasMod
         provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<PenitentStatsPatch>("test_patch_penitent.json", jsonSerializerSettings));
         provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<EnemyStatsPatch>("test_patch_enemy.json", jsonSerializerSettings));
         provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<InventoryItemStatsPatch>("test_patch_items.json", jsonSerializerSettings));
+        provider.RegisterStatsPatch(FileHandler.LoadDataAsJson<InventoryItemStatsPatch>("test_patch_prayer.json", jsonSerializerSettings));
 #endif
     }
 

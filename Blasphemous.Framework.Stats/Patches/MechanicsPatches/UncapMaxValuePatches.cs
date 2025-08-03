@@ -1,7 +1,7 @@
 ﻿using Framework.FrameworkCore.Attributes.Logic;
 using HarmonyLib;
 
-namespace Blasphemous.Framework.Stats.Patches;
+namespace Blasphemous.Framework.Stats.Patches.MechanicsPatches;
 
 /// <summary>
 /// Uncap the max value of <see cref="VariableAttribute"/>

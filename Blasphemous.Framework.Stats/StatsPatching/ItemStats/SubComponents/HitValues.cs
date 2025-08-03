@@ -34,24 +34,6 @@ public class HitValues : IAccessible_Struct<Hit>
     // hit sound
     public string hitSoundId;
 
-    /*
-    public string HitSoundId;
-    public GameObject AttackingEntity;
-    public DamageArea.DamageType DamageType;
-    public DamageArea.DamageElement DamageElement;
-    public bool Unnavoidable;
-    public bool ForceGuardSlideDirection;
-    public bool Unparriable;
-    public bool Unblockable;
-    public bool DestroysProjectiles;
-    public bool DontSpawnBlood;
-    public bool forceGuardslide;
-    public bool CheckOrientationsForGuardslide;
-    public bool ThrowbackDirByOwnerPosition;
-    public float DamageAmount;
-    public float Force;
-    */
-
     public void GetValueFrom(Hit obj)
     {
         attackingEntity = Main.GetValue<GameObject>(obj, "AttackingEntity", Main.TraverseAccessType.Field);
@@ -78,25 +60,47 @@ public class HitValues : IAccessible_Struct<Hit>
 
     public void SetValueTo(ref Hit obj)
     {
-        Main.SetValueIfNotNull(ref obj, "AttackingEntity", attackingEntity, Main.TraverseAccessType.Field);
+        if (attackingEntity != null)
+            obj.AttackingEntity = attackingEntity;
 
-        Main.SetValueIfNotNull(ref obj, "DamageAmount", damageAmount, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "DamageType", damageType, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "DamageElement", damageElement, Main.TraverseAccessType.Field);
+        if (damageAmount.HasValue)
+            obj.DamageAmount = damageAmount.Value;
+        if (damageType.HasValue)
+            obj.DamageType = damageType.Value;
+        if (damageElement.HasValue)
+            obj.DamageElement = damageElement.Value;
 
-        Main.SetValueIfNotNull(ref obj, "Unnavoidable", unavoidable, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "Unparriable", unparriable, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "Unblockable", unblockable, Main.TraverseAccessType.Field);
+        if (unavoidable.HasValue)
+            obj.Unnavoidable = unavoidable.Value;
+        if (unparriable.HasValue)
+            obj.Unparriable = unparriable.Value;
+        if (unblockable.HasValue)
+            obj.Unblockable = unblockable.Value;
 
-        Main.SetValueIfNotNull(ref obj, "Force", knockbackDistance, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "ThrowbackDirByOwnerPosition", knockbackDirectionByOwnerPosition, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "forceGuardslide", forceGuardslide, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "ForceGuardSlideDirection", forceGuardSlideDirection, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "CheckOrientationsForGuardslide", checkOrientationsForGuardslide, Main.TraverseAccessType.Field);
+        if (knockbackDistance.HasValue)
+            obj.Force = knockbackDistance.Value;
+        if (knockbackDirectionByOwnerPosition.HasValue)
+            obj.ThrowbackDirByOwnerPosition = knockbackDirectionByOwnerPosition.Value;
+        if (forceGuardslide.HasValue)
+            obj.forceGuardslide = forceGuardslide.Value;
+        if (forceGuardSlideDirection.HasValue)
+            obj.ForceGuardSlideDirection = forceGuardSlideDirection.Value;
+        if (checkOrientationsForGuardslide.HasValue)
+            obj.CheckOrientationsForGuardslide = checkOrientationsForGuardslide.Value;
 
-        Main.SetValueIfNotNull(ref obj, "DestroysProjectiles", destroysProjectiles, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "DontSpawnBlood", dontSpawnBlood, Main.TraverseAccessType.Field);
+        if (destroysProjectiles.HasValue)
+            obj.DestroysProjectiles = destroysProjectiles.Value;
+        if (dontSpawnBlood.HasValue)
+            obj.DontSpawnBlood = dontSpawnBlood.Value;
 
-        Main.SetValueIfNotNull(ref obj, "HitSoundId", hitSoundId, Main.TraverseAccessType.Field);
+        if (hitSoundId != null)
+            obj.HitSoundId = hitSoundId;
+    }
+
+    public Hit CreateHitFromValues()
+    {
+        Hit result = new();
+        SetValueTo(ref result);
+        return result;
     }
 }

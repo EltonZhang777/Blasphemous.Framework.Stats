@@ -46,10 +46,9 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     public List<ObjectEffectValues> effectDeletions = new();
 
     /// <summary>
-    /// Vanilla <see cref="ObjectEffect"/>s of the item, serialized as <see cref="ObjectEffectValues"/> for inspection. 
-    /// Dictionary value indicates whether this effect is deleted by the deletion process.
+    /// List of <see cref="ObjectEffectValues"/> that are serialized from vanilla MonoBehavior scripts.
     /// </summary>
-    public Dictionary<ObjectEffectValues, bool> vanillaEffectsToIsDeleted = new();
+    public List<ObjectEffectValues> vanillaEffects = new();
 
     protected BaseInventoryObject target;
 
@@ -59,6 +58,12 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     /// All the vanilla MonoBehaviors attached to the inventory object's GameObject
     /// </summary>
     internal List<MonoBehaviour> vanillaMonoBehaviors = new();
+
+    /// <summary>
+    /// Vanilla <see cref="ObjectEffect"/>s of the item, serialized as <see cref="ObjectEffectValues"/> for inspection. 
+    /// Dictionary value indicates whether this effect is deleted by the deletion process.
+    /// </summary>
+    internal Dictionary<ObjectEffectValues, bool> vanillaEffectsToIsDeleted = new();
 
     /// <summary>
     /// All the mod-added MonoBehaviors attached to the inventory object's GameObject
@@ -162,6 +167,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         if (!Main.Validate(obj, x => x != null))
             return;
 
+        vanillaEffects.Clear();
         vanillaEffectsToIsDeleted.Clear();
         serializedObjectsToVanillaMonoBehaviors.Clear();
 
@@ -187,6 +193,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
                     ModLog.Warn($"Getting ObjectEffectValues of derived type `{data.GetType()}`!");
 #endif
                     data.GetValueFrom((object)mb);
+                    vanillaEffects.Add(data);
                     vanillaEffectsToIsDeleted.Add(data, false);
                     serializedObjectsToVanillaMonoBehaviors.Add(data, mb);
                     break;

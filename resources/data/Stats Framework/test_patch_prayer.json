@@ -9,27 +9,33 @@
       "effectAdditions": [
         {
           "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentAreaAttackValues, StatsFramework",
-          "attackRangeRadius": 8.0,
+          "attackRangeRadius": 15.0,
           "delayBetweenHitsSeconds": 0.5,
           "slowTimeDuration": 0.5,
-          "baseDamage": 150.0,
-          "prayerBonusEfficiency": 1.0,
-          "hitValues": {
-            "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.HitValues, StatsFramework",
-            "damageAmount": 150.0,
-            "damageType": "Normal",
-            "damageElement": "Magic",
-            "unavoidable": true,
-            "unparriable": false,
-            "unblockable": false,
-            "knockbackDistance": 0.0,
-            "knockbackDirectionByOwnerPosition": false,
-            "forceGuardslide": false,
-            "forceGuardSlideDirection": false,
-            "checkOrientationsForGuardslide": false,
-            "destroysProjectiles": false,
-            "dontSpawnBlood": false,
-            "hitSoundId": "event:/SFX/Penitent/Damage/PenitentParryHit"
+          "hitData": {
+            "$type": "Blasphemous.Framework.Stats.Patches.HitPatchData, StatsFramework",
+            "baseDamage": null,
+            "attackDamageMultiplier": null,
+            "basePrayerDamage": 150.0,
+            "prayerBonusEfficiency": 2.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.HitValues, StatsFramework",
+              "damageAmount": 150.0,
+              "damageType": "Normal",
+              "damageElement": "Magic",
+              "unavoidable": true,
+              "unparriable": false,
+              "unblockable": false,
+              "knockbackDistance": 0.0,
+              "knockbackDirectionByOwnerPosition": false,
+              "forceGuardslide": false,
+              "forceGuardSlideDirection": false,
+              "checkOrientationsForGuardslide": false,
+              "destroysProjectiles": false,
+              "dontSpawnBlood": false,
+              "hitSoundId": "event:/SFX/Penitent/Damage/PenitentParryHit"
+            }
           },
           "effectType": "OnUse",
           "abilityName": "",
@@ -59,11 +65,27 @@
       "effectAdditions": [
         {
           "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentCrawlerOrbsEffectValues, StatsFramework",
-          "baseDamage": 10.0,
-          "prayerBonusEfficiency": 2.0,
-          "hitValues": {
-            "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.HitValues, StatsFramework",
-            "damageElement": "Fire"
+          "hitData": {
+            "baseDamage": 0,
+            "attackDamageMultiplier": 0,
+            "basePrayerDamage": 10.0,
+            "prayerBonusEfficiency": 2.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageAmount": 10.0,
+              "damageType": "Normal",
+              "damageElement": "Fire",
+              "unavoidable": true,
+              "unparriable": false,
+              "unblockable": false,
+              "knockbackDistance": 0.0,
+              "knockbackDirectionByOwnerPosition": false,
+              "forceGuardslide": false,
+              "forceGuardSlideDirection": false,
+              "checkOrientationsForGuardslide": false,
+              "destroysProjectiles": false,
+              "dontSpawnBlood": false
+            }
           },
           "effectType": "OnUse",
           "abilityName": "",

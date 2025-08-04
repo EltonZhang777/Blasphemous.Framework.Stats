@@ -1,7 +1,4 @@
 ﻿using Blasphemous.Framework.Stats.Extensions;
-using Blasphemous.Framework.Stats.StatsPatching;
-using Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
-using Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 using Blasphemous.ModdingAPI;
 using Framework.Managers;
 using Gameplay.GameControllers.Bosses.CommonAttacks;
@@ -11,7 +8,6 @@ using Gameplay.GameControllers.Entities;
 using Gameplay.GameControllers.Penitent;
 using Gameplay.GameControllers.Penitent.Abilities;
 using HarmonyLib;
-using System.Linq;
 using Tools.Items;
 using UnityEngine;
 
@@ -24,37 +20,20 @@ class PR12_HitPatch
     [HarmonyPostfix]
     public static void Postfix(ref Hit ___attackHit)
     {
-        if (!IsActive)
+        if (!HitData.IsActive())
             return;
 #if DEBUG
         ModLog.Warn($"Modding PR12 hit!");
 #endif
 
-        hitValues?.SetValueTo(ref ___attackHit);
-        if (baseDamage.HasValue && prayerBonusEfficiency.HasValue)
-        {
-            ___attackHit.DamageAmount = PatchController.CalculateFinalDamageWithBonuses(baseDamage.Value, PatchController.CalculatePrayerDamageMultiplier(prayerBonusEfficiency.Value));
-        }
+        ___attackHit = HitData.CreateHit(___attackHit);
 #if DEBUG
         ModLog.Warn($"PR12 hit final damage: `{___attackHit.DamageAmount}`!");
         ModLog.Warn($"PR12 hit element: `{___attackHit.DamageElement}`!");
 #endif
     }
 
-    public static float? baseDamage;
-    public static float? prayerBonusEfficiency;
-    public static HitValues hitValues;
-
-    /// <summary>
-    /// The patch should only be active if any active patch contains a modification to PR12
-    /// </summary>
-    public static bool IsActive => StatsPatchRegister.ItemPatches.Any(
-        invItemStatsPatch =>
-            invItemStatsPatch.isActive
-            && invItemStatsPatch.statsPatches.Any(
-                invItemData =>
-                    invItemData.effectAdditions.Any(
-                        objEffVal => objEffVal is PenitentAreaAttackValues)));
+    public static HitPatchData HitData => PatchController.Hits.PR12;
 }
 
 
@@ -69,10 +48,10 @@ class PR14_HitPatch
         BossStraightProjectileAttack ____crawlerOrbs,
         bool __result)
     {
-        if (!IsActive)
+        if (!HitData.IsActive())
             return true;
 
-        if (!baseDamage.HasValue || !prayerBonusEfficiency.HasValue)
+        if (!HitData.basePrayerDamage.HasValue || !HitData.prayerBonusEfficiency.HasValue)
             return true;
 
 
@@ -85,10 +64,10 @@ class PR14_HitPatch
 
         StraightProjectile straightProjectile;
 
-        straightProjectile = ____crawlerOrbs.Shoot(Vector2.right, Vector2.right * 0.01f, PatchController.CalculatePrayerDamageMultiplier(prayerBonusEfficiency.Value));
+        straightProjectile = ____crawlerOrbs.Shoot(Vector2.right, Vector2.right * 0.01f, 1);
         SetProjectileDamage(straightProjectile);
 
-        straightProjectile = ____crawlerOrbs.Shoot(Vector2.left, Vector2.left * 0.01f, PatchController.CalculatePrayerDamageMultiplier(prayerBonusEfficiency.Value));
+        straightProjectile = ____crawlerOrbs.Shoot(Vector2.left, Vector2.left * 0.01f, 1);
         SetProjectileDamage(straightProjectile);
 
 #if DEBUG
@@ -103,22 +82,9 @@ class PR14_HitPatch
         void SetProjectileDamage(StraightProjectile proj)
         {
             ProjectileWeapon projectileWeapon = proj.GetComponent<ProjectileWeapon>();
-            projectileWeapon.SetDamageAndCreateCustomHit(hitValues, baseDamage.Value, PatchController.CalculatePrayerDamageMultiplier(prayerBonusEfficiency.Value));
+            projectileWeapon.CreateCustomHit(HitData.CreateHit());
         }
     }
 
-    public static float? baseDamage;
-    public static float? prayerBonusEfficiency;
-    public static HitValues hitValues;
-
-    /// <summary>
-    /// The patch should only be active if any active patch contains a modification to the target prayer
-    /// </summary>
-    public static bool IsActive => StatsPatchRegister.ItemPatches.Any(
-        invItemStatsPatch =>
-            invItemStatsPatch.isActive
-            && invItemStatsPatch.statsPatches.Any(
-                invItemData =>
-                    invItemData.effectAdditions.Any(
-                        objEffVal => objEffVal is PenitentCrawlerOrbsEffectValues)));
+    public static HitPatchData HitData => PatchController.Hits.PR14;
 }

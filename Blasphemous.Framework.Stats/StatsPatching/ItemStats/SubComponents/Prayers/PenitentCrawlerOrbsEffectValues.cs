@@ -1,5 +1,5 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.Patches.ItemPatches;
+using Blasphemous.Framework.Stats.Patches;
 using Tools.Items;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
@@ -10,9 +10,7 @@ namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Pray
 /// </summary>
 public class PenitentCrawlerOrbsEffectValues : ObjectEffectValues, IAccessible_Class<PenitentCrawlerOrbsEffect>
 {
-    public float? baseDamage;
-    public float? prayerBonusEfficiency = 1f;
-    public HitValues hitValues;
+    public HitPatchData hitData;
 
     public void GetValueFrom(PenitentCrawlerOrbsEffect obj)
     {
@@ -21,7 +19,8 @@ public class PenitentCrawlerOrbsEffectValues : ObjectEffectValues, IAccessible_C
 
         base.GetValueFrom(obj);
 
-        baseDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field);
+        hitData = new();
+        hitData.basePrayerDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(PenitentCrawlerOrbsEffect obj)
@@ -31,12 +30,10 @@ public class PenitentCrawlerOrbsEffectValues : ObjectEffectValues, IAccessible_C
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "DamageAmount", (int?)baseDamage, Main.TraverseAccessType.Field);
+        Main.SetValueIfNotNull(ref obj, "DamageAmount", (int?)hitData.basePrayerDamage, Main.TraverseAccessType.Field);
 
-        // Modify damage to corresponding HarmonyPatch
-        PR14_HitPatch.hitValues = hitValues;
-        PR14_HitPatch.baseDamage = baseDamage;
-        PR14_HitPatch.prayerBonusEfficiency = prayerBonusEfficiency;
+        // Register hit changes to patch controller
+        hitData.CopyNonNullValuesTo(PatchController.Hits.PR14);
     }
 
     public override void GetValueFrom(object obj)

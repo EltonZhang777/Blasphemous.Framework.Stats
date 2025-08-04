@@ -1,5 +1,4 @@
 ﻿using Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
-using Blasphemous.ModdingAPI;
 using Gameplay.GameControllers.Enemies.BellGhost;
 using Gameplay.GameControllers.Entities;
 using HarmonyLib;
@@ -22,8 +21,16 @@ internal static class ProjectileWeaponExtensions
         }
         result.AttackingEntity = projectileWeapon.AttackingEntity;
         Traverse.Create(projectileWeapon).Field("weaponHit").SetValue(result);
-#if DEBUG
-        ModLog.Info($"hit element in weaponHit: {Traverse.Create(projectileWeapon).Field("weaponHit").GetValue<Hit>().DamageElement}");
-#endif
+    }
+
+    internal static void CreateCustomHit(this ProjectileWeapon projectileWeapon, Hit hit)
+    {
+        if (!projectileWeapon.AttackingEntity)
+        {
+            projectileWeapon.AttackingEntity = projectileWeapon.gameObject;
+        }
+        hit.AttackingEntity = projectileWeapon.AttackingEntity;
+
+        Traverse.Create(projectileWeapon).Field("weaponHit").SetValue(hit);
     }
 }

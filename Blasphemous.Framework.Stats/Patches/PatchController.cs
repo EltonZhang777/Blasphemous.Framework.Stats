@@ -2,7 +2,6 @@
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
-using Framework.Managers;
 using Gameplay.GameControllers.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +13,8 @@ namespace Blasphemous.Framework.Stats.Patches;
 /// </summary>
 internal static class PatchController
 {
+    internal static HitPatchController Hits { get; set; } = new();
+
     /// <summary>
     /// Gets all living enemies and patch their stats with active stats patches.
     /// </summary>
@@ -75,28 +76,5 @@ internal static class PatchController
             }
 
         }
-    }
-
-    /// <summary>
-    /// Calculate the final damage of a hit.
-    /// </summary>
-    /// <param name="baseDamage">base damage before bonuses and multipliers</param>
-    /// <param name="finalMultiplier">final damage multiplier after individual multipliers are calculated</param>
-    /// <param name="damageBonuses">individual stat bonus and their multiplier (e.g. 20 attack power with 50% of physical damage bonus will be input as {20, 0.5})</param>
-    /// <returns>Final calculated damage</returns>
-    internal static float CalculateFinalDamageWithBonuses(float baseDamage, float finalMultiplier, params KeyValuePair<float, float>[] damageBonuses)
-    {
-        float result = baseDamage;
-        foreach (KeyValuePair<float, float> kvp in damageBonuses)
-        {
-            result += kvp.Key * kvp.Value;
-        }
-        result *= finalMultiplier;
-        return result;
-    }
-
-    internal static float CalculatePrayerDamageMultiplier(float prayerBonusEfficiency)
-    {
-        return 1f + (Core.Logic.Penitent.Stats.PrayerStrengthMultiplier.Final - 1f) * prayerBonusEfficiency;
     }
 }

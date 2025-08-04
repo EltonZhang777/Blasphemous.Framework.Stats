@@ -1,5 +1,5 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.Patches.ItemPatches;
+using Blasphemous.Framework.Stats.Patches;
 using Gameplay.GameControllers.Entities;
 using HarmonyLib;
 using Tools.Items;
@@ -27,10 +27,7 @@ public class PenitentAreaAttackValues : ObjectEffectValues, IAccessible_Class<Pe
     /// </summary>
     public float? slowTimeDuration;
 
-    public float? baseDamage;
-    public float? prayerBonusEfficiency = 0.5f;
-
-    public HitValues hitValues;
+    public HitPatchData hitData;
 
     public void GetValueFrom(PenitentAreaAttack obj)
     {
@@ -39,15 +36,17 @@ public class PenitentAreaAttackValues : ObjectEffectValues, IAccessible_Class<Pe
 
         base.GetValueFrom(obj);
 
+        hitData = new();
+
         attackRangeRadius = Main.GetValue<float>(obj, "Radius", Main.TraverseAccessType.Field);
         delayBetweenHitsSeconds = Main.GetValue<float>(obj, "damageDelay", Main.TraverseAccessType.Field);
         slowTimeDuration = Main.GetValue<float>(obj, "slowTimeDuration", Main.TraverseAccessType.Field);
-        baseDamage = Main.GetValue<float>(obj, "Amount", Main.TraverseAccessType.Field);
+
+        hitData.basePrayerDamage = Main.GetValue<float>(obj, "Amount", Main.TraverseAccessType.Field);
 
         // make the target create hit before getting the hit
         Traverse.Create(obj).Method("CreateHit").GetValue(null);
-        hitValues = new();
-        hitValues.GetValueFrom(Main.GetValue<Hit>(obj, "attackHit", Main.TraverseAccessType.Field));
+        hitData.hitValues.GetValueFrom(Main.GetValue<Hit>(obj, "attackHit", Main.TraverseAccessType.Field));
     }
 
     public void SetValueTo(PenitentAreaAttack obj)
@@ -60,10 +59,8 @@ public class PenitentAreaAttackValues : ObjectEffectValues, IAccessible_Class<Pe
         Main.SetValueIfNotNull(ref obj, "damageDelay", delayBetweenHitsSeconds, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref obj, "slowTimeDuration", slowTimeDuration, Main.TraverseAccessType.Field);
 
-        // Modify damage to corresponding HarmonyPatch
-        PR12_HitPatch.hitValues = hitValues;
-        PR12_HitPatch.baseDamage = baseDamage;
-        PR12_HitPatch.prayerBonusEfficiency = prayerBonusEfficiency;
+        // Register hit changes to patch controller
+        hitData.CopyNonNullValuesTo(PatchController.Hits.PR12);
     }
 
     public override void GetValueFrom(object obj)

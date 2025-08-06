@@ -12,6 +12,14 @@ namespace Blasphemous.Framework.Stats.Patches;
 /// </summary>
 internal class HitPatchController
 {
+    internal HitPatchData PR09 = new()
+    {
+        baseDamage = 0f,
+        attackDamageMultiplier = 0f,
+        prayerBonusEfficiency = 1f,
+        IsActive = AnyActiveModificationOf<PenitentDivineLightEffectValues>
+    };
+
     internal HitPatchData PR12 = new()
     {
         baseDamage = 0f,
@@ -78,7 +86,7 @@ internal class HitPatchController
     /// Determines if a hit patch should be active. 
     /// It should activate if any active patch contains a modification to the specified child type of <see cref="ObjectEffectValues"/>
     /// </summary>
-    public static bool AnyActiveModificationOf<T>()
+    public static bool AnyActiveModificationOf<T>() where T : ObjectEffectValues
     {
         return StatsPatchRegister.ItemPatches.Any(
             invItemStatsPatch =>

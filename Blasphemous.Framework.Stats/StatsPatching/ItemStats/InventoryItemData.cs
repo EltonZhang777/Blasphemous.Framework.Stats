@@ -276,13 +276,13 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     PreserveReferencesHandling = PreserveReferencesHandling.None,
                 };
-                ModLog.Warn($"Checking if \n`{JsonConvert.SerializeObject(vanillaEffect, Formatting.Indented, jsonSerializerSettings)}`\n matches deletion condition \n`{JsonConvert.SerializeObject(deletion, Formatting.Indented, jsonSerializerSettings)}`\n for inventory object `{obj.id}`!");
+                ModLog.Info($"Checking if \n`{JsonConvert.SerializeObject(vanillaEffect, Formatting.Indented, jsonSerializerSettings)}`\n matches deletion condition \n`{JsonConvert.SerializeObject(deletion, Formatting.Indented, jsonSerializerSettings)}`\n for inventory object `{obj.id}`!");
 #endif
 
                 if (!ObjectEffectValuesMatchEvaluator(vanillaEffect, deletion))
                     continue;
 #if DEBUG
-                ModLog.Warn($"the evaluator matches current vanillaEffect!");
+                ModLog.Info($"the evaluator matches current vanillaEffect!");
 #endif
 
                 // This effect matches the delete condition, destroy its MonoBehavior
@@ -468,7 +468,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 #endif
         if (conditionsToBeChecked.Count == 0)
         {
-            ModLog.Warn($"No fields to be checked in the evaluator! Returning false");
+            ModLog.Info($"No fields to be checked in the evaluator! Returning false");
             return false;
         }
         foreach (FieldInfo conditionField in conditionsToBeChecked)
@@ -476,7 +476,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
             object targetFieldValue = target.GetType().GetField(conditionField.Name).GetValue(target);
             object conditionFieldValue = conditionField.GetValue(conditions);
 #if DEBUG
-            ModLog.Warn($"Checking field `{conditionField.Name}`! \n  `{targetFieldValue}` V.S. `{conditionFieldValue}` = {targetFieldValue.Equals(conditionFieldValue)}");
+            ModLog.Info($"Checking field `{conditionField.Name}`! \n  `{targetFieldValue}` V.S. `{conditionFieldValue}` = {targetFieldValue.Equals(conditionFieldValue)}");
 #endif
             if (!targetFieldValue.Equals(conditionFieldValue))
                 return false;

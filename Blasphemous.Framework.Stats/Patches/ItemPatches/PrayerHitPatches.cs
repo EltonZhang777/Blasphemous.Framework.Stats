@@ -2,6 +2,7 @@
 using Blasphemous.ModdingAPI;
 using Framework.Managers;
 using Gameplay.GameControllers.Bosses.CommonAttacks;
+using Gameplay.GameControllers.Bosses.Quirce.Attack;
 using Gameplay.GameControllers.Enemies.BellGhost;
 using Gameplay.GameControllers.Enemies.Projectiles;
 using Gameplay.GameControllers.Entities;
@@ -12,6 +13,63 @@ using Tools.Items;
 using UnityEngine;
 
 namespace Blasphemous.Framework.Stats.Patches.ItemPatches;
+
+[HarmonyPatch(typeof(PenitentDivineLightEffect))]
+class PR09_HitPatch
+{
+    [HarmonyPatch("OnApplyEffect")]
+    [HarmonyPrefix]
+    public static bool Prefix(
+        PenitentDivineLightEffect __instance,
+        Penitent ____owner,
+        BossAreaSummonAttack ____areaSummonAttack,
+        bool __result)
+    {
+        if (!HitData.IsActive())
+            return true;
+
+#if DEBUG
+        ModLog.Warn($"Modifying PR09 hit!");
+#endif
+        ____owner = Core.Logic.Penitent;
+        ____areaSummonAttack = ____owner.GetComponentInChildren<PrayerUse>().divineLightPrayer;
+
+        ____areaSummonAttack.SetDamageStrength(1);
+        Main.SetValueIfNotNull(ref ____areaSummonAttack, "seconds", totalPrayerDuration, Main.TraverseAccessType.Field);
+        Main.SetValueIfNotNull(ref ____areaSummonAttack, "offset", initialOffsetScale, Main.TraverseAccessType.Field);
+        Main.SetValueIfNotNull(ref ____areaSummonAttack, "totalAreas", totalLightningBoltsCount, Main.TraverseAccessType.Field);
+        Main.SetValueIfNotNull(ref ____areaSummonAttack, "distanceBetweenAreas", distanceBetweenLightningBolts, Main.TraverseAccessType.Field);
+        Main.SetValue(ref ____areaSummonAttack, "poolSize", lightningBoltPoolSize, Main.TraverseAccessType.Field);
+
+#if DEBUG
+        ModLog.Warn($"total prayer duration when patching: {Traverse.Create(____areaSummonAttack).Field("seconds").GetValue<float>()}");
+        ModLog.Warn($"total prayer duration when patching: {____areaSummonAttack.seconds}");
+#endif
+        // summon lightning
+        ____areaSummonAttack.StartCoroutine(____areaSummonAttack.CustomHitLightningStormCoroutine(HitData, Core.Logic.Penitent.transform.position, Vector2.right));  //____areaSummonAttack.SummonAreas(Vector2.right);
+        ____areaSummonAttack.StartCoroutine(____areaSummonAttack.CustomHitLightningStormCoroutine(HitData, Core.Logic.Penitent.transform.position, Vector2.left));  //____areaSummonAttack.SummonAreas(Vector2.left);
+
+        Core.Logic.CameraManager.ProCamera2DShake.ShakeUsingPreset("SimpleHit");
+
+        __result = false;
+        return false;
+    }
+
+    public static HitPatchData HitData => PatchController.Hits.PR09;
+    /// <summary>
+    /// Total duration of the lightning storm, from start to finish
+    /// </summary>
+    public static float? totalPrayerDuration;
+
+    /// <summary>
+    /// Scale multiplier for the offset at which the lightning bolts will begin to be spawned from the penitent's position.
+    /// </summary>
+    public static float? initialOffsetScale;
+
+    public static int? totalLightningBoltsCount;
+    public static float? distanceBetweenLightningBolts;
+    public static int lightningBoltPoolSize;
+}
 
 [HarmonyPatch(typeof(PenitentAreaAttack))]
 class PR12_HitPatch

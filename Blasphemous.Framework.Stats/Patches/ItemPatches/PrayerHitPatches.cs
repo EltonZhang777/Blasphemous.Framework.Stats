@@ -9,11 +9,82 @@ using Gameplay.GameControllers.Entities;
 using Gameplay.GameControllers.Penitent;
 using Gameplay.GameControllers.Penitent.Abilities;
 using HarmonyLib;
+using System.Collections;
 using Tools.Items;
 using UnityEngine;
 
 namespace Blasphemous.Framework.Stats.Patches.ItemPatches;
 
+/// <summary>
+/// Patch for PR03: Debla of the Lights
+/// </summary>
+[HarmonyPatch(typeof(PenitentLightBeamEffect))]
+class PR03_HitPatch
+{
+    [HarmonyPatch("OnApplyEffect")]
+    [HarmonyPrefix]
+    public static bool Prefix(
+        PenitentLightBeamEffect __instance,
+        bool __result,
+        Penitent ____owner,
+        BossAreaSummonAttack ____areaSummonAttack,
+        Material ___oldMat)
+    {
+        if (!HitData.IsActive())
+            return true;
+
+#if DEBUG
+        ModLog.Warn($"Modifying PR03 hit!");
+#endif
+
+        ____owner = Core.Logic.Penitent;
+        ____areaSummonAttack = ____owner.GetComponentInChildren<PrayerUse>().lightBeamPrayer;
+
+
+        // create new material for casting tint
+        Material castingMaterial = new Material(penitentCastingTintMaterial);
+        castingMaterial.color = penitentColorWhileCasting;
+        __instance.penitentBlueTintMaterial = castingMaterial;
+
+#if DEBUG
+        ModLog.Info($"Tint color while casting PR03: {__instance.penitentBlueTintMaterial.color}");
+        ModLog.Info($"Shader while casting PR03: {__instance.penitentBlueTintMaterial.shader}");
+#endif
+        Core.Logic.CameraManager.ProCamera2DShake.ShakeUsingPreset("SimpleHit");
+        BossAreaSummonAttack areaSummonAttack = ____areaSummonAttack;
+        Vector3 position = ____areaSummonAttack.transform.position;
+        areaSummonAttack.InstantiateDeblaBeamWithCustomHit(HitData, areaSummonAttack.areaPrefab, position);
+        __instance.StartCoroutine(ChangePenitentTintCoroutine());
+        __result = false;
+        return false;
+
+        IEnumerator ChangePenitentTintCoroutine()
+        {
+            yield return new WaitForSeconds(0.4f);
+            ___oldMat = ____owner.SpriteRenderer.material;
+            ____owner.SpriteRenderer.material = __instance.penitentBlueTintMaterial;
+
+            yield return new WaitForSeconds(0.8f);
+            ____owner.SpriteRenderer.material = ___oldMat;
+            yield break;
+        }
+    }
+
+    public static void GetTintMaterial()
+    {
+        PenitentLightBeamEffect pr03 = Core.InventoryManager.GetInventoryItemFromId("PR03")
+            .gameObject.GetComponent<PenitentLightBeamEffect>();
+        penitentCastingTintMaterial = pr03.penitentBlueTintMaterial;
+    }
+
+    public static HitPatchData HitData => PatchController.Hits.PR03;
+    public static Color penitentColorWhileCasting;
+    public static Material penitentCastingTintMaterial;
+}
+
+/// <summary>
+/// Patch for PR09: Taranto to My Sister
+/// </summary>
 [HarmonyPatch(typeof(PenitentDivineLightEffect))]
 class PR09_HitPatch
 {
@@ -36,7 +107,7 @@ class PR09_HitPatch
 
         ____areaSummonAttack.SetDamageStrength(1);
         Main.SetValueIfNotNull(ref ____areaSummonAttack, "seconds", totalPrayerDuration, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref ____areaSummonAttack, "offset", initialOffsetScale, Main.TraverseAccessType.Field);
+        Main.SetValueIfNotNull(ref ____areaSummonAttack, "offset", initialXOffsetScale, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref ____areaSummonAttack, "totalAreas", totalLightningBoltsCount, Main.TraverseAccessType.Field);
         Main.SetValueIfNotNull(ref ____areaSummonAttack, "distanceBetweenAreas", distanceBetweenLightningBolts, Main.TraverseAccessType.Field);
         Main.SetValue(ref ____areaSummonAttack, "poolSize", lightningBoltPoolSize, Main.TraverseAccessType.Field);
@@ -64,13 +135,16 @@ class PR09_HitPatch
     /// <summary>
     /// Scale multiplier for the offset at which the lightning bolts will begin to be spawned from the penitent's position.
     /// </summary>
-    public static float? initialOffsetScale;
+    public static float? initialXOffsetScale;
 
     public static int? totalLightningBoltsCount;
     public static float? distanceBetweenLightningBolts;
     public static int lightningBoltPoolSize;
 }
 
+/// <summary>
+/// Patch for PR12: Cante Jondo of the Three Sisters
+/// </summary>
 [HarmonyPatch(typeof(PenitentAreaAttack))]
 class PR12_HitPatch
 {
@@ -95,6 +169,9 @@ class PR12_HitPatch
 }
 
 
+/// <summary>
+/// Patch for PR14: Verdiales of the Forsaken Hamlet
+/// </summary>
 [HarmonyPatch(typeof(PenitentCrawlerOrbsEffect))]
 class PR14_HitPatch
 {

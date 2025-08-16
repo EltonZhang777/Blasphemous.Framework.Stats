@@ -241,28 +241,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
             GetValueFrom(obj);
         }
 
-        // Apply additions
-        foreach (ObjectEffectValues addition in effectAdditions)
-        {
-            if (!TryFindTypeOrBaseTypeFromList(addition.GetType(), JsonTypeToScriptType.Keys.ToList(), out Type finalJsonType))
-            {
-                ModLog.Error($"Failed to create MonoBehavior from JSON type `{addition.GetType()}`!");
-                continue;
-            }
-            MonoBehaviour mb = obj.gameObject.AddComponent(JsonTypeToScriptType[finalJsonType]) as MonoBehaviour;
-            if (mb == null)
-            {
-                ModLog.Error($"Failed to create MonoBehavior from JSON type `{addition.GetType()}`!");
-                continue;
-            }
-#if DEBUG
-            ModLog.Warn($"Adding MonoBehavior of type `{mb.GetType()}` to inventory object `{obj.id}`!");
-#endif
-            addition.SetValueTo(mb);
-            modMonoBehaviors.Add(mb);
-        }
-
-        // Apply deletions
+        // Apply deletions before additions
         foreach (ObjectEffectValues vanillaEffect in vanillaEffectsToIsDeleted.Keys.ToList())
         {
             foreach (ObjectEffectValues deletion in effectDeletions)
@@ -297,6 +276,27 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 #endif
                 break;
             }
+        }
+
+        // Apply additions
+        foreach (ObjectEffectValues addition in effectAdditions)
+        {
+            if (!TryFindTypeOrBaseTypeFromList(addition.GetType(), JsonTypeToScriptType.Keys.ToList(), out Type finalJsonType))
+            {
+                ModLog.Error($"Failed to create MonoBehavior from JSON type `{addition.GetType()}`!");
+                continue;
+            }
+            MonoBehaviour mb = obj.gameObject.AddComponent(JsonTypeToScriptType[finalJsonType]) as MonoBehaviour;
+            if (mb == null)
+            {
+                ModLog.Error($"Failed to create MonoBehavior from JSON type `{addition.GetType()}`!");
+                continue;
+            }
+#if DEBUG
+            ModLog.Warn($"Adding MonoBehavior of type `{mb.GetType()}` to inventory object `{obj.id}`!");
+#endif
+            addition.SetValueTo(mb);
+            modMonoBehaviors.Add(mb);
         }
     }
 

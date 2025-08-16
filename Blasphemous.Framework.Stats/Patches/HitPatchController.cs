@@ -12,6 +12,14 @@ namespace Blasphemous.Framework.Stats.Patches;
 /// </summary>
 internal class HitPatchController
 {
+    internal HitPatchData PR03 = new()
+    {
+        baseDamage = 0f,
+        attackDamageMultiplier = 0f,
+        prayerBonusEfficiency = 1f,
+        IsActive = AnyActiveModificationOf<PenitentLightBeamEffectValues>
+    };
+
     internal HitPatchData PR09 = new()
     {
         baseDamage = 0f,

@@ -4,6 +4,7 @@ using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Commands;
 using Blasphemous.Framework.Stats.Extensions;
 using Blasphemous.Framework.Stats.Patches;
+using Blasphemous.Framework.Stats.Patches.ItemPatches;
 using Blasphemous.Framework.Stats.StatsPatching;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
@@ -26,6 +27,8 @@ public class StatsFramework : BlasMod
 
     internal delegate void StandardEvent();
     internal event StandardEvent OnLateUpdateEvent;
+
+    private static bool _firstLevelLoadedFlag = false;
 
     internal StatsFramework()
         : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION)
@@ -75,6 +78,14 @@ public class StatsFramework : BlasMod
     /// <inheritdoc/>
     protected override void OnLevelLoaded(string oldLevel, string newLevel)
     {
+        if (!_firstLevelLoadedFlag)
+        {
+            _firstLevelLoadedFlag = true;
+
+            // Do initialization work when a game scene is loaded for the first time
+            PR03_HitPatch.GetTintMaterial();
+        }
+
         if (SceneHelper.GameSceneLoaded)
         {
             PatchController.PatchItemStats();

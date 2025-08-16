@@ -41,7 +41,9 @@ internal static class ModHitExtensions
         Traverse.Create(projectileWeapon).Field("weaponHit").SetValue(hit);
     }
 
-
+    /// <summary>
+    /// For PR09: Taranto to My Sister
+    /// </summary>
     internal static IEnumerator CustomHitLightningStormCoroutine(
         this BossAreaSummonAttack bossAreaSummonAttack,
         HitPatchData hitData,
@@ -97,6 +99,9 @@ internal static class ModHitExtensions
         }
     }
 
+    /// <summary>
+    /// For PR09: Taranto to My Sister
+    /// </summary>
     internal static GameObject InstantiateLightningBoltWithCustomHit(
         this BossAreaSummonAttack bossAreaSummonAttack,
         HitPatchData hitData,
@@ -114,6 +119,44 @@ internal static class ModHitExtensions
 
             // create modded hit
             Hit moddedHit = hitData.CreateHit();
+            component.CreateHit();
+            Hit vanillaHit = Traverse.Create(component).Field("_hit").GetValue<Hit>();
+            moddedHit.AttackingEntity = vanillaHit.AttackingEntity;
+            Traverse.Create(component).Field("_hit").SetValue(moddedHit);
+        }
+        if (bossAreaSummonAttack.instantiations == null)
+        {
+            bossAreaSummonAttack.instantiations = new List<GameObject>();
+        }
+        if (!bossAreaSummonAttack.instantiations.Contains(gameObject))
+        {
+            bossAreaSummonAttack.instantiations.Add(gameObject);
+        }
+        return gameObject;
+    }
+
+
+    /// <summary>
+    /// For PR03: Debla of the Lights
+    /// </summary>
+    internal static GameObject InstantiateDeblaBeamWithCustomHit(
+        this BossAreaSummonAttack bossAreaSummonAttack,
+        HitPatchData hitData,
+        GameObject toInstantiate,
+        Vector3 point,
+        float angle = 0f)
+    {
+        Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+        GameObject gameObject = PoolManager.Instance.ReuseObject(toInstantiate, point, rotation, false, 1).GameObject;
+        BossSpawnedAreaAttack component = gameObject.GetComponent<BossSpawnedAreaAttack>();
+        if (component != null)
+        {
+            component.SetOwner(bossAreaSummonAttack.EntityOwner);
+            component.SetDamageStrength(1f);
+
+            // create modded hit
+            Hit moddedHit = hitData.CreateHit();
+            component.CreateHit();
             Hit vanillaHit = Traverse.Create(component).Field("_hit").GetValue<Hit>();
             moddedHit.AttackingEntity = vanillaHit.AttackingEntity;
             Traverse.Create(component).Field("_hit").SetValue(moddedHit);

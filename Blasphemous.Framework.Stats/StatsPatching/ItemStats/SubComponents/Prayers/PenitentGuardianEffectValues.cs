@@ -9,6 +9,11 @@ namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Pray
 /// </summary>
 public class PenitentGuardianEffectValues : ObjectEffectValues, IAccessible_Class<PenitentGuardianEffect>
 {
+    /// <summary>
+    /// Y offset of the thorned lady VFX to Penitent
+    /// </summary>
+    public float? yOffset;
+
     public void GetValueFrom(PenitentGuardianEffect obj)
     {
         if (!Main.Validate(obj, x => x != null))
@@ -16,6 +21,7 @@ public class PenitentGuardianEffectValues : ObjectEffectValues, IAccessible_Clas
 
         base.GetValueFrom(obj);
 
+        yOffset = Main.GetValue<float>(obj, "YOffset", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(PenitentGuardianEffect obj)
@@ -25,6 +31,7 @@ public class PenitentGuardianEffectValues : ObjectEffectValues, IAccessible_Clas
 
         base.SetValueTo(obj);
 
+        Main.SetValueIfNotNull(ref obj, "YOffset", yOffset, Main.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

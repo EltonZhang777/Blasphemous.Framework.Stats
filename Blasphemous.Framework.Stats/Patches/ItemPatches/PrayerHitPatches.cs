@@ -46,10 +46,6 @@ class PR03_HitPatch
         castingMaterial.color = penitentColorWhileCasting;
         __instance.penitentBlueTintMaterial = castingMaterial;
 
-#if DEBUG
-        ModLog.Info($"Tint color while casting PR03: {__instance.penitentBlueTintMaterial.color}");
-        ModLog.Info($"Shader while casting PR03: {__instance.penitentBlueTintMaterial.shader}");
-#endif
         Core.Logic.CameraManager.ProCamera2DShake.ShakeUsingPreset("SimpleHit");
         BossAreaSummonAttack areaSummonAttack = ____areaSummonAttack;
         Vector3 position = ____areaSummonAttack.transform.position;

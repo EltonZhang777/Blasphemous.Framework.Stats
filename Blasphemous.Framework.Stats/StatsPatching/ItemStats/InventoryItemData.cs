@@ -36,6 +36,11 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     public BaseInventoryObjectValues inheritenceSettings;
 
     /// <summary>
+    /// Fervour cost for prayers
+    /// </summary>
+    public int? fervourCost;
+
+    /// <summary>
     /// List of <see cref="ObjectEffectValues"/> that will be added to the item.
     /// </summary>
     public List<ObjectEffectValues> effectAdditions = new();
@@ -121,6 +126,11 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         { typeof(ChaliceEffect), typeof(ChaliceEffectValues) },
     };
 
+    /// <summary>
+    /// Stores vanilla fervour cost, if this inventory object is a prayer.
+    /// </summary>
+    private int _vanillaFervourCost;
+
     internal static Dictionary<Type, Type> JsonTypeToScriptType
     {
         get
@@ -203,6 +213,15 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 #endif
                     data.GetValueFrom((BaseInventoryObject)mb);
                     inheritenceSettings = data;
+
+                    // if this is a prayer, get fervour cost
+                    if (mb as Prayer != null)
+                    {
+                        Prayer prayer = mb as Prayer;
+                        fervourCost = prayer.fervourNeeded;
+                        _vanillaFervourCost = prayer.fervourNeeded;
+                    }
+
                     break;
                 default:
 #if DEBUG
@@ -232,8 +251,14 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 
         isApplied = true;
 
-        // Write inheritenceSettings before it is overwritten by the following step
+        // Write inheritenceSettings before it is overwritten by the following data backup step
         inheritenceSettings?.SetValueTo(obj);
+
+        // Apply fervour cost change before it is overwritten by the following data backup step
+        if (fervourCost.HasValue && obj is Prayer prayer)
+        {
+            prayer.fervourNeeded = fervourCost.Value;
+        }
 
         // Get MonoBehaviors attached to the inventory object and serialize them for comparison
         if (vanillaMonoBehaviors == null || vanillaMonoBehaviors?.Count == 0)
@@ -277,6 +302,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
                 break;
             }
         }
+
 
         // Apply additions
         foreach (ObjectEffectValues addition in effectAdditions)
@@ -323,6 +349,12 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 
         // Revert inheritenceSettings
         new BaseInventoryObjectValues() { carryOnStart = false, preserveInNewGamePlus = true }.SetValueTo(obj);
+
+        // Revert fervour cost
+        if (obj is Prayer prayer)
+        {
+            prayer.fervourNeeded = _vanillaFervourCost;
+        }
 
         // Revert additions
         foreach (MonoBehaviour mb in modMonoBehaviors)

@@ -32,6 +32,10 @@ public class HitPatchData
         new KeyValuePair<float?, float?>(BaseAttackDamage, attackDamageMultiplier),
         new KeyValuePair<float?, float?>(basePrayerDamage, HitPatchController.CalculatePrayerDamageMultiplier(prayerBonusEfficiency)));
 
+    /// <summary>
+    /// Create a <see cref="Hit"/> with the values of this instance. 
+    /// Null values in this instance are set to default values in the resulting Hit.
+    /// </summary>
     public Hit CreateHit()
     {
         Hit result = hitValues.CreateHitFromValues();
@@ -41,6 +45,10 @@ public class HitPatchData
         return result;
     }
 
+    /// <summary>
+    /// Create a <see cref="Hit"/> with the values of this instance, using another Hit as reference. 
+    /// Null values in this instance are set to the corresponding values of the reference Hit.
+    /// </summary>
     public Hit CreateHit(Hit originalHit)
     {
         Hit result = originalHit;

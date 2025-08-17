@@ -118,9 +118,9 @@ internal static class ModHitExtensions
             component.SetDamageStrength(1f);
 
             // create modded hit
-            Hit moddedHit = hitData.CreateHit();
             component.CreateHit();
             Hit vanillaHit = Traverse.Create(component).Field("_hit").GetValue<Hit>();
+            Hit moddedHit = hitData.CreateHit(vanillaHit);
             moddedHit.AttackingEntity = vanillaHit.AttackingEntity;
             Traverse.Create(component).Field("_hit").SetValue(moddedHit);
         }
@@ -155,9 +155,9 @@ internal static class ModHitExtensions
             component.SetDamageStrength(1f);
 
             // create modded hit
-            Hit moddedHit = hitData.CreateHit();
             component.CreateHit();
             Hit vanillaHit = Traverse.Create(component).Field("_hit").GetValue<Hit>();
+            Hit moddedHit = hitData.CreateHit(vanillaHit);
             moddedHit.AttackingEntity = vanillaHit.AttackingEntity;
             Traverse.Create(component).Field("_hit").SetValue(moddedHit);
         }
@@ -170,5 +170,16 @@ internal static class ModHitExtensions
             bossAreaSummonAttack.instantiations.Add(gameObject);
         }
         return gameObject;
+    }
+
+    internal static void CreateLorquianaModdedHit(
+        this BossInstantProjectileAttack bossInstantProjectileAttack,
+        HitPatchData hitData)
+    {
+        bossInstantProjectileAttack.CreateHit();
+        Hit vanillaHit = Traverse.Create(bossInstantProjectileAttack).Field("_hit").GetValue<Hit>();
+        Hit moddedHit = hitData.CreateHit(vanillaHit);
+        moddedHit.AttackingEntity = vanillaHit.AttackingEntity;
+        Traverse.Create(bossInstantProjectileAttack).Field("_hit").SetValue(moddedHit);
     }
 }

@@ -78,19 +78,17 @@ public class StatsFramework : BlasMod
     /// <inheritdoc/>
     protected override void OnLevelLoaded(string oldLevel, string newLevel)
     {
-        if (!_firstLevelLoadedFlag)
-        {
-            _firstLevelLoadedFlag = true;
-
-            // Do initialization work when a game scene is loaded for the first time
-            PR03_HitPatch.GetTintMaterial();
-        }
-
         if (SceneHelper.GameSceneLoaded)
         {
-            PatchController.PatchItemStats();
-            PatchController.PatchEnemyStats();
-            PatchController.PatchPenitentStats();
+            if (!_firstLevelLoadedFlag)
+            {
+                _firstLevelLoadedFlag = true;
+
+                // Do initialization work when a game scene is loaded for the first time
+                PR03_HitPatch.GetTintMaterial();
+            }
+
+            PatchController.PatchAllStats();
         }
     }
 

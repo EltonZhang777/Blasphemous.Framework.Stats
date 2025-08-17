@@ -16,6 +16,16 @@ internal static class PatchController
     internal static HitPatchController Hits { get; set; } = new();
 
     /// <summary>
+    /// Patch all active stats patches.
+    /// </summary>
+    internal static void PatchAllStats()
+    {
+        PatchPenitentStats();
+        PatchEnemyStats();
+        PatchItemStats();
+    }
+
+    /// <summary>
     /// Gets all living enemies and patch their stats with active stats patches.
     /// </summary>
     internal static void PatchEnemyStats()
@@ -32,7 +42,7 @@ internal static class PatchController
     }
 
     /// <summary>
-    /// Patch all active stats patches to penitent.
+    /// Patch all active Penitent stats patches to penitent object.
     /// </summary>
     internal static void PatchPenitentStats()
     {

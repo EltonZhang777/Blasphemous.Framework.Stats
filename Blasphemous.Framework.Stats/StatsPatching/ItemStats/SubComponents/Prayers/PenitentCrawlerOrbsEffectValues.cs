@@ -19,8 +19,11 @@ public class PenitentCrawlerOrbsEffectValues : ObjectEffectValues, IAccessible_C
 
         base.GetValueFrom(obj);
 
-        hitData = new();
-        hitData.basePrayerDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field);
+        hitData = new()
+        {
+            basePrayerDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field),
+            prayerBonusEfficiency = 1f
+        };
     }
 
     public void SetValueTo(PenitentCrawlerOrbsEffect obj)

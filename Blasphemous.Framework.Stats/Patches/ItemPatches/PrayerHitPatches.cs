@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Extensions;
 using Blasphemous.ModdingAPI;
+using Framework.FrameworkCore;
 using Framework.Managers;
 using Gameplay.GameControllers.Bosses.CommonAttacks;
 using Gameplay.GameControllers.Bosses.Quirce.Attack;
@@ -79,6 +80,112 @@ class PR03_HitPatch
 }
 
 /// <summary>
+/// Patch for PR07: Lorquiana
+/// </summary>
+[HarmonyPatch(typeof(PenitentMultishotEffect))]
+class PR07_HitPatch
+{
+    [HarmonyPatch("OnApplyEffect")]
+    [HarmonyPrefix]
+    public static bool Prefix(
+        PenitentMultishotEffect __instance,
+        Penitent ____owner,
+        BossInstantProjectileAttack ____instantProjectileAttack,
+        bool __result)
+    {
+        if (!HitData.IsActive())
+            return true;
+
+#if DEBUG
+        ModLog.Warn($"Modifying PR07 hit!");
+#endif
+        __instance.StartCoroutine(LorquianaCoroutine());
+
+        __result = false;
+        return false;
+
+        IEnumerator LorquianaCoroutine()
+        {
+            ____owner = Core.Logic.Penitent;
+            ____instantProjectileAttack = ____owner.GetComponentInChildren<PrayerUse>().multishotPrayer;
+
+            // modify slowTimeDuration and shotSound
+            Main.SetValueIfNotNull(ref ____instantProjectileAttack, "slowTimeDuration", slowTimeDuration, Main.TraverseAccessType.Field);
+            Main.SetValueIfNotNull(ref ____instantProjectileAttack, "shotSound", beamShootSound, Main.TraverseAccessType.Field);
+            /*
+            if (slowTimeDuration.HasValue)
+                ____instantProjectileAttack.slowTimeDuration = slowTimeDuration.Value;
+            if (!string.IsNullOrEmpty(beamShootSound))
+                ____instantProjectileAttack.shotSound = beamShootSound;
+            */
+
+            // generate modded hit and apply it to the shots
+            ____instantProjectileAttack.SetDamageStrength(1f);
+            ____instantProjectileAttack.CreateLorquianaModdedHit(HitData);
+
+            // initialize position
+            Vector3 projectilePosition;
+            Vector2 projectileDirection;
+            InitializeProjectilePosition(____instantProjectileAttack, ____owner.Status.Orientation, out projectilePosition, out projectileDirection);
+
+            // first beam shot
+            ____instantProjectileAttack.Shoot(projectilePosition, projectileDirection);
+
+            // repeat beam shots until count is reached
+            for (int beamsFired = 1; beamsFired < BeamsCount; beamsFired++)
+            {
+                yield return new WaitForSeconds(DelayBetweenBeamsSeconds);
+                InitializeProjectilePosition(____instantProjectileAttack, ____owner.Status.Orientation, out projectilePosition, out projectileDirection);
+                ____instantProjectileAttack.Shoot(projectilePosition + Vector3.up * GetRandomOffset(-1f, 1f), projectileDirection);
+            }
+
+            yield break;
+        }
+
+        float GetRandomOffset(float min, float max)
+        {
+            return UnityEngine.Random.Range(min, max);
+        }
+
+        void InitializeProjectilePosition(
+            BossInstantProjectileAttack bossInstantProjectileAttack,
+            EntityOrientation orientation,
+            out Vector3 position,
+            out Vector2 direction)
+        {
+            direction = Main.EntityOrientationToDirectionalVector(____owner.Status.Orientation);
+            bossInstantProjectileAttack.transform.localPosition = direction;
+            position = bossInstantProjectileAttack.transform.position;
+        }
+    }
+
+    public static HitPatchData HitData => PatchController.Hits.PR07;
+
+    /// <summary>
+    /// Total number of beams fired by the prayer
+    /// </summary>
+    public static int? beamsCount;
+
+    /// <summary>
+    /// Delay between each beam shot in seconds
+    /// </summary>
+    public static float? delayBetweenHitsSeconds;
+
+    /// <summary>
+    /// The duration in which time is slowed when a beam hits a target
+    /// </summary>
+    public static float? slowTimeDuration;
+
+    /// <summary>
+    /// Sound played when a beam is shot
+    /// </summary>
+    public static string beamShootSound;
+
+    private static int BeamsCount => beamsCount.HasValue ? beamsCount.Value : 3;
+    private static float DelayBetweenBeamsSeconds => delayBetweenHitsSeconds.HasValue ? delayBetweenHitsSeconds.Value : 0.15f;
+}
+
+/// <summary>
 /// Patch for PR09: Taranto to My Sister
 /// </summary>
 [HarmonyPatch(typeof(PenitentDivineLightEffect))]
@@ -123,6 +230,7 @@ class PR09_HitPatch
     }
 
     public static HitPatchData HitData => PatchController.Hits.PR09;
+
     /// <summary>
     /// Total duration of the lightning storm, from start to finish
     /// </summary>

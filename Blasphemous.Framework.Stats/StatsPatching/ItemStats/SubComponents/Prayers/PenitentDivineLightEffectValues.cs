@@ -59,8 +59,11 @@ public class PenitentDivineLightEffectValues : ObjectEffectValues, IAccessible_C
         totalLightningBoltsCount = Main.GetValue<int>(AreaSummonAttackTraverse, "totalAreas", Main.TraverseAccessType.Field);
         distanceBetweenLightningBolts = Main.GetValue<float>(AreaSummonAttackTraverse, "distanceBetweenAreas", Main.TraverseAccessType.Field);
 
-        hitData = new();
-        hitData.basePrayerDamage = (float)Main.GetValue<int>(AreaSummonAttackTraverse, "SpawnedAreaAttackDamage", Main.TraverseAccessType.Field);
+        hitData = new()
+        {
+            basePrayerDamage = (float)Main.GetValue<int>(AreaSummonAttackTraverse, "SpawnedAreaAttackDamage", Main.TraverseAccessType.Field),
+            prayerBonusEfficiency = 1f
+        };
     }
 
     public void SetValueTo(PenitentDivineLightEffect obj)

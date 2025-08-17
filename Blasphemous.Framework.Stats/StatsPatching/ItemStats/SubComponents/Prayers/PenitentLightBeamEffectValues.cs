@@ -24,8 +24,11 @@ public class PenitentLightBeamEffectValues : ObjectEffectValues, IAccessible_Cla
         base.GetValueFrom(obj);
 
         penitentColorWhileCasting = _vanillaDefaultColor;
-        hitData = new();
-        hitData.basePrayerDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field);
+        hitData = new()
+        {
+            basePrayerDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field),
+            prayerBonusEfficiency = 1f
+        };
     }
 
     public void SetValueTo(PenitentLightBeamEffect obj)

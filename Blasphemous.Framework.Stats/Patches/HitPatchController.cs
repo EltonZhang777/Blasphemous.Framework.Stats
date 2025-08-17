@@ -20,6 +20,14 @@ internal class HitPatchController
         IsActive = AnyActiveModificationOf<PenitentLightBeamEffectValues>
     };
 
+    internal HitPatchData PR07 = new()
+    {
+        baseDamage = 0f,
+        attackDamageMultiplier = 0f,
+        prayerBonusEfficiency = 0.35f,
+        IsActive = AnyActiveModificationOf<PenitentMultishotEffectValues>
+    };
+
     internal HitPatchData PR09 = new()
     {
         baseDamage = 0f,

@@ -36,13 +36,15 @@ public class PenitentAreaAttackValues : ObjectEffectValues, IAccessible_Class<Pe
 
         base.GetValueFrom(obj);
 
-        hitData = new();
 
         attackRangeRadius = Main.GetValue<float>(obj, "Radius", Main.TraverseAccessType.Field);
         delayBetweenHitsSeconds = Main.GetValue<float>(obj, "damageDelay", Main.TraverseAccessType.Field);
         slowTimeDuration = Main.GetValue<float>(obj, "slowTimeDuration", Main.TraverseAccessType.Field);
 
-        hitData.basePrayerDamage = Main.GetValue<float>(obj, "Amount", Main.TraverseAccessType.Field);
+        hitData = new()
+        {
+            basePrayerDamage = Main.GetValue<float>(obj, "Amount", Main.TraverseAccessType.Field)
+        };
 
         // make the target create hit before getting the hit
         Traverse.Create(obj).Method("CreateHit").GetValue(null);

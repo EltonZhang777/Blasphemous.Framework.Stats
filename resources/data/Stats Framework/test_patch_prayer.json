@@ -201,6 +201,36 @@
           "activationFxSound": ""
         }
       ]
+    },
+
+    
+    {
+      "itemId": "PR07",
+      "effectAdditions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentMultishotEffectValues, StatsFramework",
+          "beamsCount": 24,
+          "delayBetweenHitsSeconds": 0.067,
+          "slowTimeDuration": 0.02,
+          "hitData": {
+            "basePrayerDamage": 80.0,
+            "prayerBonusEfficiency": 1.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageType": "Normal",
+              "damageElement": "Fire"
+            }
+          }
+        }
+      ],
+      "effectDeletions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentMultishotEffectValues, StatsFramework",
+          "pingTime": 0.4
+        }
+      ]
     }
+
+
   ]
 }

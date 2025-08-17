@@ -1,4 +1,9 @@
 ﻿using Blasphemous.Framework.Stats.Components;
+using Blasphemous.Framework.Stats.Patches;
+using Blasphemous.Framework.Stats.Patches.ItemPatches;
+using Framework.Managers;
+using Gameplay.GameControllers.Bosses.Quirce.Attack;
+using Gameplay.GameControllers.Penitent.Abilities;
 using Tools.Items;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
@@ -9,12 +14,46 @@ namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Pray
 /// </summary>
 public class PenitentMultishotEffectValues : ObjectEffectValues, IAccessible_Class<PenitentMultishotEffect>
 {
+    /// <summary>
+    /// Total number of beams fired by the prayer
+    /// </summary>
+    public int? beamsCount;
+
+    /// <summary>
+    /// Delay between each beam shot in seconds
+    /// </summary>
+    public float? delayBetweenHitsSeconds;
+
+    /// <summary>
+    /// The duration in which time is slowed when a beam hits a target
+    /// </summary>
+    public float? slowTimeDuration;
+
+    /// <summary>
+    /// Sound played when a beam is shot
+    /// </summary>
+    public string beamShootSound;
+
+    public HitPatchData hitData;
+
     public void GetValueFrom(PenitentMultishotEffect obj)
     {
         if (!Main.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
+
+        beamsCount = 3;
+        delayBetweenHitsSeconds = 0.15f;
+        hitData = new()
+        {
+            basePrayerDamage = Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field),
+            prayerBonusEfficiency = 0.35f
+        };
+
+        BossInstantProjectileAttack bossInstantProjectileAttack = Core.Logic.Penitent.GetComponentInChildren<PrayerUse>().multishotPrayer;
+        slowTimeDuration = Main.GetValue<float>(bossInstantProjectileAttack, "slowTimeDuration", Main.TraverseAccessType.Field);
+        beamShootSound = Main.GetValue<string>(bossInstantProjectileAttack, "shotSound", Main.TraverseAccessType.Field);
     }
 
     public void SetValueTo(PenitentMultishotEffect obj)
@@ -23,6 +62,13 @@ public class PenitentMultishotEffectValues : ObjectEffectValues, IAccessible_Cla
             return;
 
         base.SetValueTo(obj);
+
+        PR07_HitPatch.beamsCount = beamsCount;
+        PR07_HitPatch.delayBetweenHitsSeconds = delayBetweenHitsSeconds;
+        hitData.CopyNonNullValuesTo(PatchController.Hits.PR07);
+
+        PR07_HitPatch.slowTimeDuration = slowTimeDuration;
+        PR07_HitPatch.beamShootSound = beamShootSound;
     }
 
     public override void GetValueFrom(object obj)

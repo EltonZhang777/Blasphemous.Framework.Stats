@@ -2,6 +2,8 @@
 
 How the engineering skills should consume this repo's domain documentation when exploring the codebase.
 
+> **注（本仓库）**：领域词汇（glossary）已内嵌于根 `AGENTS.md` 的「领域词汇」节，本仓库不再有独立 `CONTEXT.md`；ADR 存于 `docs/adr/`（本地，gitignore 不进 git）。以下模板描述通用 single/multi-context 布局。
+
 ## Before exploring, read these
 
 - **`CONTEXT.md`** at the repo root, or

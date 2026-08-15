@@ -73,3 +73,17 @@ dotnet build Blasphemous.Framework.Stats.sln -c Debug
 - 开发在 `experimental` 分支；`main` 通过 PR 合入。
 - **commit / push / PR 前必须先征求用户批准**（用户硬性要求，禁止自行 commit）。
 - commit message 一律**全英文**（subject + body），格式遵循 conventional commits（`feat:`/`fix:`/`refactor:` 等，仓库历史即如此）。
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live as GitHub issues; use the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five labels: needs-triage / needs-info / ready-for-agent / ready-for-human / wontfix. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.

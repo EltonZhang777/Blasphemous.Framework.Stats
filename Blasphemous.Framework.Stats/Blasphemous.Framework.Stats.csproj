@@ -40,21 +40,24 @@
     <!-- Get plugin & resources -->
     <ItemGroup>
       <PluginDll Include="$(TargetPath)" />
+      <!-- Copy the NewbieEltonLibs dependency DLL alongside the plugin (game needs it at runtime) -->
+      <LibDeps Include="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)' == 'Blasphemous.NewbieEltonLibs'" />
       <Resources Include="$(SolutionDir)\resources\**\*.*" />
     </ItemGroup>
-    
+
     <!-- Clear export folder -->
     <RemoveDir Directories="$(ExportFolder)" />
-    
+
     <!-- Copy plugin & resources to dev folder -->
     <Copy SourceFiles="@(Resources)" DestinationFolder="$(ExportFolder)\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(PluginDll)" DestinationFolder="$(ExportFolder)\plugins" SkipUnchangedFiles="true" />
-    
+    <Copy SourceFiles="@(LibDeps)" DestinationFolder="$(ExportFolder)\plugins" SkipUnchangedFiles="true" />
+
     <!-- Copy plugin & resources to export folder -->
     <Copy SourceFiles="@(Resources)" DestinationFolder="$(DevFolder)\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(PluginDll)" DestinationFolder="$(DevFolder)\plugins" SkipUnchangedFiles="true" />
-    
-    <!-- Zip export folder -->
+    <Copy SourceFiles="@(LibDeps)" DestinationFolder="$(DevFolder)\plugins" SkipUnchangedFiles="true" />
+
     <ZipDirectory SourceDirectory="$(ExportFolder)" DestinationFile="$(ExportFolder)\..\$(TargetName).zip" Overwrite="true" />
 
   </Target>

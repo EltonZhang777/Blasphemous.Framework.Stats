@@ -1,4 +1,5 @@
 ﻿using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 using Blasphemous.ModdingAPI;
 using Framework.FrameworkCore;
 using Framework.Managers;
@@ -13,6 +14,7 @@ using HarmonyLib;
 using System.Collections;
 using Tools.Items;
 using UnityEngine;
+using Blasphemous.NewbieEltonLibs.Extensions.ModdingAPI;
 
 namespace Blasphemous.Framework.Stats.Patches.ItemPatches;
 
@@ -34,9 +36,7 @@ class PR03_HitPatch
         if (!HitData.IsActive())
             return true;
 
-#if DEBUG
-        ModLog.Warn($"Modifying PR03 hit!");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"Modifying PR03 hit!");
 
         ____owner = Core.Logic.Penitent;
         ____areaSummonAttack = ____owner.GetComponentInChildren<PrayerUse>().lightBeamPrayer;
@@ -97,9 +97,7 @@ class PR07_HitPatch
         if (!HitData.IsActive())
             return true;
 
-#if DEBUG
-        ModLog.Warn($"Modifying PR07 hit!");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"Modifying PR07 hit!");
         __instance.StartCoroutine(LorquianaCoroutine());
 
         __result = false;
@@ -203,9 +201,7 @@ class PR09_HitPatch
         if (!HitData.IsActive())
             return true;
 
-#if DEBUG
-        ModLog.Warn($"Modifying PR09 hit!");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"Modifying PR09 hit!");
         ____owner = Core.Logic.Penitent;
         ____areaSummonAttack = ____owner.GetComponentInChildren<PrayerUse>().divineLightPrayer;
 
@@ -216,10 +212,8 @@ class PR09_HitPatch
         Main.SetValueIfNotNull(ref ____areaSummonAttack, "distanceBetweenAreas", distanceBetweenLightningBolts, Main.TraverseAccessType.Field);
         Main.SetValue(ref ____areaSummonAttack, "poolSize", lightningBoltPoolSize, Main.TraverseAccessType.Field);
 
-#if DEBUG
-        ModLog.Warn($"total prayer duration when patching: {Traverse.Create(____areaSummonAttack).Field("seconds").GetValue<float>()}");
-        ModLog.Warn($"total prayer duration when patching: {____areaSummonAttack.seconds}");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"total prayer duration when patching: {Traverse.Create(____areaSummonAttack).Field("seconds").GetValue<float>()}");
+        ModLogExtensions.WarnIfDebugBuild($"total prayer duration when patching: {____areaSummonAttack.seconds}");
         // summon lightning
         ____areaSummonAttack.StartCoroutine(____areaSummonAttack.CustomHitLightningStormCoroutine(HitData, Core.Logic.Penitent.transform.position, Vector2.right));  //____areaSummonAttack.SummonAreas(Vector2.right);
         ____areaSummonAttack.StartCoroutine(____areaSummonAttack.CustomHitLightningStormCoroutine(HitData, Core.Logic.Penitent.transform.position, Vector2.left));  //____areaSummonAttack.SummonAreas(Vector2.left);
@@ -259,15 +253,11 @@ class PR12_HitPatch
     {
         if (!HitData.IsActive())
             return;
-#if DEBUG
-        ModLog.Warn($"Modding PR12 hit!");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"Modding PR12 hit!");
 
         ___attackHit = HitData.CreateHit(___attackHit);
-#if DEBUG
-        ModLog.Warn($"PR12 hit final damage: `{___attackHit.DamageAmount}`!");
-        ModLog.Warn($"PR12 hit element: `{___attackHit.DamageElement}`!");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"PR12 hit final damage: `{___attackHit.DamageAmount}`!");
+        ModLogExtensions.WarnIfDebugBuild($"PR12 hit element: `{___attackHit.DamageElement}`!");
     }
 
     public static HitPatchData HitData => PatchController.Hits.PR12;
@@ -293,9 +283,7 @@ class PR14_HitPatch
         if (!HitData.basePrayerDamage.HasValue || !HitData.prayerBonusEfficiency.HasValue)
             return true;
 
-#if DEBUG
-        ModLog.Warn($"Modding PR14 hit!");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"Modding PR14 hit!");
         ____owner = Core.Logic.Penitent;
         ____crawlerOrbs = ____owner.GetComponentInChildren<PrayerUse>().crawlerBallsPrayer;
         Core.Logic.CameraManager.ProCamera2DShake.ShakeUsingPreset("SimpleHit");

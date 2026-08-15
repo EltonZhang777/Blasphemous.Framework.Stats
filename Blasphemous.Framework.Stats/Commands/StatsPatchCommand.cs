@@ -1,6 +1,7 @@
 ﻿using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
+using Blasphemous.NewbieEltonLibs.Extensions.ModdingAPI;
 using Blasphemous.Framework.Stats.StatsPatching;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Blasphemous.ModdingAPI;

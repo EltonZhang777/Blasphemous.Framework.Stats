@@ -1,5 +1,5 @@
 ﻿using Blasphemous.CheatConsole;
-using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.NewbieEltonLibs.Extensions.ModdingAPI;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Framework.Managers;
 using Newtonsoft.Json;

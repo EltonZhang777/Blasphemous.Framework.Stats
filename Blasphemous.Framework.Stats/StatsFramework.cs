@@ -2,7 +2,7 @@
 global using UObject = UnityEngine.Object;
 using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Commands;
-using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.NewbieEltonLibs.Extensions.ModdingAPI;
 using Blasphemous.Framework.Stats.Patches;
 using Blasphemous.Framework.Stats.Patches.ItemPatches;
 using Blasphemous.Framework.Stats.StatsPatching;

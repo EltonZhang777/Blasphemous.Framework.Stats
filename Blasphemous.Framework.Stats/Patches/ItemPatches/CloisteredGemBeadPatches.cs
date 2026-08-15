@@ -3,6 +3,7 @@ using Framework.Managers;
 using Gameplay.GameControllers.Penitent.Attack;
 using HarmonyLib;
 using UnityEngine;
+using Blasphemous.NewbieEltonLibs.Extensions.ModdingAPI;
 
 namespace Blasphemous.Framework.Stats.Patches.ItemPatches;
 
@@ -20,9 +21,7 @@ class CloisteredGemProjectileAttack_FixDamageStackBug_Patch
     public static void Prefix1(CloisteredGemProjectileAttack __instance)
     {
         baseProjectileDamage = __instance.ProjectileDamageAmount;
-#if DEBUG
-        ModLog.Warn($"Storing cloistered gem blade base damage: {baseProjectileDamage}");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"Storing cloistered gem blade base damage: {baseProjectileDamage}");
     }
 
     /// <summary>
@@ -37,9 +36,7 @@ class CloisteredGemProjectileAttack_FixDamageStackBug_Patch
             return;
 
         __instance.ProjectileDamageAmount = baseProjectileDamage;
-#if DEBUG
-        ModLog.Warn($"Applying cloistered gem blade base damage: {baseProjectileDamage}");
-#endif
+        ModLogExtensions.WarnIfDebugBuild($"Applying cloistered gem blade base damage: {baseProjectileDamage}");
     }
 
     public static int baseProjectileDamage;

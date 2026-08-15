@@ -1,5 +1,5 @@
 ﻿using Blasphemous.Framework.Stats.Components;
-using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Beads;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
@@ -17,8 +17,9 @@ using System.Linq;
 using System.Reflection;
 using Tools.Items;
 using UnityEngine;
-using static Blasphemous.Framework.Stats.Extensions.InventoryManagerExtensions;
+using static Blasphemous.NewbieEltonLibs.Extensions.GameLibs.InventoryManagerExtensions;
 using static Framework.Managers.InventoryManager;
+using Blasphemous.NewbieEltonLibs.Extensions.ModdingAPI;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 
@@ -193,24 +194,18 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         foreach (MonoBehaviour mb in vanillaMonoBehaviors)
         {
             object scriptData = CreateJsonInstanceFromScriptType(mb.GetType());
-#if DEBUG
-            ModLog.Warn($"Starting to get value for `{mb}` of type {mb.GetType()}!");
-#endif
+            ModLogExtensions.WarnIfDebugBuild($"Starting to get value for `{mb}` of type {mb.GetType()}!");
             switch (scriptData)
             {
                 case ObjectEffectValues data:
-#if DEBUG
-                    ModLog.Warn($"Getting ObjectEffectValues of derived type `{data.GetType()}`!");
-#endif
+                    ModLogExtensions.WarnIfDebugBuild($"Getting ObjectEffectValues of derived type `{data.GetType()}`!");
                     data.GetValueFrom((object)mb);
                     vanillaEffects.Add(data);
                     vanillaEffectsToIsDeleted.Add(data, false);
                     serializedObjectsToVanillaMonoBehaviors.Add(data, mb);
                     break;
                 case BaseInventoryObjectValues data:
-#if DEBUG
-                    ModLog.Warn($"Getting BaseInventoryObjectValues!");
-#endif
+                    ModLogExtensions.WarnIfDebugBuild($"Getting BaseInventoryObjectValues!");
                     data.GetValueFrom((BaseInventoryObject)mb);
                     inheritenceSettings = data;
 
@@ -224,9 +219,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 
                     break;
                 default:
-#if DEBUG
-                    ModLog.Error($"Skipping value reading of unpatchable type `{mb.GetType()}`!");
-#endif
+                    ModLogExtensions.ErrorIfDebugBuild($"Skipping value reading of unpatchable type `{mb.GetType()}`!");
                     break;
             }
         }
@@ -285,9 +278,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
 
                 if (!ObjectEffectValuesMatchEvaluator(vanillaEffect, deletion))
                     continue;
-#if DEBUG
-                ModLog.Info($"the evaluator matches current vanillaEffect!");
-#endif
+                ModLogExtensions.InfoIfDebugBuild($"the evaluator matches current vanillaEffect!");
 
                 // This effect matches the delete condition, destroy its MonoBehavior
                 if (!serializedObjectsToVanillaMonoBehaviors.TryGetValue(vanillaEffect, out MonoBehaviour mb))
@@ -296,9 +287,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
                 Traverse.Create(mb).Method("OnUnEquipInventoryObject").GetValue(null);  // disable the effect if it is activated
                 MonoBehaviour.Destroy(mb);
                 vanillaEffectsToIsDeleted[vanillaEffect] = true;  // update deleted status to dictionary
-#if DEBUG
-                ModLog.Warn($"Disabling MonoBehavior of type `{mb.GetType()}` to inventory object `{obj.id}`!");
-#endif
+                ModLogExtensions.WarnIfDebugBuild($"Disabling MonoBehavior of type `{mb.GetType()}` to inventory object `{obj.id}`!");
                 break;
             }
         }
@@ -317,9 +306,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
                 ModLog.Error($"Failed to create MonoBehavior from JSON type `{addition.GetType()}`!");
                 continue;
             }
-#if DEBUG
-            ModLog.Warn($"Adding MonoBehavior of type `{mb.GetType()}` to inventory object `{obj.id}`!");
-#endif
+            ModLogExtensions.WarnIfDebugBuild($"Adding MonoBehavior of type `{mb.GetType()}` to inventory object `{obj.id}`!");
             addition.SetValueTo(mb);
             modMonoBehaviors.Add(mb);
         }
@@ -385,9 +372,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
             }
 
             vanillaEffect.SetValueTo(mb);
-#if DEBUG
-            ModLog.Warn($"Successfully reverted vanilla ObjectEffect `{mb}` of type `{mb.GetType()}`!");
-#endif
+            ModLogExtensions.WarnIfDebugBuild($"Successfully reverted vanilla ObjectEffect `{mb}` of type `{mb.GetType()}`!");
         }
     }
 
@@ -416,9 +401,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         if (TryFindTypeOrBaseTypeFromList(scriptType, scriptTypeToJsonType.Keys.ToList(), out Type targetType))
         {
             Type jsonType = scriptTypeToJsonType[targetType];
-#if DEBUG
-            ModLog.Warn($"JSON type: {jsonType}");
-#endif
+            ModLogExtensions.WarnIfDebugBuild($"JSON type: {jsonType}");
             return (TResult)jsonType.GetConstructor(Type.EmptyTypes)?.Invoke(null);
         }
         else
@@ -438,9 +421,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         if (TryFindTypeOrBaseTypeFromList(jsonType, JsonTypeToScriptType.Keys.ToList(), out Type targetType))
         {
             Type scriptType = JsonTypeToScriptType[targetType];
-#if DEBUG
-            ModLog.Warn($"script type: {scriptType}");
-#endif
+            ModLogExtensions.WarnIfDebugBuild($"script type: {scriptType}");
             return (TResult)scriptType.GetConstructor(Type.EmptyTypes)?.Invoke(null);
         }
         else
@@ -506,9 +487,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         {
             object targetFieldValue = target.GetType().GetField(conditionField.Name).GetValue(target);
             object conditionFieldValue = conditionField.GetValue(conditions);
-#if DEBUG
-            ModLog.Info($"Checking field `{conditionField.Name}`! \n  `{targetFieldValue}` V.S. `{conditionFieldValue}` = {targetFieldValue.Equals(conditionFieldValue)}");
-#endif
+            ModLogExtensions.InfoIfDebugBuild($"Checking field `{conditionField.Name}`! \n  `{targetFieldValue}` V.S. `{conditionFieldValue}` = {targetFieldValue.Equals(conditionFieldValue)}");
             if (!targetFieldValue.Equals(conditionFieldValue))
                 return false;
         }

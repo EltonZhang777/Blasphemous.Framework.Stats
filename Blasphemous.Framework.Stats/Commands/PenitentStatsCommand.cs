@@ -1,10 +1,11 @@
 ﻿using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Extensions;
-using Blasphemous.Framework.Stats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Framework.Managers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Blasphemous.Framework.Stats.Commands;
 
@@ -48,7 +49,13 @@ internal class PenitentStatsCommand : ModCommand
         PenitentData data = new();
         string fileName = "penitent_data.json";
         data.GetValueFrom(Core.Logic.Penitent);
-        Main.StatsFramework.FileHandler.WriteJsonToContent(fileName, data);
+        JsonSerializerSettings settings = new()
+        {
+            Converters = [
+                new StringEnumConverter(),
+                ]
+        };
+        Main.StatsFramework.FileHandler.WriteJsonToContent(fileName, data, settings);
 
         Write($"Successfully exported penitent values to `{fileName}` !");
     }
@@ -64,26 +71,5 @@ internal class PenitentStatsCommand : ModCommand
         data.SetValueTo(Core.Logic.Penitent);
 
         Write($"Successfully imported penitent values from `{fileName}` !");
-    }
-
-    private bool ValidateParameterList(string[] parameters, List<int> validParameterLengths)
-    {
-        if (!validParameterLengths.Contains(parameters.Length))
-        {
-            StringBuilder sb = new();
-            sb.Append($"This command takes ");
-            for (int i = 0; i < validParameterLengths.Count; i++)
-            {
-                sb.Append($"{i} ");
-                if (i != validParameterLengths.Count - 1)
-                    sb.Append("or ");
-            }
-            sb.Append($"parameters.  You passed {parameters.Length}");
-            Write(sb.ToString());
-
-            return false;
-        }
-
-        return true;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Blasphemous.CheatConsole;
 using Blasphemous.Framework.Stats.Components;
 using Blasphemous.Framework.Stats.Extensions;
-using Blasphemous.Framework.Stats.ItemStats;
-using Blasphemous.Framework.Stats.PenitentStats;
+using Blasphemous.Framework.Stats.StatsPatching;
+using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Blasphemous.ModdingAPI;
 using Framework.Managers;
 using Newtonsoft.Json;
@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Blasphemous.Framework.Stats.Commands;
 
@@ -55,13 +54,13 @@ internal class StatsPatchCommand : ModCommand
 
     private void SubCommand_List(string[] parameters)
     {
-        if (!ValidateParameterList(parameters, [0, 1]))
+        if (!this.ValidateParameterList(parameters, [0, 1]))
             return;
 
         bool hasAny = false;
         if (parameters.Length == 0)
         {
-            Write($"All loaded backgrounds: ");
+            Write($"All loaded stats patches: ");
             foreach (BaseStatsPatch patch in StatsPatchRegister.StatsPatches)
             {
                 hasAny = true;
@@ -137,25 +136,28 @@ internal class StatsPatchCommand : ModCommand
         if (!ValidateParameterList(parameters, 1))
             return;
 
-        string backgroundName = parameters[0];
-        if (!StatsPatchExists(backgroundName))
+        string patchName = parameters[0];
+        if (!StatsPatchExists(patchName))
             return;
 
-        string exportPath = Path.Combine(Main.StatsFramework.FileHandler.ContentFolder, $"exported--{backgroundName}.json");
-        switch (StatsPatchRegister.AtName(backgroundName))
+        string exportPath = Path.Combine(Main.StatsFramework.FileHandler.ContentFolder, $"exported--{patchName}.json");
+        JsonSerializerSettings jsonSerializerSettings = new()
         {
-            case PenitentStatsPatch patch:
-                File.WriteAllText(
-                    exportPath,
-                    JsonConvert.SerializeObject(patch, Formatting.Indented));
-                break;
-            case EnemyStatsPatch patch:
-                File.WriteAllText(
-                    exportPath,
-                    JsonConvert.SerializeObject(patch, Formatting.Indented));
-                break;
-        }
-        Write($"Successfully exported `{backgroundName}` info to `{exportPath}`!");
+            Converters = [
+                new StringEnumConverter(),
+                ],
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.None,
+            TypeNameHandling = TypeNameHandling.Objects,
+        };
+
+        File.WriteAllText(
+            exportPath,
+            JsonConvert.SerializeObject(
+                StatsPatchRegister.AtName(patchName),
+                Formatting.Indented,
+                jsonSerializerSettings));
+        Write($"Successfully exported `{patchName}` info to `{exportPath}`!");
     }
 
     private void SubCommand_ExportAllInventoryItems(string[] parameters)
@@ -172,40 +174,11 @@ internal class StatsPatchCommand : ModCommand
                 ],
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             PreserveReferencesHandling = PreserveReferencesHandling.None,
+            TypeNameHandling = TypeNameHandling.Objects,
         };
 
         InventoryItemStatsPatch patch = new();
-        foreach (var item in Core.InventoryManager.GetAllCollectibleItems())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllPrayers())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllQuestItems())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllRelics())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllRosaryBeads())
-        {
-            InventoryItemData itemData = new InventoryItemData(item.id);
-            itemData.GetValueFrom(item);
-            patch.statsPatches.Add(itemData);
-        }
-        foreach (var item in Core.InventoryManager.GetAllSwords())
+        foreach (var item in Core.InventoryManager.GetAllInventoryObjects())
         {
             InventoryItemData itemData = new InventoryItemData(item.id);
             itemData.GetValueFrom(item);
@@ -222,27 +195,6 @@ internal class StatsPatchCommand : ModCommand
         }
 
         Write($"Successfully exported all inventory items' data to `{Main.StatsFramework.FileHandler.ContentFolder}`!");
-    }
-
-    private bool ValidateParameterList(string[] parameters, List<int> validParameterLengths)
-    {
-        if (!validParameterLengths.Contains(parameters.Length))
-        {
-            StringBuilder sb = new();
-            sb.Append($"This command takes ");
-            for (int i = 0; i < validParameterLengths.Count; i++)
-            {
-                sb.Append($"{i} ");
-                if (i != validParameterLengths.Count - 1)
-                    sb.Append("or ");
-            }
-            sb.Append($"parameters.  You passed {parameters.Length}");
-            Write(sb.ToString());
-
-            return false;
-        }
-
-        return true;
     }
 
     private bool StatsPatchExists(string name)

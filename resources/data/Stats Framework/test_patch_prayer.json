@@ -1,0 +1,259 @@
+{
+  "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.InventoryItemStatsPatch, StatsFramework",
+  "name": "test_patch_prayer",
+  "activeType": "Manually",
+  "statsPatches": 
+  [
+    {
+      "itemId": "PR12",
+      "effectAdditions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentAreaAttackValues, StatsFramework",
+          "attackRangeRadius": 15.0,
+          "delayBetweenHitsSeconds": 0.5,
+          "slowTimeDuration": 0.5,
+          "hitData": {
+            "basePrayerDamage": 150.0,
+            "prayerBonusEfficiency": 2.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageType": "Normal",
+              "damageElement": "Magic",
+              "hitSoundId": "event:/SFX/Penitent/Damage/PenitentParryHit"
+            }
+          },
+          "effectType": "OnUse",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+        }
+      ],
+      "effectDeletions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentAreaAttackValues, StatsFramework",
+          "attackRangeRadius": 20.0
+        }
+      ]
+    },
+
+    {
+      "itemId": "PR14",
+      "effectAdditions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentCrawlerOrbsEffectValues, StatsFramework",
+          "hitData": {
+            "basePrayerDamage": 10.0,
+            "prayerBonusEfficiency": 2.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageAmount": 10.0,
+              "damageType": "Normal",
+              "damageElement": "Fire"
+            }
+          },
+          "effectType": "OnUse",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+        }
+      ],
+      "effectDeletions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentCrawlerOrbsEffectValues, StatsFramework",
+          "prayerBonusEfficiency": 1.0
+        }
+      ]
+    },
+
+    {
+      "itemId": "PR09",
+      "effectAdditions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentDivineLightEffectValues, StatsFramework",
+          "totalPrayerDuration": 4.0,
+          "initialXOffsetScale": 1.0,
+          "totalLightningBoltsCount": 30,
+          "distanceBetweenLightningBolts": 0.8,
+          "hitData": {
+            "baseDamage": 0.0,
+            "attackDamageMultiplier": 0.0,
+            "basePrayerDamage": 13.0,
+            "prayerBonusEfficiency": 2.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageType": "Normal",
+              "damageElement": "Lightning"
+            }
+          },
+          "effectType": "OnUse",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+        }
+      ],
+      "effectDeletions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentDivineLightEffectValues, StatsFramework",
+          "totalPrayerDuration": 1.0
+        }
+      ]
+    },
+
+    {
+      "itemId": "PR03",
+      "fervourCost": 50,
+      "effectAdditions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentLightBeamEffectValues, StatsFramework",
+          "penitentColorWhileCasting": "#c343b4ff",
+          "hitData": {
+            "basePrayerDamage": 45.0,
+            "prayerBonusEfficiency": 0.6,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageType": "Normal",
+              "damageElement": "Magic"
+            }
+          }
+        },
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentDivineLightEffectValues, StatsFramework",
+          "totalPrayerDuration": 4.0,
+          "initialXOffsetScale": 1.0,
+          "totalLightningBoltsCount": 30,
+          "distanceBetweenLightningBolts": 0.8,
+          "hitData": {
+            "baseDamage": 0.0,
+            "attackDamageMultiplier": 0.0,
+            "basePrayerDamage": 13.0,
+            "prayerBonusEfficiency": 2.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageType": "Normal",
+              "damageElement": "Lightning"
+            },
+          "effectType": "OnUse",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+          }
+        },
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentCrawlerOrbsEffectValues, StatsFramework",
+          "hitData": {
+            "basePrayerDamage": 10.0,
+            "prayerBonusEfficiency": 2.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageAmount": 10.0,
+              "damageType": "Normal",
+              "damageElement": "Fire"
+            },
+          "effectType": "OnUse",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+          }
+        }
+      ],
+      "effectDeletions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentLightBeamEffectValues, StatsFramework",
+          "activationFxSound": ""
+        }
+      ]
+    },
+
+    {
+      "itemId": "PR07",
+      "effectAdditions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentMultishotEffectValues, StatsFramework",
+          "beamsCount": 24,
+          "delayBetweenHitsSeconds": 0.067,
+          "slowTimeDuration": 0.02,
+          "hitData": {
+            "basePrayerDamage": 80.0,
+            "prayerBonusEfficiency": 1.0,
+            "finalMultiplier": 1.0,
+            "hitValues": {
+              "damageType": "Normal",
+              "damageElement": "Fire"
+            },
+          "effectType": "OnUse",
+          "abilityName": "",
+          "limitTime": false,
+          "effectTime": 0.0,
+          "usePrayerDurationAddition": false,
+          "triggerOnlyOnce": true,
+          "onlyWhenUsingPrayer": false,
+          "percentToExecute": 100,
+          "pingTime": 0.4,
+          "timeToWait": 3.0,
+          "useWhenCastingPrayer": true,
+          "conditions": [],
+          "stoppingConditions": [],
+          "activationFxSound": ""
+          }
+        }
+      ],
+      "effectDeletions": [
+        {
+          "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentMultishotEffectValues, StatsFramework",
+          "pingTime": 0.4
+        }
+      ]
+    }
+
+  ]
+}

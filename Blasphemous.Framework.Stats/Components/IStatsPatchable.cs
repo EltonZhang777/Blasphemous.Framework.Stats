@@ -1,5 +1,8 @@
 ﻿namespace Blasphemous.Framework.Stats.Components;
 
+/// <summary>
+/// Interface for stats patches that can be handled by the mod to patch their targets in-game.
+/// </summary>
 public interface IStatsPatchable
 {
     /// <summary>

@@ -41,10 +41,11 @@ class PR03_HitPatch
         ____owner = Core.Logic.Penitent;
         ____areaSummonAttack = ____owner.GetComponentInChildren<PrayerUse>().lightBeamPrayer;
 
-
         // create new material for casting tint
-        Material castingMaterial = new Material(penitentCastingTintMaterial);
-        castingMaterial.color = penitentColorWhileCasting;
+        Material castingMaterial = new(penitentCastingTintMaterial)
+        {
+            color = penitentColorWhileCasting
+        };
         __instance.penitentBlueTintMaterial = castingMaterial;
 
         Core.Logic.CameraManager.ProCamera2DShake.ShakeUsingPreset("SimpleHit");
@@ -136,7 +137,7 @@ class PR07_HitPatch
             {
                 yield return new WaitForSeconds(DelayBetweenBeamsSeconds);
                 InitializeProjectilePosition(____instantProjectileAttack, ____owner.Status.Orientation, out projectilePosition, out projectileDirection);
-                ____instantProjectileAttack.Shoot(projectilePosition + Vector3.up * GetRandomOffset(-1f, 1f), projectileDirection);
+                ____instantProjectileAttack.Shoot(projectilePosition + (Vector3.up * GetRandomOffset(-1f, 1f)), projectileDirection);
             }
 
             yield break;
@@ -272,7 +273,6 @@ class PR12_HitPatch
     public static HitPatchData HitData => PatchController.Hits.PR12;
 }
 
-
 /// <summary>
 /// Patch for PR14: Verdiales of the Forsaken Hamlet
 /// </summary>
@@ -292,7 +292,6 @@ class PR14_HitPatch
 
         if (!HitData.basePrayerDamage.HasValue || !HitData.prayerBonusEfficiency.HasValue)
             return true;
-
 
 #if DEBUG
         ModLog.Warn($"Modding PR14 hit!");

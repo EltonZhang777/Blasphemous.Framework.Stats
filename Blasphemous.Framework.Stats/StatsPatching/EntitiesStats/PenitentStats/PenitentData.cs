@@ -33,7 +33,6 @@ public class PenitentData : IAccessible_Class<Penitent>, IStatsPatchable
     /// </summary>
     public bool TryGetTargets() => Core.Logic.Penitent != null;
 
-
     /// <summary>
     /// Get value from Penitent instance
     /// </summary>

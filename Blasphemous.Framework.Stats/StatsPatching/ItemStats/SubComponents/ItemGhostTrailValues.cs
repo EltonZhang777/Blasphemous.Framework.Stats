@@ -9,7 +9,7 @@ public class ItemGhostTrailValues : ObjectEffectValues, IAccessible_Class<ItemGh
     public string trailColor;
 
     private Color? TrailColor => !string.IsNullOrEmpty(trailColor)
-        ? ColorUtility.TryParseHtmlString(trailColor, out var color)
+        ? ColorUtility.TryParseHtmlString(trailColor, out global::UnityEngine.Color color)
             ? color
             : null
         : null;

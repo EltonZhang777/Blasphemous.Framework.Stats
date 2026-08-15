@@ -38,7 +38,7 @@ public class CloisteredGemBeadEffectValues : ObjectEffectValues, IAccessible_Cla
     protected internal Traverse cloisteredGemProjectileAttack;
 
     protected internal float CurrentPenitentAttackDamage => Core.Logic.Penitent.Stats.Strength.Final;
-    protected internal float? ProjectileFinalDamage => baseDamage + CurrentPenitentAttackDamage * attackDamageMultiplier;
+    protected internal float? ProjectileFinalDamage => baseDamage + (CurrentPenitentAttackDamage * attackDamageMultiplier);
 
     public void GetValueFrom(CloisteredGemBeadEffect obj)
     {

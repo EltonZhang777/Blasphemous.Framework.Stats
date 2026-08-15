@@ -8,13 +8,12 @@ using System.Linq;
 
 namespace Blasphemous.Framework.Stats.StatsPatching;
 
-
 /// <summary>
 /// Register handler for new stats patches
 /// </summary>
 public static class StatsPatchRegister
 {
-    private static readonly List<BaseStatsPatch> _statsPatches = new();
+    private static readonly List<BaseStatsPatch> _statsPatches = [];
     internal static IEnumerable<BaseStatsPatch> StatsPatches => _statsPatches;
     internal static IEnumerable<PenitentStatsPatch> PenitentPatches => _statsPatches.OfType<PenitentStatsPatch>();
     internal static IEnumerable<EnemyStatsPatch> EnemyPatches => _statsPatches.OfType<EnemyStatsPatch>();

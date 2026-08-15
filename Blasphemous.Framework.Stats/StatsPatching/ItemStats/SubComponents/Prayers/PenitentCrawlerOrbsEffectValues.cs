@@ -1,7 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Blasphemous.Framework.Stats.Patches;
 using Tools.Items;
-using Framework.Inventory;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 

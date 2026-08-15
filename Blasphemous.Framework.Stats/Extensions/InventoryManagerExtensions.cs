@@ -1,9 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Blasphemous.ModdingAPI;
-using FMOD.Studio;
 using Framework.Inventory;
 using Framework.Managers;
-using RewiredConsts;
 using System.Collections.Generic;
 using static Framework.Managers.InventoryManager;
 
@@ -103,9 +101,10 @@ internal static class InventoryManagerExtensions
     /// </summary>
     public static EquipmentLoadout SaveCurrentEquipmentAsLoadout(this InventoryManager inventoryManager)
     {
-        EquipmentLoadout result = new();
-
-        result.beads = new();
+        EquipmentLoadout result = new()
+        {
+            beads = []
+        };
         for (int i = 0; i < Core.Logic.Penitent.Stats.BeadSlots.Final; i++)
         {
             result.beads.Add(Core.InventoryManager.GetRosaryBeadInSlot(i)?.id);
@@ -114,7 +113,7 @@ internal static class InventoryManagerExtensions
         result.swordHeart = Core.InventoryManager.GetSwordInSlot(0)?.id;
         result.prayer = Core.InventoryManager.GetPrayerInSlot(0)?.id;
 
-        result.relics = new();
+        result.relics = [];
         for (int i = 0; i < 3; i++)
         {
             result.relics.Add(Core.InventoryManager.GetRelicInSlot(i)?.id);

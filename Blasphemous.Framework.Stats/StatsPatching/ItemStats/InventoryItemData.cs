@@ -43,17 +43,17 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     /// <summary>
     /// List of <see cref="ObjectEffectValues"/> that will be added to the item.
     /// </summary>
-    public List<ObjectEffectValues> effectAdditions = new();
+    public List<ObjectEffectValues> effectAdditions = [];
 
     /// <summary>
     /// List of <see cref="ObjectEffectValues"/> that will be deleted from the item.
     /// </summary>
-    public List<ObjectEffectValues> effectDeletions = new();
+    public List<ObjectEffectValues> effectDeletions = [];
 
     /// <summary>
     /// List of <see cref="ObjectEffectValues"/> that are serialized from vanilla MonoBehavior scripts.
     /// </summary>
-    public List<ObjectEffectValues> vanillaEffects = new();
+    public List<ObjectEffectValues> vanillaEffects = [];
 
     protected BaseInventoryObject target;
 
@@ -62,23 +62,23 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     /// <summary>
     /// All the vanilla MonoBehaviors attached to the inventory object's GameObject
     /// </summary>
-    internal List<MonoBehaviour> vanillaMonoBehaviors = new();
+    internal List<MonoBehaviour> vanillaMonoBehaviors = [];
 
     /// <summary>
     /// Vanilla <see cref="ObjectEffect"/>s of the item, serialized as <see cref="ObjectEffectValues"/> for inspection. 
     /// Dictionary value indicates whether this effect is deleted by the deletion process.
     /// </summary>
-    internal Dictionary<ObjectEffectValues, bool> vanillaEffectsToIsDeleted = new();
+    internal Dictionary<ObjectEffectValues, bool> vanillaEffectsToIsDeleted = [];
 
     /// <summary>
     /// All the mod-added MonoBehaviors attached to the inventory object's GameObject
     /// </summary>
-    internal List<MonoBehaviour> modMonoBehaviors = new();
+    internal List<MonoBehaviour> modMonoBehaviors = [];
 
     /// <summary>
     /// Dictionary to map <see cref="ObjectEffectValues"/> to their corresponding MonoBehaviors.
     /// </summary>
-    internal Dictionary<ObjectEffectValues, MonoBehaviour> serializedObjectsToVanillaMonoBehaviors = new();
+    internal Dictionary<ObjectEffectValues, MonoBehaviour> serializedObjectsToVanillaMonoBehaviors = [];
 
     internal static readonly Dictionary<Type, Type> scriptTypeToJsonType = new()
     {
@@ -135,8 +135,8 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     {
         get
         {
-            Dictionary<Type, Type> reversedDict = new();
-            foreach (var kvp in scriptTypeToJsonType)
+            Dictionary<Type, Type> reversedDict = [];
+            foreach (KeyValuePair<Type, Type> kvp in scriptTypeToJsonType)
             {
                 reversedDict[kvp.Value] = kvp.Key;
             }
@@ -148,8 +148,8 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     {
         get
         {
-            Dictionary<MonoBehaviour, ObjectEffectValues> reversedDict = new();
-            foreach (var kvp in serializedObjectsToVanillaMonoBehaviors)
+            Dictionary<MonoBehaviour, ObjectEffectValues> reversedDict = [];
+            foreach (KeyValuePair<ObjectEffectValues, MonoBehaviour> kvp in serializedObjectsToVanillaMonoBehaviors)
             {
                 reversedDict[kvp.Value] = kvp.Key;
             }
@@ -215,7 +215,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
                     inheritenceSettings = data;
 
                     // if this is a prayer, get fervour cost
-                    if (mb as Prayer != null)
+                    if ((mb as Prayer) != null)
                     {
                         Prayer prayer = mb as Prayer;
                         fervourCost = prayer.fervourNeeded;
@@ -303,7 +303,6 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
             }
         }
 
-
         // Apply additions
         foreach (ObjectEffectValues addition in effectAdditions)
         {
@@ -363,7 +362,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         }
 
         // Revert deletions
-        foreach (var vanillaEffect in vanillaEffectsToIsDeleted.Keys.Where(x => vanillaEffectsToIsDeleted[x] == true))
+        foreach (ObjectEffectValues vanillaEffect in vanillaEffectsToIsDeleted.Keys.Where(x => vanillaEffectsToIsDeleted[x] == true))
         {
             if (vanillaEffect == null)
             {
@@ -425,7 +424,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         else
         {
             ModLog.Error($"No JSON type found for script type: {scriptType}");
-            return default(TResult);
+            return default;
         }
     }
 
@@ -447,7 +446,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         else
         {
             ModLog.Error($"No JSON type found for json type: {jsonType}");
-            return default(TResult);
+            return default;
         }
     }
 

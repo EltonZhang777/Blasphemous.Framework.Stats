@@ -36,7 +36,6 @@ public class PenitentAreaAttackValues : ObjectEffectValues, IAccessible_Class<Pe
 
         base.GetValueFrom(obj);
 
-
         attackRangeRadius = Main.GetValue<float>(obj, "Radius", Main.TraverseAccessType.Field);
         delayBetweenHitsSeconds = Main.GetValue<float>(obj, "damageDelay", Main.TraverseAccessType.Field);
         slowTimeDuration = Main.GetValue<float>(obj, "slowTimeDuration", Main.TraverseAccessType.Field);

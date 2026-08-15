@@ -7,7 +7,6 @@ using Gameplay.GameControllers.Enemies.BellGhost;
 using Gameplay.GameControllers.Entities;
 using HarmonyLib;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Blasphemous.Framework.Stats.Extensions;
@@ -53,7 +52,7 @@ internal static class ModHitExtensions
     {
         float counter = 0f;
         int areasSummoned = 0;
-        Vector3 lastPoint = originPosition + direction * bossAreaSummonAttack.offset;
+        Vector3 lastPoint = originPosition + (direction * bossAreaSummonAttack.offset);
         bool cancelled = false;
         int currentTotalAreas = bossAreaSummonAttack.totalAreas;
         float currentDistanceBetweenAreas = bossAreaSummonAttack.distanceBetweenAreas;
@@ -69,7 +68,7 @@ internal static class ModHitExtensions
                     bool flag = Physics2D.LinecastNonAlloc(originPosition, lastPoint, array, bossAreaSummonAttack.collisionMask) > 0;
                     if (flag)
                     {
-                        Debug.DrawLine(array[0].point, array[0].point + Vector2.up * 0.25f, Color.red, 1f);
+                        Debug.DrawLine(array[0].point, array[0].point + (Vector2.up * 0.25f), Color.red, 1f);
                         cancelled = true;
                     }
                 }
@@ -80,10 +79,7 @@ internal static class ModHitExtensions
                     // injecting modded hit here
                     gameObject = bossAreaSummonAttack.InstantiateLightningBoltWithCustomHit(hitData, bossAreaSummonAttack.areaPrefab, lastPoint, 0f);  //gameObject = this.InstantiateArea(this.areaPrefab, lastPoint, 0f, this.damageMultiplier, null);
                     Entity component2 = gameObject.GetComponent<Entity>();
-                    if (component2 != null)
-                    {
-                        component2.SetOrientation(orientation, true, false);
-                    }
+                    component2?.SetOrientation(orientation, true, false);
                     areasSummoned++;
                 }
                 lastPoint += direction * currentDistanceBetweenAreas;
@@ -126,7 +122,7 @@ internal static class ModHitExtensions
         }
         if (bossAreaSummonAttack.instantiations == null)
         {
-            bossAreaSummonAttack.instantiations = new List<GameObject>();
+            bossAreaSummonAttack.instantiations = [];
         }
         if (!bossAreaSummonAttack.instantiations.Contains(gameObject))
         {
@@ -134,7 +130,6 @@ internal static class ModHitExtensions
         }
         return gameObject;
     }
-
 
     /// <summary>
     /// For PR03: Debla of the Lights
@@ -163,7 +158,7 @@ internal static class ModHitExtensions
         }
         if (bossAreaSummonAttack.instantiations == null)
         {
-            bossAreaSummonAttack.instantiations = new List<GameObject>();
+            bossAreaSummonAttack.instantiations = [];
         }
         if (!bossAreaSummonAttack.instantiations.Contains(gameObject))
         {

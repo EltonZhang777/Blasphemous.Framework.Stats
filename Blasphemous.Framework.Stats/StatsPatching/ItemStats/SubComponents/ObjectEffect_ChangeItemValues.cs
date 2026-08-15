@@ -17,7 +17,6 @@ public class ObjectEffect_ChangeItemValues : ObjectEffectValues, IAccessible_Cla
 
     public InventoryObjectInspector newItem;
 
-
     public void GetValueFrom(ObjectEffect_ChangeItem obj)
     {
         if (!Main.Validate(obj, x => x != null))

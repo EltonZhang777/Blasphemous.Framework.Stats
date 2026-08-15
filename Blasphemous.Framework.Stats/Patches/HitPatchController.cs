@@ -90,12 +90,12 @@ internal class HitPatchController
 
     internal static float CalculatePrayerDamageMultiplier(float prayerBonusEfficiency)
     {
-        return 1f + (Core.Logic.Penitent.Stats.PrayerStrengthMultiplier.Final - 1f) * prayerBonusEfficiency;
+        return 1f + ((Core.Logic.Penitent.Stats.PrayerStrengthMultiplier.Final - 1f) * prayerBonusEfficiency);
     }
 
     internal static float? CalculatePrayerDamageMultiplier(float? prayerBonusEfficiency)
     {
-        return 1f + (Core.Logic.Penitent.Stats.PrayerStrengthMultiplier.Final - 1f) * prayerBonusEfficiency;
+        return 1f + ((Core.Logic.Penitent.Stats.PrayerStrengthMultiplier.Final - 1f) * prayerBonusEfficiency);
     }
 
     /// <summary>

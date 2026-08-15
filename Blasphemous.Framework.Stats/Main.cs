@@ -36,14 +36,14 @@ internal class Main : BaseUnityPlugin
         if (traverse == null)
         {
             ModLog.Error($"Failed to get null value from null traverse instance! Returning default");
-            return default(TValue);
+            return default;
         }
         variableName = variableName.Trim();
         return accessType switch
         {
             TraverseAccessType.Field => traverse.Field(variableName).GetValue<TValue>(),
             TraverseAccessType.Property => traverse.Property(variableName).GetValue<TValue>(),
-            _ => default(TValue)
+            _ => default
         };
     }
 
@@ -56,7 +56,7 @@ internal class Main : BaseUnityPlugin
         if (traverse == null)
         {
             ModLog.Error($"Failed to get null value from object of type `{obj.GetType()}`! Returning default");
-            return default(TValue);
+            return default;
         }
         return GetValue<TValue>(traverse, variableName, accessType);
     }
@@ -195,7 +195,7 @@ internal class Main : BaseUnityPlugin
         if (!validate(obj))
         {
             string errorMessage = $"`{obj}` of type `{typeof(T)}` isn't a valid argument";
-            ArgumentException exception = new ArgumentException(errorMessage);
+            ArgumentException exception = new(errorMessage);
             ModLog.Error(errorMessage);
             if (throwError)
                 throw exception;

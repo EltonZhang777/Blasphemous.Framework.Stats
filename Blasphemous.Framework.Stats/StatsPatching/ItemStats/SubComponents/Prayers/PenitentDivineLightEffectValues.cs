@@ -40,7 +40,7 @@ public class PenitentDivineLightEffectValues : ObjectEffectValues, IAccessible_C
             if (!totalLightningBoltsCount.HasValue)
                 return 20;
 
-            return Mathf.Max(20, 8 + totalLightningBoltsCount.Value * 2);
+            return Mathf.Max(20, 8 + (totalLightningBoltsCount.Value * 2));
         }
     }
 

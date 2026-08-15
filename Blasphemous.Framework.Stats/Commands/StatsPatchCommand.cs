@@ -4,6 +4,7 @@ using Blasphemous.Framework.Stats.Extensions;
 using Blasphemous.Framework.Stats.StatsPatching;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
 using Blasphemous.ModdingAPI;
+using Framework.Inventory;
 using Framework.Managers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -178,14 +179,14 @@ internal class StatsPatchCommand : ModCommand
         };
 
         InventoryItemStatsPatch patch = new();
-        foreach (var item in Core.InventoryManager.GetAllInventoryObjects())
+        foreach (BaseInventoryObject item in Core.InventoryManager.GetAllInventoryObjects())
         {
-            InventoryItemData itemData = new InventoryItemData(item.id);
+            InventoryItemData itemData = new(item.id);
             itemData.GetValueFrom(item);
             patch.statsPatches.Add(itemData);
         }
 
-        foreach (var itemPatch in patch.statsPatches)
+        foreach (InventoryItemData itemPatch in patch.statsPatches)
         {
             ModLog.Warn($"Serializing `{itemPatch.itemId}`!");
             Main.StatsFramework.FileHandler.WriteJsonToContent(

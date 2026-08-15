@@ -5,5 +5,5 @@ namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 
 public class PenitentStatsPatch : BaseStatsPatch
 {
-    public List<PenitentData> statsPatches = new();
+    public List<PenitentData> statsPatches = [];
 }

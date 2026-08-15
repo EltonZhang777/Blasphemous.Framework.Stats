@@ -1,7 +1,10 @@
-﻿using Blasphemous.Framework.Stats.StatsPatching;
+﻿using Blasphemous.Framework.Stats.Components;
+using Blasphemous.Framework.Stats.Extensions;
+using Blasphemous.Framework.Stats.StatsPatching;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.EnemyStats;
 using Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.PenitentStats;
 using Blasphemous.Framework.Stats.StatsPatching.ItemStats;
+using Framework.Managers;
 using Gameplay.GameControllers.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +64,10 @@ internal static class PatchController
     /// </summary>
     internal static void PatchItemStats()
     {
+        //// store the loadout and unequip everything before patching 
+        //EquipmentLoadout loadout = Core.InventoryManager.SaveCurrentEquipmentAsLoadout();
+        //Core.InventoryManager.RemoveEquipableObjects();
+
         foreach (InventoryItemStatsPatch patch in StatsPatchRegister.ItemPatches)
         {
             patch.UpdateActive();
@@ -84,7 +91,9 @@ internal static class PatchController
                     p.RevertValueToAllTargets();
                 }
             }
-
         }
+
+        //// re-equip all objects
+        //Core.InventoryManager.EquipItemsInLoadout(loadout);
     }
 }

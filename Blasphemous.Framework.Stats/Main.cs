@@ -58,7 +58,7 @@ internal class Main : BaseUnityPlugin
             ModLog.Error($"Failed to get null value from object of type `{obj.GetType()}`! Returning default");
             return default(TValue);
         }
-        return Main.GetValue<TValue>(traverse, variableName, accessType);
+        return GetValue<TValue>(traverse, variableName, accessType);
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ internal class Main : BaseUnityPlugin
     public static void SetValue<TTarget, TValue>(ref TTarget obj, string variableName, TValue value, TraverseAccessType accessType)
     {
         Traverse traverse = Traverse.Create(obj);
-        Main.SetValue<TValue>(ref traverse, variableName, value, accessType);
+        SetValue<TValue>(ref traverse, variableName, value, accessType);
     }
 
     /// <summary>

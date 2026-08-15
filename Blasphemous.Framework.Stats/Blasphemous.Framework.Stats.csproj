@@ -11,6 +11,8 @@
     <Description>Framework that allows other mods to implement modifications on game data and stats.</Description>
     <Version>0.1.0</Version>
 
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+
     <TargetName>StatsFramework</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>

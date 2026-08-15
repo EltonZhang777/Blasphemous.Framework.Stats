@@ -3,6 +3,7 @@ using Blasphemous.Framework.Stats.Patches;
 using Blasphemous.Framework.Stats.Patches.ItemPatches;
 using Tools.Items;
 using UnityEngine;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -18,7 +19,7 @@ public class PenitentLightBeamEffectValues : ObjectEffectValues, IAccessible_Cla
 
     public void GetValueFrom(PenitentLightBeamEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
@@ -26,14 +27,14 @@ public class PenitentLightBeamEffectValues : ObjectEffectValues, IAccessible_Cla
         penitentColorWhileCasting = _vanillaDefaultColor;
         hitData = new()
         {
-            basePrayerDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field),
+            basePrayerDamage = (float)TraverseUtils.GetValue<int>(obj, "DamageAmount", TraverseUtils.TraverseAccessType.Field),
             prayerBonusEfficiency = 1f
         };
     }
 
     public void SetValueTo(PenitentLightBeamEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);

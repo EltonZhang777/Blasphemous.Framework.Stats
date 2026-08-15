@@ -7,6 +7,7 @@ using Gameplay.GameControllers.Penitent.Abilities;
 using HarmonyLib;
 using Tools.Items;
 using UnityEngine;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -49,26 +50,26 @@ public class PenitentDivineLightEffectValues : ObjectEffectValues, IAccessible_C
 
     public void GetValueFrom(PenitentDivineLightEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        totalPrayerDuration = Main.GetValue<float>(AreaSummonAttackTraverse, "seconds", Main.TraverseAccessType.Field);
-        initialXOffsetScale = Main.GetValue<float>(AreaSummonAttackTraverse, "offset", Main.TraverseAccessType.Field);
-        totalLightningBoltsCount = Main.GetValue<int>(AreaSummonAttackTraverse, "totalAreas", Main.TraverseAccessType.Field);
-        distanceBetweenLightningBolts = Main.GetValue<float>(AreaSummonAttackTraverse, "distanceBetweenAreas", Main.TraverseAccessType.Field);
+        totalPrayerDuration = TraverseUtils.GetValue<float>(AreaSummonAttackTraverse, "seconds", TraverseUtils.TraverseAccessType.Field);
+        initialXOffsetScale = TraverseUtils.GetValue<float>(AreaSummonAttackTraverse, "offset", TraverseUtils.TraverseAccessType.Field);
+        totalLightningBoltsCount = TraverseUtils.GetValue<int>(AreaSummonAttackTraverse, "totalAreas", TraverseUtils.TraverseAccessType.Field);
+        distanceBetweenLightningBolts = TraverseUtils.GetValue<float>(AreaSummonAttackTraverse, "distanceBetweenAreas", TraverseUtils.TraverseAccessType.Field);
 
         hitData = new()
         {
-            basePrayerDamage = (float)Main.GetValue<int>(AreaSummonAttackTraverse, "SpawnedAreaAttackDamage", Main.TraverseAccessType.Field),
+            basePrayerDamage = (float)TraverseUtils.GetValue<int>(AreaSummonAttackTraverse, "SpawnedAreaAttackDamage", TraverseUtils.TraverseAccessType.Field),
             prayerBonusEfficiency = 1f
         };
     }
 
     public void SetValueTo(PenitentDivineLightEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);

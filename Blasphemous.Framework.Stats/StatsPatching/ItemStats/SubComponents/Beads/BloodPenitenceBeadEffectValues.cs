@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.SwordHearts;
 
@@ -12,22 +13,22 @@ public class BloodPenitenceBeadEffectValues : ObjectEffectValues, IAccessible_Cl
 
     public void GetValueFrom(BloodPenitenceBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        regenFactorIncrease = Main.GetValue<float>(obj, "regenFactorIncrease", Main.TraverseAccessType.Field);
+        regenFactorIncrease = TraverseUtils.GetValue<float>(obj, "regenFactorIncrease", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(BloodPenitenceBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "regenFactorIncrease", regenFactorIncrease, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "regenFactorIncrease", regenFactorIncrease, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

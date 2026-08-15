@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
@@ -11,14 +12,14 @@ public class BaseInventoryObjectValues : IAccessible_Class<BaseInventoryObject>
     /// <inheritdoc/>
     public void GetValueFrom(BaseInventoryObject obj)
     {
-        carryOnStart = Main.GetValue<bool>(obj, "carryonstart", Main.TraverseAccessType.Field);
-        preserveInNewGamePlus = Main.GetValue<bool>(obj, "preserveInNewGamePlus", Main.TraverseAccessType.Field);
+        carryOnStart = TraverseUtils.GetValue<bool>(obj, "carryonstart", TraverseUtils.TraverseAccessType.Field);
+        preserveInNewGamePlus = TraverseUtils.GetValue<bool>(obj, "preserveInNewGamePlus", TraverseUtils.TraverseAccessType.Field);
     }
 
     /// <inheritdoc/>
     public void SetValueTo(BaseInventoryObject obj)
     {
-        Main.SetValueIfNotNull(ref obj, "carryonstart", carryOnStart, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "preserveInNewGamePlus", preserveInNewGamePlus, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "carryonstart", carryOnStart, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "preserveInNewGamePlus", preserveInNewGamePlus, TraverseUtils.TraverseAccessType.Field);
     }
 }

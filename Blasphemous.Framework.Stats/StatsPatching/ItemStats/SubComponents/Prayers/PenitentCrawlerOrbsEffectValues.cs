@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Blasphemous.Framework.Stats.Patches;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -14,26 +15,26 @@ public class PenitentCrawlerOrbsEffectValues : ObjectEffectValues, IAccessible_C
 
     public void GetValueFrom(PenitentCrawlerOrbsEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
         hitData = new()
         {
-            basePrayerDamage = (float)Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field),
+            basePrayerDamage = (float)TraverseUtils.GetValue<int>(obj, "DamageAmount", TraverseUtils.TraverseAccessType.Field),
             prayerBonusEfficiency = 1f
         };
     }
 
     public void SetValueTo(PenitentCrawlerOrbsEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "DamageAmount", (int?)hitData.basePrayerDamage, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "DamageAmount", (int?)hitData.basePrayerDamage, TraverseUtils.TraverseAccessType.Field);
 
         // Register hit changes to patch controller
         hitData.CopyNonNullValuesTo(PatchController.Hits.PR14);

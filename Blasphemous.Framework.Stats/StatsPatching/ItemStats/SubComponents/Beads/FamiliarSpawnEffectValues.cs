@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Tools.Items;
 using UnityEngine;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.SwordHearts;
 
@@ -13,22 +14,22 @@ public class FamiliarSpawnEffectValues : ObjectEffectValues, IAccessible_Class<F
 
     public void GetValueFrom(FamiliarSpawnEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        minionOffsetToPenitent = Main.GetValue<Vector2>(obj, "Offset", Main.TraverseAccessType.Field);
+        minionOffsetToPenitent = TraverseUtils.GetValue<Vector2>(obj, "Offset", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(FamiliarSpawnEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "Offset", minionOffsetToPenitent, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "Offset", minionOffsetToPenitent, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

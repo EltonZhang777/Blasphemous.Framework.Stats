@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -11,7 +12,7 @@ public class ToxicCloudEffectValues : ObjectEffect_StatValues, IAccessible_Class
 {
     public void GetValueFrom(ToxicCloudEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
@@ -20,7 +21,7 @@ public class ToxicCloudEffectValues : ObjectEffect_StatValues, IAccessible_Class
 
     public void SetValueTo(ToxicCloudEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);

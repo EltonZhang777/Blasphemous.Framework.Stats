@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
 using Gameplay.GameControllers.Penitent.Abilities;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.SwordHearts;
 
@@ -13,22 +14,22 @@ public class IncreaseSpeedBeadEffectValues : ObjectEffectValues, IAccessible_Cla
 
     public void GetValueFrom(IncreaseSpeedBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        movementSetting = Main.GetValue<Dash.MoveSetting>(obj, "BeadMoveSettings", Main.TraverseAccessType.Field);
+        movementSetting = TraverseUtils.GetValue<Dash.MoveSetting>(obj, "BeadMoveSettings", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(IncreaseSpeedBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "BeadMoveSettings", movementSetting, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "BeadMoveSettings", movementSetting, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

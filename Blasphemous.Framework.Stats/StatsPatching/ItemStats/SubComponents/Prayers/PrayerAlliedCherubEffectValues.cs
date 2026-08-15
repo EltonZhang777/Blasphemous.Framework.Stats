@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
 using System;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -12,7 +13,7 @@ public class PrayerAlliedCherubEffectValues : ObjectEffect_StatValues, IAccessib
 {
     public void GetValueFrom(PrayerAlliedCherubEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
@@ -22,7 +23,7 @@ public class PrayerAlliedCherubEffectValues : ObjectEffect_StatValues, IAccessib
 
     public void SetValueTo(PrayerAlliedCherubEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);

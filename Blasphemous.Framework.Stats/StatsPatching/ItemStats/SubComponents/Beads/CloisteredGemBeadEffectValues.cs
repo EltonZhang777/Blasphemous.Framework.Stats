@@ -2,6 +2,7 @@
 using Framework.Inventory;
 using Framework.Managers;
 using HarmonyLib;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.SwordHearts;
 
@@ -42,33 +43,33 @@ public class CloisteredGemBeadEffectValues : ObjectEffectValues, IAccessible_Cla
 
     public void GetValueFrom(CloisteredGemBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        finalDamageMultiplier = Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field);
-        maxUses = Main.GetValue<int>(obj, "MaxUses", Main.TraverseAccessType.Field);
+        finalDamageMultiplier = TraverseUtils.GetValue<int>(obj, "DamageAmount", TraverseUtils.TraverseAccessType.Field);
+        maxUses = TraverseUtils.GetValue<int>(obj, "MaxUses", TraverseUtils.TraverseAccessType.Field);
 
         cloisteredGemProjectileAttack = Traverse.Create(obj).Field("projectileAttack");
         if (cloisteredGemProjectileAttack != null)
         {
             // WIP
-            projectileSpeed = Main.GetValue<float>(cloisteredGemProjectileAttack, "projectileSpeed", Main.TraverseAccessType.Field);
-            baseDamage = Main.GetValue<float>(cloisteredGemProjectileAttack, "ProjectileDamageAmount", Main.TraverseAccessType.Field);
+            projectileSpeed = TraverseUtils.GetValue<float>(cloisteredGemProjectileAttack, "projectileSpeed", TraverseUtils.TraverseAccessType.Field);
+            baseDamage = TraverseUtils.GetValue<float>(cloisteredGemProjectileAttack, "ProjectileDamageAmount", TraverseUtils.TraverseAccessType.Field);
         }
     }
 
     public void SetValueTo(CloisteredGemBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
         // WIP
-        Main.SetValueIfNotNull(ref obj, "DamageAmount", finalDamageMultiplier, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "MaxUses", maxUses, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "DamageAmount", finalDamageMultiplier, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "MaxUses", maxUses, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

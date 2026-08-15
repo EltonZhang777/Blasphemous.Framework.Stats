@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.SwordHearts;
 
@@ -12,22 +13,22 @@ public class QuickHealingBeadEffectValues : ObjectEffectValues, IAccessible_Clas
 
     public void GetValueFrom(QuickHealingBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        flaskUseSpeedMultiplier = Main.GetValue<float>(obj, "AnimatorSpeed", Main.TraverseAccessType.Field);
+        flaskUseSpeedMultiplier = TraverseUtils.GetValue<float>(obj, "AnimatorSpeed", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(QuickHealingBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "AnimatorSpeed", flaskUseSpeedMultiplier, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "AnimatorSpeed", flaskUseSpeedMultiplier, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.FrameworkCore.Attributes.Logic;
 using System;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 
@@ -19,15 +20,15 @@ public class AttributeValues : IAccessible_Class<BlasAttribute>
     /// <inheritdoc/>
     public void GetValueFrom(BlasAttribute attr)
     {
-        if (!Main.Validate(attr, x => x != null))
+        if (!TraverseUtils.Validate(attr, x => x != null))
             return;
 
-        baseValue = Main.GetValue<float>(attr, "Base", Main.TraverseAccessType.Property);
-        initialValue = Main.GetValue<float>(attr, "_initialValue", Main.TraverseAccessType.Field);
-        upgradeIncrement = Main.GetValue<float>(attr, "_upgradeValue", Main.TraverseAccessType.Field);
+        baseValue = TraverseUtils.GetValue<float>(attr, "Base", TraverseUtils.TraverseAccessType.Property);
+        initialValue = TraverseUtils.GetValue<float>(attr, "_initialValue", TraverseUtils.TraverseAccessType.Field);
+        upgradeIncrement = TraverseUtils.GetValue<float>(attr, "_upgradeValue", TraverseUtils.TraverseAccessType.Field);
         upgradeCount = attr.GetUpgrades();
-        bonusValue = Main.GetValue<float>(attr, "Bonus", Main.TraverseAccessType.Property);
-        finalValue = Main.GetValue<float>(attr, "Final", Main.TraverseAccessType.Property);
+        bonusValue = TraverseUtils.GetValue<float>(attr, "Bonus", TraverseUtils.TraverseAccessType.Property);
+        finalValue = TraverseUtils.GetValue<float>(attr, "Final", TraverseUtils.TraverseAccessType.Property);
     }
 
     /// <summary>
@@ -36,16 +37,16 @@ public class AttributeValues : IAccessible_Class<BlasAttribute>
     /// </summary>
     public void SetValueTo(BlasAttribute attr)
     {
-        if (!Main.Validate(attr, x => x != null))
+        if (!TraverseUtils.Validate(attr, x => x != null))
             return;
 
         // reset `_bonusValue` since it won't be properly reset in vanilla code
-        Main.SetValue(ref attr, "Bonus", 0f, Main.TraverseAccessType.Property);
+        TraverseUtils.SetValue(ref attr, "Bonus", 0f, TraverseUtils.TraverseAccessType.Property);
 
         // set values
-        Main.SetValueIfNotNull(ref attr, "Base", baseValue, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref attr, "_initialValue", initialValue, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref attr, "_upgradeValue", upgradeIncrement, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref attr, "Base", baseValue, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref attr, "_initialValue", initialValue, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref attr, "_upgradeValue", upgradeIncrement, TraverseUtils.TraverseAccessType.Field);
 
         // re-upgrade according to current upgrade count
         if (upgradeCount.HasValue)

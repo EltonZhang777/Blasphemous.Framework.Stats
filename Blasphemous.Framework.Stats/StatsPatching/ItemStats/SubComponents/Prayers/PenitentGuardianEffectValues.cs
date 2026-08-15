@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -16,22 +17,22 @@ public class PenitentGuardianEffectValues : ObjectEffectValues, IAccessible_Clas
 
     public void GetValueFrom(PenitentGuardianEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        yOffset = Main.GetValue<float>(obj, "YOffset", Main.TraverseAccessType.Field);
+        yOffset = TraverseUtils.GetValue<float>(obj, "YOffset", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(PenitentGuardianEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "YOffset", yOffset, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "YOffset", yOffset, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

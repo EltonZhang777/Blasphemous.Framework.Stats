@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Gameplay.GameControllers.Entities;
 using Newtonsoft.Json;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 
@@ -41,7 +42,7 @@ public class EntityStatsValues_Penitent : IAccessible_Class<EntityStats>
     /// <inheritdoc/>
     public void GetValueFrom(EntityStats stats)
     {
-        if (!Main.Validate(stats, x => x != null))
+        if (!TraverseUtils.Validate(stats, x => x != null))
             return;
 
         life.GetValueFrom(stats.Life);
@@ -77,7 +78,7 @@ public class EntityStatsValues_Penitent : IAccessible_Class<EntityStats>
     /// <inheritdoc/>
     public void SetValueTo(EntityStats stats)
     {
-        if (!Main.Validate(stats, x => x != null))
+        if (!TraverseUtils.Validate(stats, x => x != null))
             return;
 
         life.SetValueTo(stats.Life);
@@ -129,7 +130,7 @@ public class EntityStatsValues_Enemy : IAccessible_Class<EntityStats>
     /// <inheritdoc/>
     public void GetValueFrom(EntityStats stats)
     {
-        if (!Main.Validate(stats, x => x != null))
+        if (!TraverseUtils.Validate(stats, x => x != null))
             return;
 
         life.GetValueFrom(stats.Life);
@@ -146,7 +147,7 @@ public class EntityStatsValues_Enemy : IAccessible_Class<EntityStats>
     /// <inheritdoc/>
     public void SetValueTo(EntityStats stats)
     {
-        if (!Main.Validate(stats, x => x != null))
+        if (!TraverseUtils.Validate(stats, x => x != null))
             return;
 
         life.SetValueTo(stats.Life);

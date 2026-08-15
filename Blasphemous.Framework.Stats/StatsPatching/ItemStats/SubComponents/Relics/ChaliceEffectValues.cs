@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using System.Collections.Generic;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Relics;
 
@@ -13,22 +14,22 @@ public class ChaliceEffectValues : ObjectEffectValues, IAccessible_Class<Chalice
 
     public void GetValueFrom(ChaliceEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        targetEnemyNames = Main.GetValue<List<string>>(obj, "EnemiesNames", Main.TraverseAccessType.Field);
+        targetEnemyNames = TraverseUtils.GetValue<List<string>>(obj, "EnemiesNames", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ChaliceEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "EnemiesNames", targetEnemyNames, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "EnemiesNames", targetEnemyNames, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

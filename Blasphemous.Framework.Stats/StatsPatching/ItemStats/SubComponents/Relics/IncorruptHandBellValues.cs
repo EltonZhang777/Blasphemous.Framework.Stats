@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using System;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Relics;
 
@@ -11,7 +12,7 @@ public class IncorruptHandBellValues : ObjectEffectValues, IAccessible_Class<Inc
 {
     public void GetValueFrom(IncorruptHandBell obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
@@ -21,7 +22,7 @@ public class IncorruptHandBellValues : ObjectEffectValues, IAccessible_Class<Inc
 
     public void SetValueTo(IncorruptHandBell obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);

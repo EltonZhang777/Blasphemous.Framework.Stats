@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Tools.Items;
 using UnityEngine;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
@@ -16,22 +17,22 @@ public class ItemGhostTrailValues : ObjectEffectValues, IAccessible_Class<ItemGh
 
     public void GetValueFrom(ItemGhostTrail obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        trailColor = ColorUtility.ToHtmlStringRGBA(Main.GetValue<Color>(obj, "color", Main.TraverseAccessType.Field));
+        trailColor = ColorUtility.ToHtmlStringRGBA(TraverseUtils.GetValue<Color>(obj, "color", TraverseUtils.TraverseAccessType.Field));
     }
 
     public void SetValueTo(ItemGhostTrail obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "color", TrailColor, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "color", TrailColor, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

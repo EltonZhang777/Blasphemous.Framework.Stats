@@ -2,6 +2,7 @@
 using Blasphemous.ModdingAPI;
 using Framework.Inventory;
 using System.Collections.Generic;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
@@ -25,45 +26,45 @@ public class ObjectEffectValues : IAccessible_Class<ObjectEffect>, IAccessible_P
     /// <inheritdoc/>
     public virtual void GetValueFrom(ObjectEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
-        effectType = Main.GetValue<ObjectEffect.EffectType>(obj, "effectType", Main.TraverseAccessType.Field);
-        abilityName = Main.GetValue<string>(obj, "abilityName", Main.TraverseAccessType.Field);
-        limitTime = Main.GetValue<bool>(obj, "LimitTime", Main.TraverseAccessType.Field);
-        effectTime = Main.GetValue<float>(obj, "EffectTime", Main.TraverseAccessType.Field);
-        usePrayerDurationAddition = Main.GetValue<bool>(obj, "UsePrayerDurationAddition", Main.TraverseAccessType.Field);
-        triggerOnlyOnce = Main.GetValue<bool>(obj, "TriggerOnlyOnce", Main.TraverseAccessType.Field);
-        onlyWhenUsingPrayer = Main.GetValue<bool>(obj, "OnlyWhenUsingPrayer", Main.TraverseAccessType.Field);
-        percentToExecute = Main.GetValue<int>(obj, "percentToExecute", Main.TraverseAccessType.Field);
-        pingTime = Main.GetValue<float>(obj, "PingTime", Main.TraverseAccessType.Field);
-        timeToWait = Main.GetValue<float>(obj, "TimeToWait", Main.TraverseAccessType.Field);
-        useWhenCastingPrayer = Main.GetValue<bool>(obj, "UseWhenCastingPrayer", Main.TraverseAccessType.Field);
-        conditions = Main.GetValue<List<ObjectEffect.Condition>>(obj, "Conditions", Main.TraverseAccessType.Field);
-        stoppingConditions = Main.GetValue<List<ObjectEffect.Condition>>(obj, "StoppingConditions", Main.TraverseAccessType.Field);
-        activationFxSound = Main.GetValue<string>(obj, "ActivationFxSound", Main.TraverseAccessType.Field);
+        effectType = TraverseUtils.GetValue<ObjectEffect.EffectType>(obj, "effectType", TraverseUtils.TraverseAccessType.Field);
+        abilityName = TraverseUtils.GetValue<string>(obj, "abilityName", TraverseUtils.TraverseAccessType.Field);
+        limitTime = TraverseUtils.GetValue<bool>(obj, "LimitTime", TraverseUtils.TraverseAccessType.Field);
+        effectTime = TraverseUtils.GetValue<float>(obj, "EffectTime", TraverseUtils.TraverseAccessType.Field);
+        usePrayerDurationAddition = TraverseUtils.GetValue<bool>(obj, "UsePrayerDurationAddition", TraverseUtils.TraverseAccessType.Field);
+        triggerOnlyOnce = TraverseUtils.GetValue<bool>(obj, "TriggerOnlyOnce", TraverseUtils.TraverseAccessType.Field);
+        onlyWhenUsingPrayer = TraverseUtils.GetValue<bool>(obj, "OnlyWhenUsingPrayer", TraverseUtils.TraverseAccessType.Field);
+        percentToExecute = TraverseUtils.GetValue<int>(obj, "percentToExecute", TraverseUtils.TraverseAccessType.Field);
+        pingTime = TraverseUtils.GetValue<float>(obj, "PingTime", TraverseUtils.TraverseAccessType.Field);
+        timeToWait = TraverseUtils.GetValue<float>(obj, "TimeToWait", TraverseUtils.TraverseAccessType.Field);
+        useWhenCastingPrayer = TraverseUtils.GetValue<bool>(obj, "UseWhenCastingPrayer", TraverseUtils.TraverseAccessType.Field);
+        conditions = TraverseUtils.GetValue<List<ObjectEffect.Condition>>(obj, "Conditions", TraverseUtils.TraverseAccessType.Field);
+        stoppingConditions = TraverseUtils.GetValue<List<ObjectEffect.Condition>>(obj, "StoppingConditions", TraverseUtils.TraverseAccessType.Field);
+        activationFxSound = TraverseUtils.GetValue<string>(obj, "ActivationFxSound", TraverseUtils.TraverseAccessType.Field);
     }
 
     /// <inheritdoc/>
     public virtual void SetValueTo(ObjectEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
-        Main.SetValueIfNotNull(ref obj, "effectType", effectType, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "abilityName", abilityName, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "LimitTime", limitTime, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "EffectTime", effectTime, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "UsePrayerDurationAddition", usePrayerDurationAddition, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "TriggerOnlyOnce", triggerOnlyOnce, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "OnlyWhenUsingPrayer", onlyWhenUsingPrayer, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "percentToExecute", percentToExecute, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "PingTime", pingTime, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "TimeToWait", timeToWait, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "UseWhenCastingPrayer", useWhenCastingPrayer, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "Conditions", conditions, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "StoppingConditions", stoppingConditions, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "ActivationFxSound", activationFxSound, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "effectType", effectType, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "abilityName", abilityName, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "LimitTime", limitTime, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "EffectTime", effectTime, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "UsePrayerDurationAddition", usePrayerDurationAddition, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "TriggerOnlyOnce", triggerOnlyOnce, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "OnlyWhenUsingPrayer", onlyWhenUsingPrayer, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "percentToExecute", percentToExecute, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "PingTime", pingTime, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "TimeToWait", timeToWait, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "UseWhenCastingPrayer", useWhenCastingPrayer, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "Conditions", conditions, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "StoppingConditions", stoppingConditions, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "ActivationFxSound", activationFxSound, TraverseUtils.TraverseAccessType.Field);
     }
 
     public virtual void GetValueFrom(object obj)

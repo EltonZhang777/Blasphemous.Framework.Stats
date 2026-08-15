@@ -5,6 +5,7 @@ using Framework.Managers;
 using Gameplay.GameControllers.Bosses.Quirce.Attack;
 using Gameplay.GameControllers.Penitent.Abilities;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -38,7 +39,7 @@ public class PenitentMultishotEffectValues : ObjectEffectValues, IAccessible_Cla
 
     public void GetValueFrom(PenitentMultishotEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
@@ -47,18 +48,18 @@ public class PenitentMultishotEffectValues : ObjectEffectValues, IAccessible_Cla
         delayBetweenHitsSeconds = 0.15f;
         hitData = new()
         {
-            basePrayerDamage = Main.GetValue<int>(obj, "DamageAmount", Main.TraverseAccessType.Field),
+            basePrayerDamage = TraverseUtils.GetValue<int>(obj, "DamageAmount", TraverseUtils.TraverseAccessType.Field),
             prayerBonusEfficiency = 0.35f
         };
 
         BossInstantProjectileAttack bossInstantProjectileAttack = Core.Logic.Penitent.GetComponentInChildren<PrayerUse>().multishotPrayer;
-        slowTimeDuration = Main.GetValue<float>(bossInstantProjectileAttack, "slowTimeDuration", Main.TraverseAccessType.Field);
-        beamShootSound = Main.GetValue<string>(bossInstantProjectileAttack, "shotSound", Main.TraverseAccessType.Field);
+        slowTimeDuration = TraverseUtils.GetValue<float>(bossInstantProjectileAttack, "slowTimeDuration", TraverseUtils.TraverseAccessType.Field);
+        beamShootSound = TraverseUtils.GetValue<string>(bossInstantProjectileAttack, "shotSound", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(PenitentMultishotEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);

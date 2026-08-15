@@ -175,7 +175,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     /// <inheritdoc/>
     public void GetValueFrom(BaseInventoryObject obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         vanillaEffects.Clear();
@@ -239,7 +239,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     /// <inheritdoc/>
     public void SetValueTo(BaseInventoryObject obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         isApplied = true;
@@ -328,7 +328,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     /// </summary>
     public void RevertValueTo(BaseInventoryObject obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         isApplied = false;

@@ -109,8 +109,8 @@ class PR07_HitPatch
             ____instantProjectileAttack = ____owner.GetComponentInChildren<PrayerUse>().multishotPrayer;
 
             // modify slowTimeDuration and shotSound
-            Main.SetValueIfNotNull(ref ____instantProjectileAttack, "slowTimeDuration", slowTimeDuration, Main.TraverseAccessType.Field);
-            Main.SetValueIfNotNull(ref ____instantProjectileAttack, "shotSound", beamShootSound, Main.TraverseAccessType.Field);
+            TraverseUtils.SetValueIfNotNull(ref ____instantProjectileAttack, "slowTimeDuration", slowTimeDuration, TraverseUtils.TraverseAccessType.Field);
+            TraverseUtils.SetValueIfNotNull(ref ____instantProjectileAttack, "shotSound", beamShootSound, TraverseUtils.TraverseAccessType.Field);
             /*
             if (slowTimeDuration.HasValue)
                 ____instantProjectileAttack.slowTimeDuration = slowTimeDuration.Value;
@@ -206,11 +206,11 @@ class PR09_HitPatch
         ____areaSummonAttack = ____owner.GetComponentInChildren<PrayerUse>().divineLightPrayer;
 
         ____areaSummonAttack.SetDamageStrength(1);
-        Main.SetValueIfNotNull(ref ____areaSummonAttack, "seconds", totalPrayerDuration, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref ____areaSummonAttack, "offset", initialXOffsetScale, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref ____areaSummonAttack, "totalAreas", totalLightningBoltsCount, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref ____areaSummonAttack, "distanceBetweenAreas", distanceBetweenLightningBolts, Main.TraverseAccessType.Field);
-        Main.SetValue(ref ____areaSummonAttack, "poolSize", lightningBoltPoolSize, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref ____areaSummonAttack, "seconds", totalPrayerDuration, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref ____areaSummonAttack, "offset", initialXOffsetScale, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref ____areaSummonAttack, "totalAreas", totalLightningBoltsCount, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref ____areaSummonAttack, "distanceBetweenAreas", distanceBetweenLightningBolts, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValue(ref ____areaSummonAttack, "poolSize", lightningBoltPoolSize, TraverseUtils.TraverseAccessType.Field);
 
         ModLogExtensions.WarnIfDebugBuild($"total prayer duration when patching: {Traverse.Create(____areaSummonAttack).Field("seconds").GetValue<float>()}");
         ModLogExtensions.WarnIfDebugBuild($"total prayer duration when patching: {____areaSummonAttack.seconds}");

@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.SwordHearts;
 
@@ -12,22 +13,22 @@ public class HardLandingBeadEffectValues : ObjectEffect_StatValues, IAccessible_
 
     public void GetValueFrom(HardLandingBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        fallRecoveryAnimationSpeed = Main.GetValue<float>(obj, "AnimatorNormalizedSpeed", Main.TraverseAccessType.Field);
+        fallRecoveryAnimationSpeed = TraverseUtils.GetValue<float>(obj, "AnimatorNormalizedSpeed", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(HardLandingBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "AnimatorNormalizedSpeed", fallRecoveryAnimationSpeed, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "AnimatorNormalizedSpeed", fallRecoveryAnimationSpeed, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

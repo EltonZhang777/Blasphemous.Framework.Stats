@@ -1,4 +1,5 @@
 ﻿using Blasphemous.CheatConsole;
+using Blasphemous.NewbieEltonLibs.CheatConsole;
 using Blasphemous.Framework.Stats.Components;
 using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 using Blasphemous.NewbieEltonLibs.Extensions.ModdingAPI;
@@ -16,49 +17,13 @@ using System.Linq;
 
 namespace Blasphemous.Framework.Stats.Commands;
 
-internal class StatsPatchCommand : ModCommand
+internal class StatsPatchCommand : AutoModCommand
 {
     protected override string CommandName => "statspatch";
 
-    protected override bool AllowUppercase => true;
-    protected override Dictionary<string, Action<string[]>> AddSubCommands()
-    {
-        Dictionary<string, Action<string[]>> result = new()
-        {
-            { "help", SubCommand_Help },
-            { "list", SubCommand_List },
-            { "activate", SubCommand_Activate },
-            { "deactivate", SubCommand_Deactivate }
-        };
-#if DEBUG
-        result.Add("exportjson", SubCommand_ExportToJson);
-        result.Add("exportallinventoryitems", SubCommand_ExportAllInventoryItems);
-#endif
-
-        return result;
-    }
-
-    private void SubCommand_Help(string[] parameters)
-    {
-        if (!ValidateParameterList(parameters, 0))
-            return;
-
-        Write($"Available {CommandName} commands:");
-        Write($"{CommandName} list : list all loaded stats patches");
-        Write($"{CommandName} list [active/inactive] : list all active/inactive stats patches");
-        Write($"{CommandName} activate [patchName] : activate the specified stats patch. (only supports patches that can be manually toggled active)");
-        Write($"{CommandName} deactivate [patchName] : deactivate the specified stats patch. (only supports patches that can be manually toggled active)");
-#if DEBUG
-        Write($"{CommandName} exportjson [patchName] : (debug use) export the info of specified stats patch to JSON file");
-        Write($"{CommandName} exportallinventoryitems : (debug use) export the info all inventory items to JSON file");
-#endif
-    }
-
+    [ModSubCommand("list", "list all loaded stats patches", "[active/inactive]", 0, 1)]
     private void SubCommand_List(string[] parameters)
     {
-        if (!this.ValidateParameterList(parameters, [0, 1]))
-            return;
-
         bool hasAny = false;
         if (parameters.Length == 0)
         {
@@ -109,11 +74,9 @@ internal class StatsPatchCommand : ModCommand
         }
     }
 
+    [ModSubCommand("activate", "activate the specified stats patch (manually toggled only)", "[patchName]", 1)]
     private void SubCommand_Activate(string[] parameters)
     {
-        if (!ValidateParameterList(parameters, 1))
-            return;
-
         string targetName = parameters[0];
         if (TrySetPatchActive(targetName, true))
         {
@@ -121,11 +84,9 @@ internal class StatsPatchCommand : ModCommand
         }
     }
 
+    [ModSubCommand("deactivate", "deactivate the specified stats patch (manually toggled only)", "[patchName]", 1)]
     private void SubCommand_Deactivate(string[] parameters)
     {
-        if (!ValidateParameterList(parameters, 1))
-            return;
-
         string targetName = parameters[0];
         if (TrySetPatchActive(targetName, false))
         {
@@ -133,11 +94,10 @@ internal class StatsPatchCommand : ModCommand
         }
     }
 
+#if DEBUG
+    [ModSubCommand("exportjson", "export the info of specified stats patch to JSON file (debug use)", "[patchName]", 1)]
     private void SubCommand_ExportToJson(string[] parameters)
     {
-        if (!ValidateParameterList(parameters, 1))
-            return;
-
         string patchName = parameters[0];
         if (!StatsPatchExists(patchName))
             return;
@@ -161,13 +121,13 @@ internal class StatsPatchCommand : ModCommand
                 jsonSerializerSettings));
         Write($"Successfully exported `{patchName}` info to `{exportPath}`!");
     }
+#endif
 
+#if DEBUG
+    [ModSubCommand("exportallinventoryitems", "export the info of all inventory items to JSON file (debug use)", null, 0)]
     private void SubCommand_ExportAllInventoryItems(string[] parameters)
     {
         // WIP!
-        if (!ValidateParameterList(parameters, 0))
-            return;
-
         JsonSerializerSettings jsonSerializerSettings = new()
         {
             Converters = [
@@ -198,6 +158,7 @@ internal class StatsPatchCommand : ModCommand
 
         Write($"Successfully exported all inventory items' data to `{Main.StatsFramework.FileHandler.ContentFolder}`!");
     }
+#endif
 
     private bool StatsPatchExists(string name)
     {

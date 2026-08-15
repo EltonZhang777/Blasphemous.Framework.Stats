@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
@@ -9,22 +10,22 @@ public class ItemFlagValues : ObjectEffectValues, IAccessible_Class<ItemFlag>
 
     public void GetValueFrom(ItemFlag obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        flagName = Main.GetValue<string>(obj, "flagName", Main.TraverseAccessType.Field);
+        flagName = TraverseUtils.GetValue<string>(obj, "flagName", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ItemFlag obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "flagName", flagName, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "flagName", flagName, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

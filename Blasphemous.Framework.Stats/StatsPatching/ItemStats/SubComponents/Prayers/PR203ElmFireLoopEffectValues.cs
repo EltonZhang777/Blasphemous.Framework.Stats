@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -11,7 +12,7 @@ public class PR203ElmFireLoopEffectValues : ObjectEffectValues, IAccessible_Clas
 {
     public void GetValueFrom(PR203ElmFireLoopEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
@@ -20,7 +21,7 @@ public class PR203ElmFireLoopEffectValues : ObjectEffectValues, IAccessible_Clas
 
     public void SetValueTo(PR203ElmFireLoopEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);

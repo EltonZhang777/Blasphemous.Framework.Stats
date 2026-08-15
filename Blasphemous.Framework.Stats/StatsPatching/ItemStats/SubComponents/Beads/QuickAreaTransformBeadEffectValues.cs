@@ -1,5 +1,6 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.SwordHearts;
 
@@ -12,22 +13,22 @@ public class QuickAreaTransformBeadEffectValues : ObjectEffectValues, IAccessibl
 
     public void GetValueFrom(QuickAreaTransformBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        prayerCastSpeedMultiplier = Main.GetValue<float>(obj, "AuraTransformAnimationSpeed", Main.TraverseAccessType.Field);
+        prayerCastSpeedMultiplier = TraverseUtils.GetValue<float>(obj, "AuraTransformAnimationSpeed", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(QuickAreaTransformBeadEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "AuraTransformAnimationSpeed", prayerCastSpeedMultiplier, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "AuraTransformAnimationSpeed", prayerCastSpeedMultiplier, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

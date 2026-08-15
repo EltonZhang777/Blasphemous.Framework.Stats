@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using System.Collections.Generic;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
@@ -10,22 +11,22 @@ public class ItemTemporalEffectValues : ObjectEffectValues, IAccessible_Class<It
 
     public void GetValueFrom(ItemTemporalEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        temporalEffects = Main.GetValue<List<ItemTemporalEffect.PenitentEffects>>(obj, "effects", Main.TraverseAccessType.Field);
+        temporalEffects = TraverseUtils.GetValue<List<ItemTemporalEffect.PenitentEffects>>(obj, "effects", TraverseUtils.TraverseAccessType.Field);
     }
 
     public void SetValueTo(ItemTemporalEffect obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "effects", temporalEffects, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "effects", temporalEffects, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

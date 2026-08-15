@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using Framework.Inventory;
 using Gameplay.GameControllers.Entities;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents;
 
@@ -17,35 +18,35 @@ public class ObjectEffect_StatValues : ObjectEffectValues, IAccessible_Class<Obj
     /// <inheritdoc/>
     public void GetValueFrom(ObjectEffect_Stat obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        useHitAsBaseValue = Main.GetValue<bool>(obj, "UseHitAsBaseValue", Main.TraverseAccessType.Field);
-        effectMode = Main.GetValue<ObjectEffect_Stat.EffectMode>(obj, "effectMode", Main.TraverseAccessType.Field);
-        statType = Main.GetValue<EntityStats.StatsTypes>(obj, "statType", Main.TraverseAccessType.Field);
-        valueType = Main.GetValue<ObjectEffect_Stat.ValueType>(obj, "valueType", Main.TraverseAccessType.Field);
-        statValueType = Main.GetValue<EntityStats.StatsTypes>(obj, "statValueType", Main.TraverseAccessType.Field);
-        value = Main.GetValue<float>(obj, "value", Main.TraverseAccessType.Field);
-        multiplier = Main.GetValue<float>(obj, "multiplier", Main.TraverseAccessType.Field);
+        useHitAsBaseValue = TraverseUtils.GetValue<bool>(obj, "UseHitAsBaseValue", TraverseUtils.TraverseAccessType.Field);
+        effectMode = TraverseUtils.GetValue<ObjectEffect_Stat.EffectMode>(obj, "effectMode", TraverseUtils.TraverseAccessType.Field);
+        statType = TraverseUtils.GetValue<EntityStats.StatsTypes>(obj, "statType", TraverseUtils.TraverseAccessType.Field);
+        valueType = TraverseUtils.GetValue<ObjectEffect_Stat.ValueType>(obj, "valueType", TraverseUtils.TraverseAccessType.Field);
+        statValueType = TraverseUtils.GetValue<EntityStats.StatsTypes>(obj, "statValueType", TraverseUtils.TraverseAccessType.Field);
+        value = TraverseUtils.GetValue<float>(obj, "value", TraverseUtils.TraverseAccessType.Field);
+        multiplier = TraverseUtils.GetValue<float>(obj, "multiplier", TraverseUtils.TraverseAccessType.Field);
     }
 
     /// <inheritdoc/>
     public void SetValueTo(ObjectEffect_Stat obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
 
-        Main.SetValueIfNotNull(ref obj, "UseHitAsBaseValue", useHitAsBaseValue, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "effectMode", effectMode, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "statType", statType, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "valueType", valueType, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "statValueType", statValueType, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "value", value, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "multiplier", multiplier, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "UseHitAsBaseValue", useHitAsBaseValue, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "effectMode", effectMode, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "statType", statType, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "valueType", valueType, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "statValueType", statValueType, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "value", value, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "multiplier", multiplier, TraverseUtils.TraverseAccessType.Field);
     }
 
     public override void GetValueFrom(object obj)

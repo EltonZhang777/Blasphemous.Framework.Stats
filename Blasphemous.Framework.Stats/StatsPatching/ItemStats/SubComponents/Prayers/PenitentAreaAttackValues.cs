@@ -3,6 +3,7 @@ using Blasphemous.Framework.Stats.Patches;
 using Gameplay.GameControllers.Entities;
 using HarmonyLib;
 using Tools.Items;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers;
 
@@ -31,34 +32,34 @@ public class PenitentAreaAttackValues : ObjectEffectValues, IAccessible_Class<Pe
 
     public void GetValueFrom(PenitentAreaAttack obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.GetValueFrom(obj);
 
-        attackRangeRadius = Main.GetValue<float>(obj, "Radius", Main.TraverseAccessType.Field);
-        delayBetweenHitsSeconds = Main.GetValue<float>(obj, "damageDelay", Main.TraverseAccessType.Field);
-        slowTimeDuration = Main.GetValue<float>(obj, "slowTimeDuration", Main.TraverseAccessType.Field);
+        attackRangeRadius = TraverseUtils.GetValue<float>(obj, "Radius", TraverseUtils.TraverseAccessType.Field);
+        delayBetweenHitsSeconds = TraverseUtils.GetValue<float>(obj, "damageDelay", TraverseUtils.TraverseAccessType.Field);
+        slowTimeDuration = TraverseUtils.GetValue<float>(obj, "slowTimeDuration", TraverseUtils.TraverseAccessType.Field);
 
         hitData = new()
         {
-            basePrayerDamage = Main.GetValue<float>(obj, "Amount", Main.TraverseAccessType.Field)
+            basePrayerDamage = TraverseUtils.GetValue<float>(obj, "Amount", TraverseUtils.TraverseAccessType.Field)
         };
 
         // make the target create hit before getting the hit
         Traverse.Create(obj).Method("CreateHit").GetValue(null);
-        hitData.hitValues.GetValueFrom(Main.GetValue<Hit>(obj, "attackHit", Main.TraverseAccessType.Field));
+        hitData.hitValues.GetValueFrom(TraverseUtils.GetValue<Hit>(obj, "attackHit", TraverseUtils.TraverseAccessType.Field));
     }
 
     public void SetValueTo(PenitentAreaAttack obj)
     {
-        if (!Main.Validate(obj, x => x != null))
+        if (!TraverseUtils.Validate(obj, x => x != null))
             return;
 
         base.SetValueTo(obj);
-        Main.SetValueIfNotNull(ref obj, "Radius", attackRangeRadius, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "damageDelay", delayBetweenHitsSeconds, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref obj, "slowTimeDuration", slowTimeDuration, Main.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "Radius", attackRangeRadius, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "damageDelay", delayBetweenHitsSeconds, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref obj, "slowTimeDuration", slowTimeDuration, TraverseUtils.TraverseAccessType.Field);
 
         // Register hit changes to patch controller
         hitData.CopyNonNullValuesTo(PatchController.Hits.PR12);

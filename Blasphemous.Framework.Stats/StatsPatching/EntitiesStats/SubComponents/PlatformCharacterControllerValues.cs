@@ -1,6 +1,7 @@
 ﻿using Blasphemous.Framework.Stats.Components;
 using CreativeSpore.SmartColliders;
 using Gameplay.GameControllers.Entities;
+using Blasphemous.NewbieEltonLibs.Extensions.GameLibs;
 
 namespace Blasphemous.Framework.Stats.StatsPatching.EntitiesStats.SubComponents;
 
@@ -19,13 +20,13 @@ public class PlatformCharacterControllerValues_Penitent : PlatformCharacterContr
     {
         base.GetValueFrom(pcc);
 
-        if (!Main.Validate(pcc, x => x != null))
+        if (!TraverseUtils.Validate(pcc, x => x != null))
             return;
 
-        platformDropTime = Main.GetValue<float>(pcc, "PlatformDropTime", Main.TraverseAccessType.Property);
-        ghostJumpDelay = Main.GetValue<float>(pcc, "GhostJumpDelay", Main.TraverseAccessType.Property);
-        ladderJumpTimeThreshold = Main.GetValue<float>(pcc, "m_ladderJumpTimeThreshold", Main.TraverseAccessType.Field);
-        climbingSpeed = Main.GetValue<float>(pcc, "ClimbingSpeed", Main.TraverseAccessType.Property);
+        platformDropTime = TraverseUtils.GetValue<float>(pcc, "PlatformDropTime", TraverseUtils.TraverseAccessType.Property);
+        ghostJumpDelay = TraverseUtils.GetValue<float>(pcc, "GhostJumpDelay", TraverseUtils.TraverseAccessType.Property);
+        ladderJumpTimeThreshold = TraverseUtils.GetValue<float>(pcc, "m_ladderJumpTimeThreshold", TraverseUtils.TraverseAccessType.Field);
+        climbingSpeed = TraverseUtils.GetValue<float>(pcc, "ClimbingSpeed", TraverseUtils.TraverseAccessType.Property);
     }
 
     /// <inheritdoc/>
@@ -33,13 +34,13 @@ public class PlatformCharacterControllerValues_Penitent : PlatformCharacterContr
     {
         base.SetValueTo(pcc);
 
-        if (!Main.Validate(pcc, x => x != null))
+        if (!TraverseUtils.Validate(pcc, x => x != null))
             return;
 
-        Main.SetValueIfNotNull(ref pcc, "PlatformDropTime", platformDropTime, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "GhostJumpDelay", ghostJumpDelay, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "m_ladderJumpTimeThreshold", ladderJumpTimeThreshold, Main.TraverseAccessType.Field);
-        Main.SetValueIfNotNull(ref pcc, "ClimbingSpeed", climbingSpeed, Main.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "PlatformDropTime", platformDropTime, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "GhostJumpDelay", ghostJumpDelay, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "m_ladderJumpTimeThreshold", ladderJumpTimeThreshold, TraverseUtils.TraverseAccessType.Field);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "ClimbingSpeed", climbingSpeed, TraverseUtils.TraverseAccessType.Property);
     }
 }
 
@@ -59,30 +60,30 @@ public class PlatformCharacterControllerValues_Enemy : IAccessible_Class<Platfor
     /// <inheritdoc/>
     public virtual void GetValueFrom(PlatformCharacterController pcc)
     {
-        if (!Main.Validate(pcc, x => x != null))
+        if (!TraverseUtils.Validate(pcc, x => x != null))
             return;
 
-        walkingAcceleration = Main.GetValue<float>(pcc, "WalkingAcc", Main.TraverseAccessType.Property);
-        walkingDrag = Main.GetValue<float>(pcc, "WalkingDrag", Main.TraverseAccessType.Property);
-        maxWalkingSpeed = Main.GetValue<float>(pcc, "MaxWalkingSpeed", Main.TraverseAccessType.Property);
-        airborneAcceleration = Main.GetValue<float>(pcc, "AirborneAcc", Main.TraverseAccessType.Property);
-        jumpingSpeed = Main.GetValue<float>(pcc, "JumpingSpeed", Main.TraverseAccessType.Property);
-        jumpingAcceleration = Main.GetValue<float>(pcc, "JumpingAcc", Main.TraverseAccessType.Property);
-        jumpingAccelerationTime = Main.GetValue<float>(pcc, "JumpingAccTime", Main.TraverseAccessType.Property);
+        walkingAcceleration = TraverseUtils.GetValue<float>(pcc, "WalkingAcc", TraverseUtils.TraverseAccessType.Property);
+        walkingDrag = TraverseUtils.GetValue<float>(pcc, "WalkingDrag", TraverseUtils.TraverseAccessType.Property);
+        maxWalkingSpeed = TraverseUtils.GetValue<float>(pcc, "MaxWalkingSpeed", TraverseUtils.TraverseAccessType.Property);
+        airborneAcceleration = TraverseUtils.GetValue<float>(pcc, "AirborneAcc", TraverseUtils.TraverseAccessType.Property);
+        jumpingSpeed = TraverseUtils.GetValue<float>(pcc, "JumpingSpeed", TraverseUtils.TraverseAccessType.Property);
+        jumpingAcceleration = TraverseUtils.GetValue<float>(pcc, "JumpingAcc", TraverseUtils.TraverseAccessType.Property);
+        jumpingAccelerationTime = TraverseUtils.GetValue<float>(pcc, "JumpingAccTime", TraverseUtils.TraverseAccessType.Property);
     }
 
     /// <inheritdoc/>
     public virtual void SetValueTo(PlatformCharacterController pcc)
     {
-        if (!Main.Validate(pcc, x => x != null))
+        if (!TraverseUtils.Validate(pcc, x => x != null))
             return;
 
-        Main.SetValueIfNotNull(ref pcc, "WalkingAcc", walkingAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "WalkingDrag", walkingDrag, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "MaxWalkingSpeed", maxWalkingSpeed, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "AirborneAcc", airborneAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "JumpingSpeed", jumpingSpeed, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "JumpingAcc", jumpingAcceleration, Main.TraverseAccessType.Property);
-        Main.SetValueIfNotNull(ref pcc, "JumpingAccTime", jumpingAccelerationTime, Main.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "WalkingAcc", walkingAcceleration, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "WalkingDrag", walkingDrag, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "MaxWalkingSpeed", maxWalkingSpeed, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "AirborneAcc", airborneAcceleration, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "JumpingSpeed", jumpingSpeed, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "JumpingAcc", jumpingAcceleration, TraverseUtils.TraverseAccessType.Property);
+        TraverseUtils.SetValueIfNotNull(ref pcc, "JumpingAccTime", jumpingAccelerationTime, TraverseUtils.TraverseAccessType.Property);
     }
 }

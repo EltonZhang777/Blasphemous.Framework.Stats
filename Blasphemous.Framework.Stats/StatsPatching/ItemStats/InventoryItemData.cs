@@ -42,6 +42,11 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     public int? fervourCost;
 
     /// <summary>
+    /// Cast duration (cooldown) for prayers, written to <see cref="Prayer.EffectTime"/>
+    /// </summary>
+    public float? prayerDuration;
+
+    /// <summary>
     /// List of <see cref="ObjectEffectValues"/> that will be added to the item.
     /// </summary>
     public List<ObjectEffectValues> effectAdditions = [];
@@ -132,6 +137,11 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
     /// </summary>
     private int _vanillaFervourCost;
 
+    /// <summary>
+    /// Stores vanilla cast duration (cooldown), if this inventory object is a prayer.
+    /// </summary>
+    private float _vanillaPrayerDuration;
+
     internal static Dictionary<Type, Type> JsonTypeToScriptType
     {
         get
@@ -215,6 +225,7 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
                         Prayer prayer = mb as Prayer;
                         fervourCost = prayer.fervourNeeded;
                         _vanillaFervourCost = prayer.fervourNeeded;
+                        _vanillaPrayerDuration = prayer.EffectTime;
                     }
 
                     break;
@@ -251,6 +262,13 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         if (fervourCost.HasValue && obj is Prayer prayer)
         {
             prayer.fervourNeeded = fervourCost.Value;
+        }
+
+        // Apply prayer cast duration (cooldown) change before it is overwritten by the following data backup step
+        if (prayerDuration.HasValue && obj is Prayer durationPrayer)
+        {
+            TraverseUtils.SetValueIfNotNull(ref durationPrayer, "EffectTime", prayerDuration, TraverseUtils.TraverseAccessType.Property);
+            ModLogExtensions.InfoIfDebugBuild($"Setting Prayer `{obj.id}` EffectTime to {prayerDuration.Value}");
         }
 
         // Get MonoBehaviors attached to the inventory object and serialize them for comparison
@@ -340,6 +358,12 @@ public class InventoryItemData : IAccessible_Class<BaseInventoryObject>, IStatsP
         if (obj is Prayer prayer)
         {
             prayer.fervourNeeded = _vanillaFervourCost;
+        }
+
+        // Revert prayer cast duration
+        if (obj is Prayer durationRevertPrayer)
+        {
+            TraverseUtils.SetValue(ref durationRevertPrayer, "EffectTime", _vanillaPrayerDuration, TraverseUtils.TraverseAccessType.Property);
         }
 
         // Revert additions

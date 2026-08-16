@@ -132,6 +132,7 @@
     {
       "itemId": "PR03",
       "fervourCost": 50,
+      "prayerDuration": 4.0,
       "effectAdditions": [
         {
           "$type": "Blasphemous.Framework.Stats.StatsPatching.ItemStats.SubComponents.Prayers.PenitentLightBeamEffectValues, StatsFramework",

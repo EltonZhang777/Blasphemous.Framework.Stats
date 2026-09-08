@@ -50,28 +50,7 @@ dotnet build Blasphemous.Framework.Stats.sln -c Debug
 
 ## 领域词汇（Glossary）
 
-**Stats Patch**：
-一个 JSON 可序列化的数据修改单元，含名称、激活条件（`activeType`/`activeFlag`）与目标数据列表（`PenitentData` / `EnemyData` / `InventoryItemData`）。`isActive` 由 `UpdateActive()` 按激活条件刷新，激活时把 JSON 值写回游戏对象，失活时还原。
-_Avoid_: 配置项、属性覆盖
-
-**Traverse Utils**：
-`Blasphemous.NewbieEltonLibs.Extensions.GameLibs.TraverseUtils` —— 通过 Harmony Traverse 读写任意可访问性字段/属性的工具（`GetValue`/`SetValue`/`SetValueIfNotNull`/`Validate`）。本仓库访问游戏私有成员一律走它。
-_Avoid_: 直接反射、`Traverse.Create` 散写
-
-**AutoModCommand**：
-lib 提供的 CheatConsole 命令基类：子命令用 `ModSubCommand` attribute 声明，自动生成 help 与参数长度校验。本仓库 `statspatch` / `penitentstats` 命令基于它。
-_Avoid_: 手写 `AddSubCommands()`
-
-**Loadout**：
-忏悔者当前装备组合（念珠槽位列表 + 圣剑之心 + 祷告 + 遗物槽位），用 `SaveCurrentEquipmentAsLoadout` 保存、`EquipItemsInLoadout` 重穿。此概念目前只在本仓库内部使用（物品 patch 流程曾用于安全替换装备，现已注释）。
-
-**Item ID 前缀**：
-背包物品 ID 的前缀约定，用于推断物品类型：`RE`=遗物、`RB`=念珠、`QI`=任务物品、`PR`=祷告、`CO`=收集品、`HE`=剑。
-_Avoid_: 硬编码类型判断
-
-**Hit Patch**：
-针对某次伤害计算的修改数据（`HitPatchData`：baseDamage / attackDamageMultiplier / basePrayerDamage / prayerBonusEfficiency / hitValues），由 `HitPatchController` 计算最终伤害并注入祷告的 Hit。`IsActive` 决定是否生效。
-_Avoid_: 伤害加成
+领域术语的定义、边界和避免使用的同义词以根目录 `CONTEXT.md` 为单一事实源。处理 Stats Patch、Traverse Utils、AutoModCommand、Loadout、Item ID 前缀、Effect 或 Hit，或编写相关 issue/spec/test 文档前，先读取 `CONTEXT.md`。
 
 ## 编码约定
 
@@ -111,4 +90,4 @@ Default five labels: needs-triage / needs-info / ready-for-agent / ready-for-hum
 
 ### Domain docs
 
-Single-context：领域词汇内嵌于本文件（见「领域词汇」节）；ADR 存本地 `docs/adr/`（gitignore，不进 git）。See `docs/agents/domain.md`。
+Single-context：领域词汇存于根 `CONTEXT.md`；ADR 存本地 `docs/adr/`（gitignore，不进 git）。See `docs/agents/domain.md`。
